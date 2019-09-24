@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
   // use hoc
 class Results extends Component {
   constructor(props) {
