@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Place from './Place/index';
-import {findPlaces} from './../../GoogleMaps/helper'
+import {findPlaces} from './../../Api/GoogleMaps/helper'
 
 class Search extends Component {
   constructor(props) {
