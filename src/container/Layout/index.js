@@ -4,12 +4,24 @@ import Search from './../Search/index';
 class Layout extends Component {
   constructor(props) {
     super(props);
-    this.state = {  }
+    this.state = { 
+      yelpHealthData: [],
+      allPlaces: [],
+     }
   }
+
+  setYelpHealthData = (data) => {
+    this.setState({ yelpHealthData: data  });
+  }
+
+  setAllPlaces = (data) => {
+    this.setState({ allPlaces: data });
+  }
+
   render() { 
     return ( 
       <div>
-        <Search/>
+        <Search allPlaces={this.state.allPlaces} setYelpHealthData={this.setYelpHealthData} setAllPlaces={this.setAllPlaces}/>
       </div>
      )
   }

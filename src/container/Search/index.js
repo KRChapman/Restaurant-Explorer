@@ -1,134 +1,81 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Place from './Place/index';
 import {findPlaces} from './../../Api/GoogleMaps/helper'
 
-class Search extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      inputForSearch: "",
-      place: "",
-      allPlaces: [],
-      dataToShare: {
-        cords: [],
-        health: [],
-        yelp: "",
-      },
-     }
-  }
- 
-  componentDidUpdate(prevProps, prevState){
-    if (prevState.allPlaces !== this.state.allPlaces) { //prevState.detailPlaces !== this.state.detailPlaces
-      this.getNameAddress();
-    }
+const  Search = props => {
+  const [inputForSearch, setInputForSearch] = useState("");
+  const [place, setplace] = useState("");
+  const [dataToShare, setdataToShare] = useState({
+                                        cords: [],
+                                        health: [],
+                                        yelp: "",
+                                      });
 
+    // this.state = { 
+    //   inputForSearch: "",
+    //   place: "",
+    //   dataToShare: {
+    //     cords: [],
+    //     health: [],
+    //     yelp: "",
+    //   },
+
+    // }
+  useEffect(()=>{
+    getNameAddress()
+  }, [props.allPlaces])//prevState.detailPlaces !== this.state.detailPlaces
+
+
+  const handleChange = (event) =>{
+    setInputForSearch(event.target.value );
   }
 
-  handleChange = (event) =>{
-    this.setState({ inputForSearch: event.target.value });
-  }
-
-  handleSearch = (event) => {
+  const handleSearch = (event) => {
     event.preventDefault();
-    
-    let lat = this.state.place.geometry.location.lat();
-    let lon = this.state.place.geometry.location.lng();
+    let lat = place.geometry.location.lat();
+    let lon = place.geometry.location.lng();
+    let query = inputForSearch;
+    let places = findPlaces(lat, lon, query, props.setAllPlaces);
 
-    let query = this.state.inputForSearch;
-
-    const theSetState = (places, service) => {
-      this.setState({ allPlaces: places, service });
-
-    }
-
-    let places = findPlaces(lat, lon, query, theSetState, this.state.map);
-    console.log('fftt', places);
-    // this.setState({ :  });
   }
 
 
-  getNameAddress() {
-
-    let coords = this.state.allPlaces.map(ele => {
+  function getNameAddress() {
+      let coords = props.allPlaces.map(ele => {
       let addressArray = ele.formatted_address.split('');
-
       let index = addressArray.indexOf(',');
       let address = addressArray.slice(0, index);
       address = address.join('');
-
       return {
         name: ele.name,
         address: address,
         city: '',
-
       }
-
     })
-    this.setState(currentState => {
-      let dataToShare = { ...currentState.dataToShare };
-      dataToShare.cords = coords;
+    setdataToShare({ ...dataToShare, coords })
 
-      return {
-        dataToShare
-      }
-    });
   }
 
 
-
-
-
-  // latLong = (data) => {
-  //   let latlong = data.map(l => {
-  //     let latlong = {}
-  //     latlong.lat = l.geometry.location.lat();
-  //     latlong.lng = l.geometry.location.lng();
-
-  //     return latlong;
-  //   })
-  //   this.setState({ latlong });
-  // }
-  // getPhoto = () => {
-
-  //   this.setState(currentState => {
-  //     let entireLength = currentState.allPlaces.length;
-
-  //     this.latLong(currentState.allPlaces);
-  //     // let half = Math.floor(entireLength/ 2);
-  //     let firstHalf = currentState.allPlaces.slice(0, entireLength);
-  //     let pictureData = firstHalf.map((ele) => {
-  //       if (ele.photos != null) {
-  //         return ele.photos[0].getUrl()
-  //       }
-  //       else {
-  //         return "";
-  //       }
-
-  //     })
-
-  //     return {
-  //       pictureData
-  //     }
-  //   });
-  // }
-
-  handleUpdatePlace = (place) => {
-    this.setState({ place  });
+  const handleUpdatePlace = (place) => {
+    setplace( place  );
   }
-  render() { 
-    return (
+
+
+  let content =  (
       <React.Fragment>
-        <h1>{this.props.tester}</h1>
+        <h1>{props.tester}</h1>
 
-        <form action="/" method="get" onSubmit={this.handleSearch}>
-          <input type="text" onChange={this.handleChange}/>
+        <form action="/" method="get" onSubmit={handleSearch}>
+          <input type="text" onChange={handleChange}/>
           <button>Search</button>
         </form>
-        <Place updatePlace={this.handleUpdatePlace}/>
+        <Place updatePlace={handleUpdatePlace}/>
       </React.Fragment>
 
-      )
-  }
+  )
+  return content;
+
 }
 
 
