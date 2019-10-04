@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Place from './Place/index';
-import {findPlaces} from './../../Api/GoogleMaps/helper'
+import googleMap from './../../Api/GoogleMaps/helper'
 
 const  Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
   const [place, setplace] = useState("");
   const [dataToShare, setdataToShare] = useState({
-                                        cords: [],
+                                        locationData: [],
                                         health: [],
                                         yelp: "",
                                       });
@@ -32,16 +32,16 @@ const  Search = props => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    let lat = place.geometry.location.lat();
-    let lon = place.geometry.location.lng();
+    // let lat = place.geometry.location.lat();
+    // let lon = place.geometry.location.lng();
     let query = inputForSearch;
-    let places = findPlaces(lat, lon, query, props.setAllPlaces);
+    let places = googleMap.findPlaces(query, props.setAllPlaces);
 
   }
 
 
   function getNameAddress() {
-      let coords = props.allPlaces.map(ele => {
+    let locationData = props.allPlaces.map(ele => {
       let addressArray = ele.formatted_address.split('');
       let index = addressArray.indexOf(',');
       let address = addressArray.slice(0, index);
@@ -52,7 +52,7 @@ const  Search = props => {
         city: '',
       }
     })
-    setdataToShare({ ...dataToShare, coords })
+    setdataToShare({ ...dataToShare, locationData })
 
   }
 

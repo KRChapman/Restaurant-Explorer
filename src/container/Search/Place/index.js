@@ -1,6 +1,7 @@
 // TURN INTO HOOK
 import React, { Component } from 'react';
-  
+import g from './../../../Api/GoogleMaps/helper';
+
 class Place extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +16,7 @@ class Place extends Component {
 
     // https://developers.google.com/maps/documentation/javascript/places-autocomplete
     var input = document.getElementById('searchPlace');
-    autoCompletePlace(input, setThePlace);
+    g.autoCompletePlace(input);
   }
 
   render() { 
