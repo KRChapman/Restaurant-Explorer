@@ -1,29 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Place from './Place/index';
 import googleMap from './../../Api/GoogleMaps/helper'
-
+import Subject from './Subject/index'
 const  Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
   const [place, setplace] = useState("");
-  const [dataToShare, setdataToShare] = useState({
-                                        locationData: [],
-                                        health: [],
-                                        yelp: "",
-                                      });
+  const [allPlaces, setAllPlaces] = useState([]);
 
-    // this.state = { 
-    //   inputForSearch: "",
-    //   place: "",
-    //   dataToShare: {
-    //     cords: [],
-    //     health: [],
-    //     yelp: "",
-    //   },
-
-    // }
+  const isFirstRun = useRef(true);
   useEffect(()=>{
-    getNameAddress()
-  }, [props.allPlaces])//prevState.detailPlaces !== this.state.detailPlaces
+    if(isFirstRun.current){
+      isFirstRun.current = false;
+      return;
+    }
+    console.log('allPlaces', allPlaces );
+    formatPlaceDataForQuery()
+  }, [allPlaces])
 
 
   const handleChange = (event) =>{
@@ -35,42 +27,36 @@ const  Search = props => {
     // let lat = place.geometry.location.lat();
     // let lon = place.geometry.location.lng();
     let query = inputForSearch;
-    let places = googleMap.findPlaces(query, props.setAllPlaces);
-
+    let places = googleMap.findPlaces(query, setAllPlaces );
+    //props.setAllPlaces
   }
 
 
-  function getNameAddress() {
-    let locationData = props.allPlaces.map(ele => {
+  function formatPlaceDataForQuery() {
+    let locationData = allPlaces.map(ele => {
       let addressArray = ele.formatted_address.split('');
       let index = addressArray.indexOf(',');
       let address = addressArray.slice(0, index);
       address = address.join('');
       return {
+        place_id: ele.place_id,
         name: ele.name,
         address: address,
-        city: '',
       }
     })
-    setdataToShare({ ...dataToShare, locationData })
 
-  }
+    props.setAllPlaces(locationData);
+    // setdataToShare(locationData )
 
-
-  const handleUpdatePlace = (place) => {
-    setplace( place  );
   }
 
 
   let content =  (
       <React.Fragment>
         <h1>{props.tester}</h1>
-
-        <form action="/" method="get" onSubmit={handleSearch}>
-          <input type="text" onChange={handleChange}/>
-          <button>Search</button>
-        </form>
-        <Place updatePlace={handleUpdatePlace}/>
+        <Subject handleSearch={handleSearch} handleChange={handleChange}/>
+ 
+      <Place setPlaceDataForQuery={props.setPlaceDataForQuery}/>
       </React.Fragment>
 
   )

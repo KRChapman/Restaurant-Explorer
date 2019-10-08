@@ -12,13 +12,10 @@ class GoogleMaps {
     this.exactLocation = null
   }
 
-  
-
    initiateMap(){
       const lat = this.place.geometry.location.lat();
       const lon = this.place.geometry.location.lng();
       const exactLocation = new window.google.maps.LatLng(lat, lon);
-
       const map = new window.google.maps.Map(document.getElementById('map'), {
         center: exactLocation,
         zoom: 8,
@@ -27,7 +24,7 @@ class GoogleMaps {
       this.map = map;
   }
 
-  autoCompletePlace(inputElement) {
+  autoCompletePlace(inputElement, setPlace) {
     const searchBox = new window.google.maps.places.Autocomplete(inputElement);
     let place;
     searchBox.addListener('place_changed', () => {
@@ -36,6 +33,7 @@ class GoogleMaps {
         return;
       }
       this.place = place;
+      setPlace(place);
       this.initiateMap();
     });
   }
@@ -51,21 +49,16 @@ class GoogleMaps {
     this.service = service;
     service.textSearch(request, callback);
 
-    // service = new window.google.maps.places.PlacesService(map);
-    // service.textSearch(request, callback);
-
     function callback(results, status) {
       let allPlaceData = [];
       for (let i = 0; i < results.length; i++) {
         allPlaceData.push(results[i]); 
       }
-
-      setPlaceData(allPlaceData, service);
+      setPlaceData(allPlaceData);
     }
   }
 
   getPhone = (places,limit) => {
-   
     const requests = [];
     for (let index = 0; index <= limit; index++) {
       let request = {
@@ -73,58 +66,36 @@ class GoogleMaps {
         fields: ['name', 'formatted_phone_number']
       };
       requests.push(request)
-
     }
     let phoneNumbers = []
     const service = this.service;
 
-    //  const response = getPhoneToReturn(requests, 0, phoneNumbers, service);
-    // console.log('phoneNumbersresponseresponse', response);
-    // return response;
-  
-  
     return new Promise(function (resolve, reject) {
       getPhoneToReturn(requests, 0, phoneNumbers, service)
       
-
         function getPhoneToReturn(requests, index, phoneNumbers, service) {
-
           index = index + 1
           if (index <= limit) {
-
-            var promise1 = new Promise(function (resolve, reject) {
-
-
+            const promise1 = new Promise(function (resolve, reject) {
               service.getDetails(requests[index], callback);
-
               function callback(place, status) {
-                console.log('status', status);
                 if (status) {
-                  console.log('place', place);
                   resolve(place);
                 }
                 else {
                   reject();
                 }
               }
-
             });
+
             promise1.then((place) => {
               phoneNumbers.push(place);
-
               getPhoneToReturn(requests, index, phoneNumbers, service);
 
             })
           }
           else {
-        
-        
-            // return new Promise(function (resolve, reject) {
-            //   return resolve(phoneNumbers)
-            // });
             resolve(phoneNumbers)
-           // return 
-          //  theSetState(phoneNumbers);
           }
         }
 
@@ -132,109 +103,6 @@ class GoogleMaps {
   }
 }
 
-
- 
-
-export const getPhone = (service, places, limit = 5, theSetState) => {
-  const requests = [];
-  for (let index = 0; index < limit; index++) {
-    let request = {
-      placeId: places[index].place_id,
-      fields: ['name', 'formatted_phone_number']
-    };
-    requests.push(request)
-
-  }
-  let phoneNumbers = []
-  getPhoneToReturn(requests, 0, phoneNumbers);
-
-
-  function getPhoneToReturn(requests, index, phoneNumbers) {
-
-    var promise1 = new Promise(function (resolve, reject) {
-
-
-      service.getDetails(requests[index], callback);
-
-      function callback(place, status) {
-        console.log('status', status);
-        //  if (status == google.maps.places.PlacesServiceStatus.OK) {
-        console.log('place', place);
-        resolve(place);
-        // }
-      }
-
-    });
-    index = index + 1
-    if (index <= 4) {
-      promise1.then((place) => {
-        phoneNumbers.push(place);
-
-        getPhoneToReturn(requests, index, phoneNumbers);
-
-      })
-    }
-    else {
-
-      theSetState(phoneNumbers);
-    }
-  }
-
-
-}
-
-
-
-
-
- const getPhoneNumbers = (service, places, limit, theSetState) => {
-  limit = places.length < limit ? places.length : limit;
-  const requests = [];
-  for (let index = 0; index < limit; index++) {
-    let request = {
-      placeId: places[index].place_id,
-      fields: ['name', 'formatted_phone_number']
-    };
-    requests.push(request)
-
-  }
-  let phoneNumbers = []
-  getPhoneToReturn(requests, 0, phoneNumbers);
-
-
-  function getPhoneToReturn(requests, index, phoneNumbers) {
-
-    let promise1 = new Promise(function (resolve, reject) {
-
-
-      service.getDetails(requests[index], callback);
-
-      function callback(place, status) {
-        console.log('status', status);
-        //  if (status == google.maps.places.PlacesServiceStatus.OK) {
-        console.log('place', place);
-        resolve(place);
-        // }
-      }
-
-    });
-    index = index + 1
-    if (index <= 4) {
-      promise1.then((place) => {
-        phoneNumbers.push(place);
-
-        getPhoneToReturn(requests, index, phoneNumbers);
-
-      })
-    }
-    else {
-
-      theSetState(phoneNumbers);
-    }
-  }
-
-
-}
 
 let googleMap = new GoogleMaps();
 export default googleMap;

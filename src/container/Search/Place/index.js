@@ -1,25 +1,35 @@
 // TURN INTO HOOK
-import React, { Component } from 'react';
-import g from './../../../Api/GoogleMaps/helper';
+import React, { useState, useEffect } from 'react';
+import googleMap from './../../../Api/GoogleMaps/helper';
+import { useDidUpdateEffect} from './../../../hooks/index'
+const Place = props => {
+  
+  const [place, setPlace] = useState("");
+  
+  // const setThePlace = (place) => {
+  //   //context in event call back function
+  //   setPlace(place);
+  // }
 
-class Place extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {  }
-
-  }
-  componentDidMount(){
-    const setThePlace = (place) => {
-      //context in event call back function
-      this.props.updatePlace( place );
-    }
-
+  useEffect(()=> {
     // https://developers.google.com/maps/documentation/javascript/places-autocomplete
     var input = document.getElementById('searchPlace');
-    g.autoCompletePlace(input);
-  }
+    googleMap.autoCompletePlace(input, setPlace);
+  }, [])
 
-  render() { 
+  useDidUpdateEffect(()=> {
+    formatPlaceDataForQuery(place)
+  }, place)
+
+  function formatPlaceDataForQuery(place){
+    const PlaceData ={
+      city: place.address_components[0].long_name,
+      state: place.address_components[2].short_name,
+      country: place.address_components[3].short_name,
+    }
+   
+    props.setPlaceDataForQuery(PlaceData);
+  }
 
     return ( 
       <div>
@@ -27,19 +37,7 @@ class Place extends Component {
 
       </div>
      )
-  }
+
 }
  
 export default Place;
-
-function autoCompletePlace(inputElement, setStateCallBack) {
-  var searchBox = new window.google.maps.places.Autocomplete(inputElement);
-  var place;
-  searchBox.addListener('place_changed', function () {
-    place = searchBox.getPlace();
-    if (place.length === 0) {
-      return;
-    }
-    setStateCallBack(place);
-  });
-}

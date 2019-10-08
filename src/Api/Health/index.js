@@ -1,6 +1,7 @@
- const buildHealthApiQuery = (places,limit,queryData) =>{
-   
-  function getNames(coordsToSearch, phoneNumbers) {
+const buildHealthApiQuery = (places,phoneNumbers,limit,queryBuilder) =>{
+
+  return  getNames();
+  function getNames(coordsToSearch) {
 
      for (let i = 0; i < limit; i++) {
        let name = places[i].name.toUpperCase();
@@ -19,8 +20,7 @@
        healthName = healthName.replace(regex, '%20%26%20')
 
        healthName = healthName.replace(regex3, '%20')
-
-       let addressArray = coordsToSearch[i].address.split(' ');
+       let addressArray = places[i].address.split(' ');
        addressArray = addressArray.slice(0, 2);
        let partialaddress = addressArray.join(' ')
 
@@ -75,11 +75,14 @@
 
 
        let apiSearchValue = { health: { request }}
-       queryData.push(apiSearchValue);
+       queryBuilder.push(apiSearchValue);
      }
-    return queryData
+    return queryBuilder
    }
 }
+
+
+
 
 //, yelp: { name, address: coordsToSearch[i].address } 
 

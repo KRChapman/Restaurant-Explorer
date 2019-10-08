@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Search from './../Search/index';
 import googleMapsApi from './../../Api/GoogleMaps/helper'
+import healthApi from './../../Api/Health/index'
+
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -8,14 +10,22 @@ class Layout extends Component {
       yelpHealthData: [],
       allPlaces: [],
       placesToDisplay: [],
-      displayLimit: 4,
+      placeData: {}
+      
      }
+    this.displayLimit = 4
   }
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.allPlaces !== this.state.allPlaces){
       // wipe placesToDisplay clean 
-      this.getPlacesToDisplay();
+
+     this.getPlacesToDisplay();
+      // DO PLACE DATA NEXT TO PASS TO YELP
+      console.log('googleMapsApi', googleMapsApi.place);
+
+
+
       // create a promise funtion that takes in an array and adds to placesToDisplay from
       // placesTodisplay length + displayLimit
       // inside if display function
@@ -39,16 +49,22 @@ class Layout extends Component {
   //  let t = new Promise( (resolve, reject)=> {
   //    return resolve()
   //   });
+   let queryBuilder = [];
+   const { allPlaces} = this.state
+    let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, this.displayLimit)
+
+    const phoneNumbers = await getPhoneNumbers;
     
-    let t = googleMapsApi.getPhone(this.state.allPlaces, this.state.displayLimit)
-    console.log('ASYNCAWITphoneNumbersTTTT', t);
-    const s = await t;
-    console.log('ASYNCAWITphoneNumbersSSSS', s);
    
-  //  const phoneNumbers = await response.json();
+    queryBuilder = healthApi(allPlaces, phoneNumbers, this.displayLimit, queryBuilder);
+
+    // console.log("queryBuilderqueryBuilder", queryBuilder);
+
   
     
   }
+
+
 
   setYelpHealthData = (data) => {
     this.setState({ yelpHealthData: data  });
@@ -58,10 +74,14 @@ class Layout extends Component {
     this.setState({ allPlaces: data });
   }
 
+  setPlaceDataForQuery = (placeData) =>{
+    this.setState({ placeData  });
+  }
+
   render() { 
     return ( 
       <div>
-        <Search allPlaces={this.state.allPlaces} setYelpHealthData={this.setYelpHealthData} setAllPlaces={this.setAllPlaces}/>
+        <Search setPlaceDataForQuery={this.setPlaceDataForQuery} setYelpHealthData={this.setYelpHealthData} setAllPlaces={this.setAllPlaces}/>
       </div>
      )
   }
