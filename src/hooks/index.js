@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export const useDidUpdateEffect = (fn, inputs) => {
   const isInitialRender = useRef(true);

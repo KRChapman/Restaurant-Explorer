@@ -44,10 +44,7 @@ const  Search = props => {
         address: address,
       }
     })
-
     props.setAllPlaces(locationData);
-    // setdataToShare(locationData )
-
   }
 
 

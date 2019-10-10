@@ -19,7 +19,7 @@ const Place = props => {
 
   useDidUpdateEffect(()=> {
     formatPlaceDataForQuery(place)
-  }, place)
+  }, [place])
 
   function formatPlaceDataForQuery(place){
     const PlaceData ={

@@ -1,4 +1,4 @@
-const buildHealthApiQuery = (places,phoneNumbers,limit,queryBuilder) =>{
+export const buildHealthQuery = (places,phoneNumbers,limit,queryBuilder) =>{
 
   return  getNames();
   function getNames(coordsToSearch) {
@@ -77,13 +77,10 @@ const buildHealthApiQuery = (places,phoneNumbers,limit,queryBuilder) =>{
        let apiSearchValue = { health: { request }}
        queryBuilder.push(apiSearchValue);
      }
-    return queryBuilder
+
    }
 }
 
 
 
 
-//, yelp: { name, address: coordsToSearch[i].address } 
-
-export default buildHealthApiQuery

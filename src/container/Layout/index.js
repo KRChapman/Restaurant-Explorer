@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Search from './../Search/index';
 import googleMapsApi from './../../Api/GoogleMaps/helper'
-import healthApi from './../../Api/Health/index'
-
+import { buildHealthQuery} from './../../Api/Health/index'
+import { buildYelpQuery} from './../../Api/Yelp/index'
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ class Layout extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (prevState.allPlaces !== this.state.allPlaces){
+    if (prevState.allPlaces !== this.state.allPlaces ){
       // wipe placesToDisplay clean 
 
      this.getPlacesToDisplay();
@@ -46,25 +46,35 @@ class Layout extends Component {
   }
 
   getPlacesToDisplay = async () =>{
-  //  let t = new Promise( (resolve, reject)=> {
-  //    return resolve()
-  //   });
+  
    let queryBuilder = [];
    const { allPlaces} = this.state
     let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, this.displayLimit)
 
     const phoneNumbers = await getPhoneNumbers;
     
-   
-    queryBuilder = healthApi(allPlaces, phoneNumbers, this.displayLimit, queryBuilder);
+    buildHealthQuery(allPlaces, phoneNumbers, this.displayLimit, queryBuilder);
+    buildYelpQuery(allPlaces, queryBuilder);
 
-    // console.log("queryBuilderqueryBuilder", queryBuilder);
-
-  
-    
+   // placesToDisplay = await 
+    console.log("queryBuilderqueryBuilder", queryBuilder);
   }
 
+  getYelpHealthData = () =>{
+   // just like the fact that 4xx / 5xx responses don't reject the initial promise
 
+    //   Promise.all([
+    // fetchfunction(request), //FROM FETCH wrapper
+    //   fetchfunction(`
+//    /api/yelp?name=${name}&location=${address}&city=${city}
+//       &state=${state}&country=${country}`) GET FROM yelp api file
+    //     ])
+      //  .then(([data1, data2]) => {
+      // let yelpHealth = {
+      //   recentInfo: data1.json(),
+      //   alltimeInfo: data2.json()
+      // }
+  }
 
   setYelpHealthData = (data) => {
     this.setState({ yelpHealthData: data  });
