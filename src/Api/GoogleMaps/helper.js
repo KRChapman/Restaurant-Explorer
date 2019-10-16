@@ -5,7 +5,6 @@
 
 class GoogleMaps {
   constructor() {
-
     this.map = null
     this.service = null
     this.place = null
@@ -87,18 +86,15 @@ class GoogleMaps {
                 }
               }
             });
-
             promise1.then((place) => {
               phoneNumbers.push(place);
               getPhoneToReturn(requests, index, phoneNumbers, service);
-
             })
           }
           else {
             resolve(phoneNumbers)
           }
         }
-
     });
   }
 }

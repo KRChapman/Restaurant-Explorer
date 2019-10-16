@@ -1,4 +1,4 @@
-export const buildHealthQuery = (places,phoneNumbers,limit,queryBuilder) =>{
+export const buildHealthQuery = (places,phoneNumbers,limit,queries) =>{
 
   return  getNames();
   function getNames(coordsToSearch) {
@@ -60,8 +60,8 @@ export const buildHealthQuery = (places,phoneNumbers,limit,queryBuilder) =>{
 
 
        let request = {
-         method: "get",
-         url: phoneComb,
+         method: "GET",
+         
 
          params: {
            "$limit": 2,
@@ -74,8 +74,8 @@ export const buildHealthQuery = (places,phoneNumbers,limit,queryBuilder) =>{
      
 
 
-       let apiSearchValue = { health: { request }}
-       queryBuilder.push(apiSearchValue);
+       let apiSearchValue = { health: { url: phoneComb, request }}
+       queries.push(apiSearchValue);
      }
 
    }
