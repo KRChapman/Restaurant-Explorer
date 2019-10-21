@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
-export const useDidUpdateEffect = (fn, inputs) => {
+export const useDidUpdateEffect = (fn, inputs = []) => {
   const isInitialRender = useRef(true);
+  //
   useEffect(() => {
     if (isInitialRender.current){
       isInitialRender.current = false;

@@ -4,6 +4,8 @@ import googleMapsApi from './../../Api/GoogleMaps/helper'
 import { buildHealthQuery} from './../../Api/Health/index'
 import { buildYelpQuery} from './../../Api/Yelp/index'
 import { apiRequest} from './../../utils/index'
+import { yelpUrl} from './../../Api/Yelp/index'
+
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -62,14 +64,22 @@ class Layout extends Component {
     const yelpHealthData = []
     const iterateOne = (queries, index, yelpHealthData) => {
       if (index < this.displayLimit) {
-        const healthRequest = queries[index].health.request
-        const healthUrl = queries[index].health.url
-        const yelpRequest = queries[index].yelp.request
-        const yelpthUrl = queries[index].yelp.url
+        // const healthRequest = queries[index].health.request
+        // const healthUrl = queries[index].health.url
+        // const yelpRequest = queries[index].yelp.request
+        // const yelpthUrl = queries[index].yelp.url
 
+        const request = {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: queries.yelp
+        }
 
         Promise.resolve(
-          apiRequest(yelpthUrl, yelpRequest),
+          apiRequest(yelpUrl, request)
 
        )
           .then((response) => {
@@ -82,8 +92,8 @@ class Layout extends Component {
             }
             console.log('yelpHealthyelpHealthyelpHealth', yelpHealth);
             yelpHealthData.push(yelpHealth);
-            index = index + 1;
-            iterateOne(queries, index, yelpHealthData)
+            //index = index + 1;
+            //iterateOne(queries, index, yelpHealthData)
           })
         
         
@@ -143,11 +153,13 @@ class Layout extends Component {
   }
 
   async buildQueries() {
-    let queries = [];
+    let queries = {health: [], yelp: []};
     const { allPlaces, placeData } = this.state;
     let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, this.displayLimit);
     const phoneNumbers = await getPhoneNumbers;
-    buildHealthQuery(allPlaces, phoneNumbers, this.displayLimit, queries);
+    // Pass in placesToDisplay.length for starting point 
+    // to placesToDisplay.length + this.displayLimit
+    buildHealthQuery(allPlaces, phoneNumbers, this.displayLimit, queries.health);
     buildYelpQuery(allPlaces, placeData, queries);
     return queries;
   }

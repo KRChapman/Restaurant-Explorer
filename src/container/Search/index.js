@@ -4,9 +4,9 @@ import googleMap from './../../Api/GoogleMaps/helper'
 import Subject from './Subject/index'
 const  Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
-  const [place, setplace] = useState("");
-  const [allPlaces, setAllPlaces] = useState([]);
-
+  //const [place, setplace] = useState("");
+  const [allPlaces, setPlaces] = useState([]);
+  const {setAllPlaces} = props
   const isFirstRun = useRef(true);
   useEffect(()=>{
     if(isFirstRun.current){
@@ -14,8 +14,22 @@ const  Search = props => {
       return;
     }
     console.log('allPlaces', allPlaces );
-    formatPlaceDataForQuery()
-  }, [allPlaces])
+    formatAllPlaceDataForQuery();
+    function formatAllPlaceDataForQuery() {
+      let locationData = allPlaces.map(ele => {
+        let addressArray = ele.formatted_address.split('');
+        let index = addressArray.indexOf(',');
+        let address = addressArray.slice(0, index);
+        address = address.join('');
+        return {
+          place_id: ele.place_id,
+          name: ele.name,
+          address: address,
+        }
+      })
+     setAllPlaces(locationData);
+    }
+  }, [allPlaces, setAllPlaces])
 
 
   const handleChange = (event) =>{
@@ -27,25 +41,12 @@ const  Search = props => {
     // let lat = place.geometry.location.lat();
     // let lon = place.geometry.location.lng();
     let query = inputForSearch;
-    let places = googleMap.findPlaces(query, setAllPlaces );
+    let places = googleMap.findPlaces(query, setPlaces );
     //props.setAllPlaces
   }
 
 
-  function formatPlaceDataForQuery() {
-    let locationData = allPlaces.map(ele => {
-      let addressArray = ele.formatted_address.split('');
-      let index = addressArray.indexOf(',');
-      let address = addressArray.slice(0, index);
-      address = address.join('');
-      return {
-        place_id: ele.place_id,
-        name: ele.name,
-        address: address,
-      }
-    })
-    props.setAllPlaces(locationData);
-  }
+ 
 
 
   let content =  (

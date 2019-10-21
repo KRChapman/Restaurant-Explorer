@@ -2,17 +2,22 @@
 export const buildYelpQuery = (allPlaces, placeDetails, queries) =>{
   const { city, state, country } = placeDetails;
 
-  queries.forEach((element,i) => {
-    let urlMatch = `https://api.yelp.com/v3/businesses/matches?name=${allPlaces[i].name}&address1=${allPlaces[i].address}&city=${city}&state=${state}&country=${country}`;
-    let request = {
-      method: 'GET',
+  queries.health.forEach((element,i) => {
+    // let urlMatch = `https://api.yelp.com/v3/businesses/matches?name=${allPlaces[i].name}&address1=${allPlaces[i].address}&city=${city}&state=${state}&country=${country}`;
+    // let request = {
+    //   method: 'GET',
 
-      headers: { "Authorization": "Bearer gqw4k3JJGYyUVrE5fvmaOBd9YerLDsSJxXtBykLWy3U1226XfsGL4gDIq0ARBRsoiuJGN66bEh0ozpxleHGcC3rB8uncvLSg8r0gVCaw8rYDrBXr3PaSaVF1MNnPW3Yx" }
-    }
-    queries[i].yelp = { url: urlMatch,request}
-  //  queries[i].yelp = { name: allPlaces[i].name, address: allPlaces[i].address }
+    //   headers: { "Authorization": "Bearer gqw4k3JJGYyUVrE5fvmaOBd9YerLDsSJxXtBykLWy3U1226XfsGL4gDIq0ARBRsoiuJGN66bEh0ozpxleHGcC3rB8uncvLSg8r0gVCaw8rYDrBXr3PaSaVF1MNnPW3Yx" }
+    // }
+
+   // create a string to concat each object instead of an array
+    queries.yelp.push({ city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
+
   });
+  queries.yelp = JSON.stringify(queries.yelp);
 }
+
+export const yelpUrl = 'http://localhost:5000/api/yelp'
 
 
 
