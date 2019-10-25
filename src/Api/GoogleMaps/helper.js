@@ -62,7 +62,9 @@ class GoogleMaps {
     for (let index = 0; index <= limit; index++) {
       let request = {
         placeId: places[index].place_id,
-        fields: ['name', 'formatted_phone_number']
+        
+        //  'formatted_phone_number',
+        fields: ['name','international_phone_number']
       };
       requests.push(request)
     }
@@ -88,6 +90,7 @@ class GoogleMaps {
             });
             promise1.then((place) => {
               phoneNumbers.push(place);
+       
               getPhoneToReturn(requests, index, phoneNumbers, service);
             })
           }

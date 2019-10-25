@@ -1,5 +1,5 @@
 
-export const buildYelpQuery = (allPlaces, placeDetails, queries) =>{
+export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) =>{
   const { city, state, country } = placeDetails;
 
   queries.health.forEach((element,i) => {
@@ -9,9 +9,21 @@ export const buildYelpQuery = (allPlaces, placeDetails, queries) =>{
 
     //   headers: { "Authorization": "Bearer gqw4k3JJGYyUVrE5fvmaOBd9YerLDsSJxXtBykLWy3U1226XfsGL4gDIq0ARBRsoiuJGN66bEh0ozpxleHGcC3rB8uncvLSg8r0gVCaw8rYDrBXr3PaSaVF1MNnPW3Yx" }
     // }
+   // debugger;
+  //CREATE FORMATED PHONE NUMBER "+14157492060" from international_phone_number "+1 206-332-0220"
+  let phoneNumbersFormated;
+  if (phoneNumbers[i].international_phone_number){
+      phoneNumbersFormated  = phoneNumbers[i].international_phone_number
+                              .split('')
+                              .filter(letter => letter != '-' && letter != ' ')
+                              .join('');
+  }
+  else{
+      phoneNumbersFormated = null;
+  }
+ 
 
-   // create a string to concat each object instead of an array
-    queries.yelp.push({ city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
+    queries.yelp.push({ phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
 
   });
   queries.yelp = JSON.stringify(queries.yelp);

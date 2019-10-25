@@ -160,7 +160,7 @@ class Layout extends Component {
     // Pass in placesToDisplay.length for starting point 
     // to placesToDisplay.length + this.displayLimit
     buildHealthQuery(allPlaces, phoneNumbers, this.displayLimit, queries.health);
-    buildYelpQuery(allPlaces, placeData, queries);
+    buildYelpQuery(allPlaces, phoneNumbers, placeData, queries);
     return queries;
   }
 
