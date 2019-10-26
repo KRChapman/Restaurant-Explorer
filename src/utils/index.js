@@ -2,6 +2,7 @@
 
 export async function apiRequest(
   endpoint,request) {
+
   const response = await fetch( endpoint, {
     ...request,
   //  headers: { ...request.headers, 'Content-Type': 'application/json'}

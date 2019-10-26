@@ -12,6 +12,7 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) =
    // debugger;
   //CREATE FORMATED PHONE NUMBER "+14157492060" from international_phone_number "+1 206-332-0220"
   let phoneNumbersFormated;
+  //debugger;
   if (phoneNumbers[i].international_phone_number){
       phoneNumbersFormated  = phoneNumbers[i].international_phone_number
                               .split('')
@@ -23,9 +24,10 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) =
   }
  
 
-    queries.yelp.push({ phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
+    queries.yelp.data.push({ phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
 
   });
+  
   queries.yelp = JSON.stringify(queries.yelp);
 }
 

@@ -75,23 +75,27 @@ class GoogleMaps {
       getPhoneToReturn(requests, 0, phoneNumbers, service)
       
         function getPhoneToReturn(requests, index, phoneNumbers, service) {
-          index = index + 1
+          
+        //  index = index + 1
           if (index <= limit) {
             const promise1 = new Promise(function (resolve, reject) {
+             // debugger;
               service.getDetails(requests[index], callback);
               function callback(place, status) {
+             
                 if (status) {
                   resolve(place);
                 }
                 else {
-                  reject();
+                  resolve({ name: "", formatted_phone_number: ""})
+                 // reject();
                 }
               }
             });
             promise1.then((place) => {
               phoneNumbers.push(place);
        
-              getPhoneToReturn(requests, index, phoneNumbers, service);
+              getPhoneToReturn(requests, index+1, phoneNumbers, service);
             })
           }
           else {

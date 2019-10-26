@@ -12,11 +12,12 @@ class Layout extends Component {
     this.state = { 
       yelpHealthData: [],
       allPlaces: [],
+      yelpData: [],
       placesToDisplay: [],
       placeData: {}
       
      }
-    this.displayLimit = 4
+    this.displayLimit = 4;
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -60,9 +61,11 @@ class Layout extends Component {
   }
 
   getYelpHealthData = (queries) =>{
+    
    // just like the fact that 4xx / 5xx responses don't reject the initial promise
-    const yelpHealthData = []
-    const iterateOne = (queries, index, yelpHealthData) => {
+    const yelpData = []
+    const iterateOne = (queries, index, yelpData) => {
+  
       if (index < this.displayLimit) {
         // const healthRequest = queries[index].health.request
         // const healthUrl = queries[index].health.url
@@ -75,23 +78,22 @@ class Layout extends Component {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: queries.yelp
+          body: queries
         }
-
+      
         Promise.resolve(
           apiRequest(yelpUrl, request)
-
        )
           .then((response) => {
             return response.json()
-          }).then((data1) => {
+          }).then((data) => {
            
-            let yelpHealth = {
-              health: data1,
+            // const yelpHealth = {
+            //   yelp: data1,
 
-            }
-            console.log('yelpHealthyelpHealthyelpHealth', yelpHealth);
-            yelpHealthData.push(yelpHealth);
+            // }
+            console.log('yelpHealthyelpHealthyelpHealth', data);
+            yelpData.push(data);
             //index = index + 1;
             //iterateOne(queries, index, yelpHealthData)
           })
@@ -101,40 +103,41 @@ class Layout extends Component {
        
       }
       else {
-        this.setState({ placesToDisplay: yelpHealthData });
+        console.log('yelpData', yelpData);
+        this.setState({ yelpData });
       }
     }
 
 
     
-    const  iterateApiCalls = (queries, index, yelpHealthData) =>{
-      if(index < this.displayLimit){
-        const healthRequest = queries[index].health.request
-        const healthUrl = queries[index].health.url
-        const yelpRequest = queries[index].yelp.request
-        const yelpthUrl = queries[index].yelp.url
+    // const  iterateApiCalls = (queries, index, yelpHealthData) =>{
+    //   if(index < this.displayLimit){
+    //     const healthRequest = queries[index].health.request
+    //     const healthUrl = queries[index].health.url
+    //     const yelpRequest = queries[index].yelp.request
+    //     const yelpthUrl = queries[index].yelp.url
  
     
-        Promise.all([
-          apiRequest(healthUrl,healthRequest),
-          apiRequest(yelpthUrl,yelpRequest)
-        ])
-          .then(([data1, data2]) => {
-            let yelpHealth = {
-              health: data1.json(),
-              yelp: data2.json()
-            }
-            console.log('yelpHealthyelpHealthyelpHealth', yelpHealth);
-            yelpHealthData.push(yelpHealth);
-            index = index + 1;
-            iterateApiCalls(queries, index, yelpHealthData)
-          })
-      }
-      else{
-        this.setState({ placesToDisplay: yelpHealthData  });
-      }
-    }
-    iterateOne(queries, 0, yelpHealthData);
+    //     Promise.all([
+    //       apiRequest(healthUrl,healthRequest),
+    //       apiRequest(yelpthUrl,yelpRequest)
+    //     ])
+    //       .then(([data1, data2]) => {
+    //         let yelpHealth = {
+    //           health: data1.json(),
+    //           yelp: data2.json()
+    //         }
+    //         console.log('yelpHealthyelpHealthyelpHealth', yelpHealth);
+    //         yelpHealthData.push(yelpHealth);
+    //         index = index + 1;
+    //         iterateApiCalls(queries, index, yelpHealthData)
+    //       })
+    //   }
+    //   else{
+    //     this.setState({ placesToDisplay: yelpHealthData  });
+    //   }
+    // }
+    iterateOne(queries.yelp, 0, yelpData);
    // iterateApiCalls(queries, 0, yelpHealthData);
 
   }
@@ -153,10 +156,11 @@ class Layout extends Component {
   }
 
   async buildQueries() {
-    let queries = {health: [], yelp: []};
+    let queries = {health: [], yelp: {data: [], displayLimit: this.displayLimit} };
     const { allPlaces, placeData } = this.state;
     let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, this.displayLimit);
     const phoneNumbers = await getPhoneNumbers;
+    
     // Pass in placesToDisplay.length for starting point 
     // to placesToDisplay.length + this.displayLimit
     buildHealthQuery(allPlaces, phoneNumbers, this.displayLimit, queries.health);
@@ -167,7 +171,7 @@ class Layout extends Component {
   render() { 
     return ( 
       <div>
-        <Search setPlaceDataForQuery={this.setPlaceDataForQuery} setYelpHealthData={this.setYelpHealthData} setAllPlaces={this.setAllPlaces}/>
+        <Search setPlaceDataForQuery={this.setPlaceDataForQuery}  setAllPlaces={this.setAllPlaces}/>
       </div>
      )
   }
