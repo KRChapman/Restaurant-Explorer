@@ -61,14 +61,13 @@ class Layout extends Component {
   }
 
   getYelpHealthData = (queries) =>{
-
     const request = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: queries
+      body: queries.yelp
     }
 
     Promise.resolve(
