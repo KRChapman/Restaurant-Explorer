@@ -43,6 +43,10 @@ class GoogleMaps {
       location, 
       radius: '20',
       query,
+      fields: ['formatted_address',
+      'id', 'photos', 'place_id', 'name','price_level',
+        'rating', 'user_ratings_total','international_phone_number']
+        //https://developers.google.com/maps/documentation/javascript/place_field_js_migration
     };
     let service = new window.google.maps.places.PlacesService(this.map);
     this.service = service;
@@ -75,11 +79,8 @@ class GoogleMaps {
       getPhoneToReturn(requests, 0, phoneNumbers, service)
       
         function getPhoneToReturn(requests, index, phoneNumbers, service) {
-          
-        //  index = index + 1
           if (index <= limit) {
             const promise1 = new Promise(function (resolve, reject) {
-             // debugger;
               service.getDetails(requests[index], callback);
               function callback(place, status) {
              
@@ -88,7 +89,6 @@ class GoogleMaps {
                 }
                 else {
                   resolve({ name: "", formatted_phone_number: ""})
-                 // reject();
                 }
               }
             });

@@ -93,7 +93,8 @@ class Layout extends Component {
 
             // }
             console.log('yelpHealthyelpHealthyelpHealth', data);
-            yelpData.push(data);
+           // yelpData.push(data);
+            this.setState({ yelpData: data });
             //index = index + 1;
             //iterateOne(queries, index, yelpHealthData)
           })
@@ -104,7 +105,7 @@ class Layout extends Component {
       }
       else {
         console.log('yelpData', yelpData);
-        this.setState({ yelpData });
+        
       }
     }
 

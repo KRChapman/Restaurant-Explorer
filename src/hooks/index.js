@@ -10,5 +10,5 @@ export const useDidUpdateEffect = (fn, inputs = []) => {
     else{
       fn();
     }
-  }, inputs);
+  }, [fn, inputs]);
 }

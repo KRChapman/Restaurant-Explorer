@@ -5,11 +5,6 @@ import { useDidUpdateEffect} from './../../../hooks/index'
 const Place = props => {
   const { setPlaceDataForQuery } = props
   const [place, setPlace] = useState("");
-  
-  // const setThePlace = (place) => {
-  //   //context in event call back function
-  //   setPlace(place);
-  // }
 
   // prevents useEffect from rerender like with a normal function
   // only if useCallback dependencies change
@@ -27,16 +22,18 @@ const Place = props => {
   useEffect(()=> {
     // https://developers.google.com/maps/documentation/javascript/places-autocomplete
     var input = document.getElementById('searchPlace');
+    // use google api and set up listener for input to change when it does setPlace state
     googleMap.autoCompletePlace(input, setPlace);
   }, [])
 
 
 
-  // useDidUpdateEffect(()=> {
-  //   formatPlaceDataForQuery(place)
-  // }, [place])
+
+  // on initial component load sets reference to current place
   const previousPlace = useRef(place);
+  // get similer behavior to componentdidUpdate
   useEffect(() => {
+    // when previousPlace is not equal to new sate for place from google maps autocomplete above
     if (previousPlace.current !== place) {
       formatPlaceDataForQuery();
       previousPlace.current = place;
