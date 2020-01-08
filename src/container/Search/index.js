@@ -4,9 +4,9 @@ import googleMap from './../../Api/GoogleMaps/helper'
 import Subject from './Subject/index'
 const  Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
-  //const [place, setplace] = useState("");
   const [allPlaces, setPlaces] = useState([]);
   const {setAllPlaces} = props
+
   const isFirstRun = useRef(true);
   useEffect(()=>{
     if(isFirstRun.current){
@@ -38,18 +38,11 @@ const  Search = props => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    // let lat = place.geometry.location.lat();
-    // let lon = place.geometry.location.lng();
     let query = inputForSearch;
-    let places = googleMap.findPlaces(query, setPlaces );
-    //props.setAllPlaces
+    googleMap.findPlaces(query, setPlaces );
   }
 
-
- 
-
-
-  let content =  (
+  const content =  (
       <React.Fragment>
         <h1>{props.tester}</h1>
         <Subject handleSearch={handleSearch} handleChange={handleChange}/>
@@ -59,9 +52,6 @@ const  Search = props => {
 
   )
   return content;
-
 }
 
-
- 
 export default Search;

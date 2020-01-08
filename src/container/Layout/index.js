@@ -61,86 +61,25 @@ class Layout extends Component {
   }
 
   getYelpHealthData = (queries) =>{
-    
-   // just like the fact that 4xx / 5xx responses don't reject the initial promise
-    const yelpData = []
-    const iterateOne = (queries, index, yelpData) => {
-  
-      if (index < this.displayLimit) {
-        // const healthRequest = queries[index].health.request
-        // const healthUrl = queries[index].health.url
-        // const yelpRequest = queries[index].yelp.request
-        // const yelpthUrl = queries[index].yelp.url
 
-        const request = {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: queries
-        }
-      
-        Promise.resolve(
-          apiRequest(yelpUrl, request)
-       )
-          .then((response) => {
-            return response.json()
-          }).then((data) => {
-           
-            // const yelpHealth = {
-            //   yelp: data1,
-
-            // }
-            console.log('yelpHealthyelpHealthyelpHealth', data);
-           // yelpData.push(data);
-            this.setState({ yelpData: data });
-            //index = index + 1;
-            //iterateOne(queries, index, yelpHealthData)
-          })
-        
-        
-           
-       
-      }
-      else {
-        console.log('yelpData', yelpData);
-        
-      }
+    const request = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: queries
     }
 
+    Promise.resolve(
+      apiRequest(yelpUrl, request)
+    )
+      .then((response) => {
+        return response.json()
+      }).then((data) => {
 
-    
-    // const  iterateApiCalls = (queries, index, yelpHealthData) =>{
-    //   if(index < this.displayLimit){
-    //     const healthRequest = queries[index].health.request
-    //     const healthUrl = queries[index].health.url
-    //     const yelpRequest = queries[index].yelp.request
-    //     const yelpthUrl = queries[index].yelp.url
- 
-    
-    //     Promise.all([
-    //       apiRequest(healthUrl,healthRequest),
-    //       apiRequest(yelpthUrl,yelpRequest)
-    //     ])
-    //       .then(([data1, data2]) => {
-    //         let yelpHealth = {
-    //           health: data1.json(),
-    //           yelp: data2.json()
-    //         }
-    //         console.log('yelpHealthyelpHealthyelpHealth', yelpHealth);
-    //         yelpHealthData.push(yelpHealth);
-    //         index = index + 1;
-    //         iterateApiCalls(queries, index, yelpHealthData)
-    //       })
-    //   }
-    //   else{
-    //     this.setState({ placesToDisplay: yelpHealthData  });
-    //   }
-    // }
-    iterateOne(queries.yelp, 0, yelpData);
-   // iterateApiCalls(queries, 0, yelpHealthData);
-
+        this.setState({ yelpData: data });
+      })
   }
   
 

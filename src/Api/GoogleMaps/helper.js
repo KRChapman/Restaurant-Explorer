@@ -1,8 +1,4 @@
 
-
-// API OBJECTS ARE REUSABLE FOR EXAMPLE new window.google.maps.places.PlacesService(map);
-// USING A CLASS INSTANCE MAKES REUSING API OBJECTS STRAIGHT FORWARD
-
 class GoogleMaps {
   constructor() {
     this.map = null
@@ -46,6 +42,7 @@ class GoogleMaps {
       fields: ['formatted_address',
       'id', 'photos', 'place_id', 'name','price_level',
         'rating', 'user_ratings_total','international_phone_number']
+        // Change fields
         //https://developers.google.com/maps/documentation/javascript/place_field_js_migration
     };
     let service = new window.google.maps.places.PlacesService(this.map);
@@ -66,8 +63,7 @@ class GoogleMaps {
     for (let index = 0; index <= limit; index++) {
       let request = {
         placeId: places[index].place_id,
-        
-        //  'formatted_phone_number',
+
         fields: ['name','international_phone_number']
       };
       requests.push(request)

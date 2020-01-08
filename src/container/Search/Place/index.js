@@ -24,8 +24,7 @@ const Place = props => {
     var input = document.getElementById('searchPlace');
     // use google api and set up listener for input to change when it does setPlace state
     googleMap.autoCompletePlace(input, setPlace);
-  }, [])
-
+  }, [])//works as ComponentDidMount if empty array passed
 
 
 
@@ -40,15 +39,12 @@ const Place = props => {
     }
   }, [place, formatPlaceDataForQuery]);
 
-
-
     return ( 
       <div>
         <input id={"searchPlace"} type="text" />
 
       </div>
      )
-
 }
  
 export default Place;
