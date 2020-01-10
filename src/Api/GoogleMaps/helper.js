@@ -78,6 +78,8 @@ class GoogleMaps {
           if (index <= limit) {
             const promise1 = new Promise(function (resolve, reject) {
               service.getDetails(requests[index], callback);
+              // NEED REJECT FOR ERROR (connection / wrong data ect...)
+              // Iif not found then keep resolve
               function callback(place, status) {
              
                 if (status) {
