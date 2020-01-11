@@ -3,31 +3,18 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) =
   const { city, state, country } = placeDetails;
 
   queries.health.forEach((element,i) => {
-    // let urlMatch = `https://api.yelp.com/v3/businesses/matches?name=${allPlaces[i].name}&address1=${allPlaces[i].address}&city=${city}&state=${state}&country=${country}`;
-    // let request = {
-    //   method: 'GET',
-
-    //   headers: { "Authorization": "Bearer gqw4k3JJGYyUVrE5fvmaOBd9YerLDsSJxXtBykLWy3U1226XfsGL4gDIq0ARBRsoiuJGN66bEh0ozpxleHGcC3rB8uncvLSg8r0gVCaw8rYDrBXr3PaSaVF1MNnPW3Yx" }
-    // }
-   // debugger;
-  //CREATE FORMATED PHONE NUMBER "+14157492060" from international_phone_number "+1 206-332-0220"
-  let phoneNumbersFormated;
-  //debugger;
-  if (phoneNumbers[i].international_phone_number){
-      phoneNumbersFormated  = phoneNumbers[i].international_phone_number
-                              .split('')
-                              .filter(letter => letter != '-' && letter != ' ')
-                              .join('');
-  }
-  else{
-      phoneNumbersFormated = null;
-  }
- 
-
-    queries.yelp.data.push({ phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
-
+    let phoneNumbersFormated;
+    if (phoneNumbers[i].international_phone_number){
+        phoneNumbersFormated  = phoneNumbers[i].international_phone_number
+                                .split('')
+                                .filter(letter => letter !== '-' && letter !== ' ')
+                                .join('');
+    }
+    else{
+        phoneNumbersFormated = null;
+    }
+      queries.yelp.data.push({ phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
   });
-  
   queries.yelp = JSON.stringify(queries.yelp);
 }
 

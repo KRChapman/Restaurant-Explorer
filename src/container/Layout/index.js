@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Search from './../Search/index';
-import googleMapsApi from './../../Api/GoogleMaps/helper'
+import googleMapsApi from '../../Api/GoogleMap/helper'
 import { buildHealthQuery} from './../../Api/Health/index'
 import { buildYelpQuery} from './../../Api/Yelp/index'
 import { apiRequest} from './../../utils/index'
@@ -30,13 +30,7 @@ class Layout extends Component {
 
 
 
-      // create a promise funtion that takes in an array and adds to placesToDisplay from
-      // placesTodisplay length + displayLimit
-      // inside if display function
-          // iterate from displayPlaces.length to limit+ displayPlaces
-          // For each Ieration recursivly call promise
-            //  phone (make decupled in case i want to nix)
-            // LOOK FOR NO PHONE NUMBER EDGE CASE!
+      // PUT ALL API IN ONE FILE MOVE function getYelpHealthData and buildquries to file and export
             // add photo
                // health
                // yelp
