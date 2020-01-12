@@ -1,22 +1,5 @@
 
-export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) =>{
-  const { city, state, country } = placeDetails;
 
-  queries.health.forEach((element,i) => {
-    let phoneNumbersFormated;
-    if (phoneNumbers[i].international_phone_number){
-        phoneNumbersFormated  = phoneNumbers[i].international_phone_number
-                                .split('')
-                                .filter(letter => letter !== '-' && letter !== ' ')
-                                .join('');
-    }
-    else{
-        phoneNumbersFormated = null;
-    }
-      queries.yelp.data.push({ phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
-  });
-  queries.yelp = JSON.stringify(queries.yelp);
-}
 
 export const yelpUrl = 'http://localhost:5000/api/yelp'
 

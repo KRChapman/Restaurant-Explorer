@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Place from './Place/index';
-import googleMap from '../../Api/GoogleMap/helper'
+import {googleMapsApi} from '../../Api/helper'
 import Subject from './Subject/index'
 const  Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
@@ -39,7 +39,7 @@ const  Search = props => {
   const handleSearch = (event) => {
     event.preventDefault();
     let query = inputForSearch;
-    googleMap.findPlaces(query, setPlaces );
+    googleMapsApi.findPlaces(query, setPlaces );
   }
 
   const content =  (

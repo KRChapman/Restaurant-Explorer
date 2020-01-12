@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import Search from './../Search/index';
-import googleMapsApi from '../../Api/GoogleMap/helper'
-import { buildHealthQuery} from './../../Api/Health/index'
-import { buildYelpQuery} from './../../Api/Yelp/index'
-import { apiRequest} from './../../utils/index'
-import { yelpUrl} from './../../Api/Yelp/index'
+import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} from '../../Api/helper'
+
 
 class Layout extends Component {
   constructor(props) {
@@ -46,35 +43,20 @@ class Layout extends Component {
   getPlacesToDisplay = async () =>{
   
     let queries = await this.buildQueries();
+     
+    const setData = (data) => {
 
-
+      this.setState({ yelpData: data });
+    }
+    
     // first do set state
     // then experiment with asyn and return that and set state here instead
-    this.getYelpHealthData(queries);
+    getYelpHealthData(queries, setData);
+    
     console.log("queryBuilderqueryBuilder", queries);
   }
 
-  getYelpHealthData = (queries) =>{
-    const request = {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: queries.yelp
-    }
 
-    Promise.resolve(
-      apiRequest(yelpUrl, request)
-    )
-      .then((response) => {
-        return response.json()
-      }).then((data) => {
-
-        this.setState({ yelpData: data });
-      })
-  }
-  
 
   setYelpHealthData = (data) => {
     this.setState({ yelpHealthData: data  });
@@ -89,7 +71,7 @@ class Layout extends Component {
   }
 
   async buildQueries() {
-    let queries = {health: [], yelp: {data: [], displayLimit: this.displayLimit} };
+    let queries = { health: [], yelp: { data: [] }, displayLimit: this.displayLimit};
     const { allPlaces, placeData } = this.state;
     let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, this.displayLimit);
     const phoneNumbers = await getPhoneNumbers;
@@ -97,7 +79,7 @@ class Layout extends Component {
     // Pass in placesToDisplay.length for starting point 
     // to placesToDisplay.length + this.displayLimit
     buildHealthQuery(allPlaces, phoneNumbers, this.displayLimit, queries.health);
-    buildYelpQuery(allPlaces, phoneNumbers, placeData, queries);
+    buildYelpQuery(allPlaces, phoneNumbers, placeData, queries, this.displayLimit);
     return queries;
   }
 

@@ -1,6 +1,6 @@
 // TURN INTO HOOK
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import googleMap from '../../../Api/GoogleMap/helper';
+import {googleMapsApi} from '../../../Api/helper';
 import { useDidUpdateEffect} from './../../../hooks/index'
 const Place = props => {
   const { setPlaceDataForQuery } = props
@@ -23,7 +23,7 @@ const Place = props => {
     // https://developers.google.com/maps/documentation/javascript/places-autocomplete
     var input = document.getElementById('searchPlace');
     // use google api and set up listener for input to change when it does setPlace state
-    googleMap.autoCompletePlace(input, setPlace);
+    googleMapsApi.autoCompletePlace(input, setPlace);
   }, [])//works as ComponentDidMount if empty array passed
 
 
