@@ -1,6 +1,6 @@
 // TURN INTO HOOK
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import googleMap from './../../../Api/GoogleMaps/helper';
+import googleMap from '../../../Api/GoogleMap/helper';
 import { useDidUpdateEffect} from './../../../hooks/index'
 const Place = props => {
   const { setPlaceDataForQuery } = props

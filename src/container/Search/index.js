@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Place from './Place/index';
-import googleMap from './../../Api/GoogleMaps/helper'
+import googleMap from '../../Api/GoogleMap/helper'
 import Subject from './Subject/index'
 const  Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
