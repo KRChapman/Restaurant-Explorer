@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Place from './Place/index';
 import {googleMapsApi} from '../../Api/helper'
 import Subject from './Subject/index'
+
 const  Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
   const [allPlaces, setPlaces] = useState([]);
@@ -13,7 +14,7 @@ const  Search = props => {
       isFirstRun.current = false;
       return;
     }
-    console.log('allPlaces', allPlaces );
+  console.log('allPlaces', allPlaces);
     formatAllPlaceDataForQuery();
     function formatAllPlaceDataForQuery() {
       let locationData = allPlaces.map(ele => {
@@ -31,11 +32,9 @@ const  Search = props => {
     }
   }, [allPlaces, setAllPlaces])
 
-
   const handleChange = (event) =>{
     setInputForSearch(event.target.value );
   }
-
   const handleSearch = (event) => {
     event.preventDefault();
     let query = inputForSearch;

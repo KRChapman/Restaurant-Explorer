@@ -61,12 +61,13 @@ class GoogleMaps {
 
   getPhone = (places,limit) => {
     const requests = [];
-    for (let index = 0; index <= limit; index++) {
+    for (let index = 0; index < limit; index++) {
       let request = {
         placeId: places[index].place_id,
 
-        fields: ['name','international_phone_number']
+        fields: ['name', 'international_phone_number','formatted_phone_number']
       };
+      // formatted_phone_number
       requests.push(request)
     }
     let phoneNumbers = []
@@ -76,7 +77,7 @@ class GoogleMaps {
       getPhoneToReturn(requests, 0, phoneNumbers, service)
       
         function getPhoneToReturn(requests, index, phoneNumbers, service) {
-          if (index <= limit) {
+          if (index < limit) {
             const promise1 = new Promise(function (resolve, reject) {
               service.getDetails(requests[index], callback);
               // NEED REJECT FOR ERROR (connection / wrong data ect...)
@@ -139,38 +140,43 @@ export const buildHealthQuery = (places, phoneNumbers, limit, queries) => {
       let name = places[i].name.toUpperCase();
 
       function fixedEncodeURIComponent(str) {
-        return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+        return encodeURIComponent(str).replace(/[!()*]/g, function (c) {
           return '%' + c.charCodeAt(0).toString(16);
         });
       }
 
       var regex = /%20and%20/gi;
-      // var regex2 = /%20&%20/gi;
-      let regex3 = /'S%20/gi;
 
-      let healthName = encodeURIComponent(name.toUpperCase());
+      let regex4 = /'/gi
+      let healthName = fixedEncodeURIComponent(name.toUpperCase());
       healthName = healthName.replace(regex, '%20%26%20')
 
-      healthName = healthName.replace(regex3, '%20')
+      healthName = healthName.replace(regex4, '%34')
       let addressArray = places[i].address.split(' ');
       addressArray = addressArray.slice(0, 2);
       let partialaddress = addressArray.join(' ')
 
 
       let address = encodeURIComponent(partialaddress).toUpperCase();
-
-      if (i < 3) {
+      // if(i===0){
+      //   phoneNumbers[i].formatted_phone_number = "1(206) 485-7044"
+      // }
+      if (phoneNumbers[i].formatted_phone_number) {
 
         var partialAddressQuery = createPartialAddress(phoneNumbers[i].formatted_phone_number);
       }
 
 
       function createPartialAddress(phone) {
-
+      
 
         let partialaddress = fixedEncodeURIComponent(phone);
-        let partialAddressQuery = `OR%20phone%20=%20'${partialaddress}'%20`
 
+      
+
+       let partialAddressQuery = `OR%20phone%20=%20'${partialaddress}'%20`
+
+      let phones = `phone%20=%20'${partialaddress}'`
         return partialAddressQuery;
       }
 
@@ -187,8 +193,8 @@ export const buildHealthQuery = (places, phoneNumbers, limit, queries) => {
       let firstHealth = `starts_with(name, '${first}')`
 
       let phoneComb = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=(upper(address)%20like%20'%25${address}%25'%20AND%20(name%20${t}%20OR%20name%20=%20'${healthName}'%20OR%20${firstHealth}))${partialAddressQuery}&$order=inspection_date%20DESC`
-
-
+     let phoneOnly = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=${partialAddressQuery}&$order=inspection_date%20DESC`
+     // let nameOnly = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=upper(address)%20like%20'%25${address}%25'%20AND%20(name%20${t}%20OR%20name%20=%20'${healthName}'%20OR%20${firstHealth})&$order=inspection_date%20DESC`
 
 
       let request = {

@@ -10,9 +10,10 @@ class Layout extends Component {
       yelpHealthData: [],
       allPlaces: [],
       yelpData: [],
+      healthData:[],
       placesToDisplay: [],
-      placeData: {}
-      
+      placeData: {},
+      currentDisplayLimit: 0,
      }
     this.displayLimit = 4;
   }
@@ -46,7 +47,7 @@ class Layout extends Component {
      
     const setData = (data) => {
 
-      this.setState({ yelpData: data });
+      this.setState({ yelpData: data.yelpData,healthData: data.healthData });
     }
     
     // first do set state
@@ -63,7 +64,8 @@ class Layout extends Component {
   }
 
   setAllPlaces = (data) => {
-    this.setState({ allPlaces: data });
+    const currentDisplayLimit = this.displayLimit >= data.length ? data.length : this.displayLimit
+      this.setState({ allPlaces: data, currentDisplayLimit });
   }
 
   setPlaceDataForQuery = (placeData) =>{
@@ -71,15 +73,15 @@ class Layout extends Component {
   }
 
   async buildQueries() {
-    let queries = { health: [], yelp: { data: [] }, displayLimit: this.displayLimit};
-    const { allPlaces, placeData } = this.state;
-    let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, this.displayLimit);
+    const { allPlaces, placeData, currentDisplayLimit } = this.state;
+    let queries = { health: [], yelp: { data: [] }, displayLimit: currentDisplayLimit };
+    let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, currentDisplayLimit);
     const phoneNumbers = await getPhoneNumbers;
     
     // Pass in placesToDisplay.length for starting point 
     // to placesToDisplay.length + this.displayLimit
-    buildHealthQuery(allPlaces, phoneNumbers, this.displayLimit, queries.health);
-    buildYelpQuery(allPlaces, phoneNumbers, placeData, queries, this.displayLimit);
+    buildHealthQuery(allPlaces, phoneNumbers,currentDisplayLimit, queries.health);
+    buildYelpQuery(allPlaces, phoneNumbers, placeData, queries, currentDisplayLimit);
     return queries;
   }
 
