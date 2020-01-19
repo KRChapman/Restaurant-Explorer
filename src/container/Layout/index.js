@@ -42,25 +42,12 @@ class Layout extends Component {
   }
 
   getPlacesToDisplay = async () =>{
-  
     let queries = await this.buildQueries();
-     
     const setData = (data) => {
-
       this.setState({ yelpData: data.yelpData,healthData: data.healthData });
     }
-    
-    // first do set state
-    // then experiment with asyn and return that and set state here instead
     getYelpHealthData(queries, setData);
-    
-    console.log("queryBuilderqueryBuilder", queries);
-  }
 
-
-
-  setYelpHealthData = (data) => {
-    this.setState({ yelpHealthData: data  });
   }
 
   setAllPlaces = (data) => {
@@ -84,6 +71,28 @@ class Layout extends Component {
     buildYelpQuery(allPlaces, phoneNumbers, placeData, queries, currentDisplayLimit);
     return queries;
   }
+  
+  // getPhoto
+  //  this.setState(currentState => {
+  //    let entireLength = currentState.allPlaces.length;
+
+  //    this.latLong(currentState.allPlaces);
+  //    // let half = Math.floor(entireLength/ 2);
+  //    let firstHalf = currentState.allPlaces.slice(0, entireLength);
+  //    let pictureData = firstHalf.map((ele) => {
+  //      if (ele.photos != null) {
+  //        return ele.photos[0].getUrl()
+  //      }
+  //      else {
+  //        return "";
+  //      }
+
+  //    })
+
+  //    return {
+  //      pictureData
+  //    }
+  //  });
 
   render() { 
     return ( 

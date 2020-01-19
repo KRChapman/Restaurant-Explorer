@@ -3,7 +3,7 @@ import Place from './Place/index';
 import {googleMapsApi} from '../../Api/helper'
 import Subject from './Subject/index'
 
-const  Search = props => {
+const Search = props => {
   const [inputForSearch, setInputForSearch] = useState("");
   const [allPlaces, setPlaces] = useState([]);
   const {setAllPlaces} = props
@@ -45,10 +45,8 @@ const  Search = props => {
       <React.Fragment>
         <h1>{props.tester}</h1>
         <Subject handleSearch={handleSearch} handleChange={handleChange}/>
- 
       <Place setPlaceDataForQuery={props.setPlaceDataForQuery}/>
       </React.Fragment>
-
   )
   return content;
 }

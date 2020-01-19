@@ -42,9 +42,7 @@ class GoogleMaps {
       query,
       fields: ['formatted_address',
       'id', 'photos', 'place_id', 'name','price_level',
-        'rating', 'user_ratings_total','international_phone_number']
-        // Change fields
-        //https://developers.google.com/maps/documentation/javascript/place_field_js_migration
+        'rating', 'user_ratings_total', 'international_phone_number','utc_offset_minutes']
     };
     let service = new window.google.maps.places.PlacesService(this.map);
     this.service = service;
@@ -64,10 +62,8 @@ class GoogleMaps {
     for (let index = 0; index < limit; index++) {
       let request = {
         placeId: places[index].place_id,
-
         fields: ['name', 'international_phone_number','formatted_phone_number']
       };
-      // formatted_phone_number
       requests.push(request)
     }
     let phoneNumbers = []
@@ -122,100 +118,83 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries, l
     else {
       phoneNumbersFormated = null;
     }
-    queries.yelp.data.push({ phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
+
+    queries.yelp.data.push({ placeId: allPlaces[i].place_id, phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
   }
- // queries.yelp = JSON.stringify(queries.yelp);
 }
 
-   
-
-
-
 export const buildHealthQuery = (places, phoneNumbers, limit, queries) => {
-
   return getNames();
+
   function getNames(coordsToSearch) {
-
     for (let i = 0; i < limit; i++) {
-      let name = places[i].name.toUpperCase();
-
-      function fixedEncodeURIComponent(str) {
-        return encodeURIComponent(str).replace(/[!()*]/g, function (c) {
-          return '%' + c.charCodeAt(0).toString(16);
-        });
-      }
-
-      var regex = /%20and%20/gi;
-
-      let regex4 = /'/gi
-      let healthName = fixedEncodeURIComponent(name.toUpperCase());
-      healthName = healthName.replace(regex, '%20%26%20')
-
-      healthName = healthName.replace(regex4, '%34')
-      let addressArray = places[i].address.split(' ');
-      addressArray = addressArray.slice(0, 2);
-      let partialaddress = addressArray.join(' ')
-
-
-      let address = encodeURIComponent(partialaddress).toUpperCase();
-      // if(i===0){
-      //   phoneNumbers[i].formatted_phone_number = "1(206) 485-7044"
+      let healthName = formatHealthName(places[i].name.toUpperCase());
+      let address = formatAddress(places[i].address);
+      let partialAddressQuery = '%20'
+      // if (phoneNumbers[i].formatted_phone_number) {
+      //   partialAddressQuery = createPartialAddress(phoneNumbers[i].formatted_phone_number);
       // }
-      if (phoneNumbers[i].formatted_phone_number) {
 
-        var partialAddressQuery = createPartialAddress(phoneNumbers[i].formatted_phone_number);
-      }
-
-
-      function createPartialAddress(phone) {
-      
-
-        let partialaddress = fixedEncodeURIComponent(phone);
-
-      
-
-       let partialAddressQuery = `OR%20phone%20=%20'${partialaddress}'%20`
-
-      let phones = `phone%20=%20'${partialaddress}'`
-        return partialAddressQuery;
-      }
-
-      let tempName = healthName;
-      let index = tempName.lastIndexOf("%20");
-      let firstIndex = tempName.indexOf("%20");
-      let theArray = tempName.split('').slice(index + 3, tempName.length).join('');
-      let first = tempName.split('').slice(0, firstIndex).join('');
-
-
-
-
-      let t = `like%20'%25${theArray}'`;
-      let firstHealth = `starts_with(name, '${first}')`
-
-      let phoneComb = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=(upper(address)%20like%20'%25${address}%25'%20AND%20(name%20${t}%20OR%20name%20=%20'${healthName}'%20OR%20${firstHealth}))${partialAddressQuery}&$order=inspection_date%20DESC`
-     let phoneOnly = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=${partialAddressQuery}&$order=inspection_date%20DESC`
+      let healthAPiQuery = formatUrlQuery(healthName, address, partialAddressQuery);
      // let nameOnly = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=upper(address)%20like%20'%25${address}%25'%20AND%20(name%20${t}%20OR%20name%20=%20'${healthName}'%20OR%20${firstHealth})&$order=inspection_date%20DESC`
-
 
       let request = {
         method: "GET",
-
-
         params: {
           "$limit": 2,
           "$$app_token": "5m2NIQFlbJa6mE8SmXjznEIKH"
         }
       }
-      let apiSearchValue = { health: { url: phoneComb, request } }
+      let apiSearchValue = { health: { url: healthAPiQuery, request } }
       queries.push(apiSearchValue);
     }
+  }
 
+  function formatHealthName(name) {
+    const regex = /%20and%20/gi;
+    const regex2 = /'/gi;
+    let healthName = fixedEncodeURIComponent(name.toUpperCase());
+    healthName = healthName.replace(regex, '%20%26%20');
+    healthName = healthName.replace(regex2, '%34');
+    return healthName;
+  }
+
+  function fixedEncodeURIComponent(str) {
+    return encodeURIComponent(str).replace(/[!()*]/g, function (c) {
+      return '%' + c.charCodeAt(0).toString(16);
+    });
+  }
+
+  // function createPartialAddress(phone) {
+  //   let partialaddress = fixedEncodeURIComponent(phone);
+  //   let partialAddressQuery = `OR%20phone%20=%20'${partialaddress}'%20`;
+
+  //   return partialAddressQuery;
+  // }
+
+  function formatAddress(initialAddress) {
+    let addressArray = initialAddress.split(' ');
+    addressArray = addressArray.slice(0, 2);
+    let partialaddress = addressArray.join(' ');
+    let address = encodeURIComponent(partialaddress).toUpperCase();
+    return address;
+  }
+
+  function formatUrlQuery(healthName, address, partialAddressQuery) {
+    let tempName = healthName;
+    let index = tempName.lastIndexOf("%20");
+    let firstIndex = tempName.indexOf("%20");
+    let theArray = tempName.split('').slice(index + 3, tempName.length).join('');
+    let first = tempName.split('').slice(0, firstIndex).join('');
+    let t = `like%20'%25${theArray}'`;
+    let firstHealth = `starts_with(name, '${first}')`;
+    let phoneComb = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=(upper(address)%20like%20'%25${address}%25'%20AND%20(name%20${t}%20OR%20name%20=%20'${healthName}'%20OR%20${firstHealth}))${partialAddressQuery}&$order=inspection_date%20DESC`;
+    return phoneComb;
   }
 }
 
 export const getYelpHealthData = (queries, setState) => {
   const queryiesForApi =  JSON.stringify(queries)
-  
   const request = {
     method: 'POST',
     headers: {
@@ -231,17 +210,10 @@ export const getYelpHealthData = (queries, setState) => {
     .then((response) => {
       return response.json()
     }).then((data) => {
-   
       setState(data);
-      
     }).catch(e=>{
       console.log('req.body.yelp', e);
     })
 }
-
-
-
-
-
 
 export let googleMapsApi = new GoogleMaps();
