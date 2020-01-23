@@ -23,19 +23,17 @@ class Layout extends Component {
       // wipe placesToDisplay clean 
 
      this.getPlacesToDisplay();
-      // DO PLACE DATA NEXT TO PASS TO YELP
-      console.log('googleMapsApi', googleMapsApi.place);
 
 
 
-      // PUT ALL API IN ONE FILE MOVE function getYelpHealthData and buildquries to file and export
-            // add photo
-               // health
-               // yelp
         // add returned values from primises to api to placesTodisplay
       // should be reusable  return promise upate state for placestoDisplay
 
       
+    }
+
+    if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData){
+
     }
 
    
@@ -72,28 +70,6 @@ class Layout extends Component {
     return queries;
   }
   
-  // getPhoto
-  //  this.setState(currentState => {
-  //    let entireLength = currentState.allPlaces.length;
-
-  //    this.latLong(currentState.allPlaces);
-  //    // let half = Math.floor(entireLength/ 2);
-  //    let firstHalf = currentState.allPlaces.slice(0, entireLength);
-  //    let pictureData = firstHalf.map((ele) => {
-  //      if (ele.photos != null) {
-  //        return ele.photos[0].getUrl()
-  //      }
-  //      else {
-  //        return "";
-  //      }
-
-  //    })
-
-  //    return {
-  //      pictureData
-  //    }
-  //  });
-
   render() { 
     return ( 
       <div>

@@ -145,7 +145,7 @@ export const buildHealthQuery = (places, phoneNumbers, limit, queries) => {
           "$$app_token": "5m2NIQFlbJa6mE8SmXjznEIKH"
         }
       }
-      let apiSearchValue = { health: { url: healthAPiQuery, request } }
+      let apiSearchValue = { health: { url: healthAPiQuery, request, placeId: places[i].place_id } }
       queries.push(apiSearchValue);
     }
   }
