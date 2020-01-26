@@ -39,7 +39,6 @@ const Place = props => {
     return ( 
       <div>
         <input id={"searchPlace"} type="text" />
-
       </div>
      )
 }

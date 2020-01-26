@@ -103,7 +103,7 @@ class GoogleMaps {
 }
 
 export const yelpUrl = 'http://localhost:5000/api'
-export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries, limit) => {
+export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries, start, limit) => {
   const { city, state, country } = placeDetails;
 
   for (let i = 0; i < limit; i++) {
@@ -123,16 +123,16 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries, l
   }
 }
 
-export const buildHealthQuery = (places, phoneNumbers, limit, queries) => {
+export const buildHealthQuery = (places, phoneNumbers,start, limit, queries) => {
   return getNames();
 
   function getNames(coordsToSearch) {
-    for (let i = 0; i < limit; i++) {
+    for (let i = start; i < limit; i++) {
       let healthName = formatHealthName(places[i].name.toUpperCase());
       let address = formatAddress(places[i].address);
       let partialAddressQuery = '%20'
       // if (phoneNumbers[i].formatted_phone_number) {
-      //   partialAddressQuery = createPartialAddress(phoneNumbers[i].formatted_phone_number);
+      // buildHealthQuery  partialAddressQuery = createPartialAddress(phoneNumbers[i].formatted_phone_number);
       // }
 
       let healthAPiQuery = formatUrlQuery(healthName, address, partialAddressQuery);

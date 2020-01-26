@@ -22,12 +22,13 @@ const Search = props => {
         let index = addressArray.indexOf(',');
         let address = addressArray.slice(0, index);
         address = address.join('');
-       // let pictures = ele.photos != null ? ele.photos[0].getUrl() : null;
+        let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
         return {
           place_id: ele.place_id,
           name: ele.name,
           address,
-         // pictures
+          rating: ele.rating,
+          photo
         }
       })
      setAllPlaces(locationData);
