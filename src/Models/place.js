@@ -4,7 +4,7 @@ export class GooglePlace {
     this.placeId = placeId;
     this.name = googleData.name || "";
     this.rating = googleData.rating || "";
-    this.photo = googleData.photo;
+    this.photo = googleData.photo || "";
 
 
   }
@@ -14,8 +14,7 @@ export class Yelpplace {
   constructor(placeId,yelpData ) {
     let name = "";
     let rating = "";
-    // Check for empty obj
-   // debugger;
+
     if (Object.entries(yelpData).length > 0 && yelpData.constructor === Object){//DO empty oBJ keep consistant
       name = yelpData.name;
       rating = yelpData.rating
@@ -35,7 +34,6 @@ export class Healthplace {
       name = healthData[0].name
       recentGrade = healthData[0].grade;
     }
-
 
     this.placeId = placeId;
     this.name = name || "";

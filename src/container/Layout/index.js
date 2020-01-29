@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Search from './../Search/index';
 import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} from '../../Api/helper'
 import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
-import DisplayCard from '../../components/DisplayCard/DisplayCard';
 import Results from './../Results/index';
 
 const Btn = rtBtn();
@@ -30,8 +29,6 @@ class Layout extends Component {
     if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData && (this.state.healthData.length > 0 || this.state.yelpData.length > 0)){
       this.combineDataForPlacesToDisplay()
     }
-
-   
   }
 
   getPlacesToDisplay = async () =>{
@@ -41,18 +38,17 @@ class Layout extends Component {
         const yelpData = currentState.yelpData.concat(data.yelpData)
         const healthData = currentState.healthData.concat(data.healthData)
         return { yelpData, healthData}
-      }); //, this.combineDataForPlacesToDisplay
+      });
     }
     getYelpHealthData(queries, setData);
 
   }
   combineDataForPlacesToDisplay  = () => {
     const { allPlaces, placesToDisplay, currentTotalDisplay, yelpData,healthData } = this.state;
-    
     const start = placesToDisplay.length;
     const end = currentTotalDisplay;
     const slectedPlaces = allPlaces.slice(start, end);
-    debugger;
+
     const places = slectedPlaces.map((ele, i) => {
       const  yelp  = yelpData[i].yelp;
       const  health  = healthData[i].data;
@@ -62,8 +58,6 @@ class Layout extends Component {
       return { googlePlace: new GooglePlace(ele.place_id, ele), yelpPlace, healthPlace }
     })
     this.setState(currentState => {
-    
-   
       return { placesToDisplay: currentState.placesToDisplay.concat(places)}
     });
   }
@@ -78,16 +72,13 @@ class Layout extends Component {
   }
 
   async buildQueries() {
-    const { allPlaces, placeData, currentTotalDisplay, placesToDisplay} = this.state;
-    
+    const { allPlaces, placeData, currentTotalDisplay, placesToDisplay} = this.state; 
     const startingCountDisplay = placesToDisplay.length
     const displayLimit = currentTotalDisplay - startingCountDisplay;
     let queries = { health: [], yelp: { data: [] }, displayLimit };
     let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, currentTotalDisplay);
     const phoneNumbers = await getPhoneNumbers;
-    
-    // Pass in placesToDisplay.length for starting point 
-    // to placesToDisplay.length + this.displayInc
+
     buildHealthQuery(allPlaces, phoneNumbers,startingCountDisplay,currentTotalDisplay, queries.health);
     buildYelpQuery(allPlaces, phoneNumbers, placeData, queries, startingCountDisplay, currentTotalDisplay);
     return queries;
