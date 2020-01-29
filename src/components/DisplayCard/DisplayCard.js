@@ -2,11 +2,9 @@
 import React from 'react';
 
 const DisplayCard = (props) => {
-  console.log('prps.', props.placeData);
 
-  const { googlePlace } = props.placeData;
-  const { yelpPlace } = props.placeData;
-  const { healthPlace } = props.placeData;
+  const { googlePlace, yelpPlace, healthPlace } = props
+
   // STOCK PHOTO OR MAYBE USE YELP IF GOOGLE PHOTO NULL
   return (
     <div className="display-card" >
