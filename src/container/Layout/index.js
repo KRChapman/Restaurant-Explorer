@@ -4,6 +4,8 @@ import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} fro
 import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
 import DisplayCard from '../../components/DisplayCard/DisplayCard';
 import Results from './../Results/index';
+
+const Btn = rtBtn();
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -15,25 +17,17 @@ class Layout extends Component {
       placeData: {},
       currentTotalDisplay: 0,
      }
-    this.displayLimit = 4;
+    this.displayInc = 4;
   }
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.allPlaces !== this.state.allPlaces ){
-      // wipe placesToDisplay clean 
-
-     this.getPlacesToDisplay();
-
-
-
-        // add returned values from primises to api to placesTodisplay
-      // should be reusable  return promise upate state for placestoDisplay
-
-      
+      this.setState(currentState => {
+        return { placesToDisplay: [], yelpData: [], healthData:[] }
+      }, this.getPlacesToDisplay);
     }
 
-    if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData){
-        
+    if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData && (this.state.healthData.length > 0 || this.state.yelpData.length > 0)){
       this.combineDataForPlacesToDisplay()
     }
 
@@ -45,9 +39,9 @@ class Layout extends Component {
     const setData = (data) => {
       this.setState(currentState => {
         const yelpData = currentState.yelpData.concat(data.yelpData)
-        const healthData = currentState.yelpData.concat(data.healthData)
+        const healthData = currentState.healthData.concat(data.healthData)
         return { yelpData, healthData}
-      });
+      }); //, this.combineDataForPlacesToDisplay
     }
     getYelpHealthData(queries, setData);
 
@@ -58,11 +52,10 @@ class Layout extends Component {
     const start = placesToDisplay.length;
     const end = currentTotalDisplay;
     const slectedPlaces = allPlaces.slice(start, end);
-
+    debugger;
     const places = slectedPlaces.map((ele, i) => {
       const  yelp  = yelpData[i].yelp;
       const  health  = healthData[i].data;
-     //debugger;
       const healthPlace = new Healthplace(healthData[i].placeId, health)
       const yelpPlace = new Yelpplace(yelpData[i].placeId, yelp);
       
@@ -76,7 +69,7 @@ class Layout extends Component {
   }
 
   setAllPlaces = (data) => {
-    const currentTotalDisplay = this.displayLimit >= data.length ? data.length : this.displayLimit
+    const currentTotalDisplay = this.displayInc >= data.length ? data.length : this.displayInc
       this.setState({ allPlaces: data, currentTotalDisplay });
   }
 
@@ -86,28 +79,55 @@ class Layout extends Component {
 
   async buildQueries() {
     const { allPlaces, placeData, currentTotalDisplay, placesToDisplay} = this.state;
+    
     const startingCountDisplay = placesToDisplay.length
-    let queries = { health: [], yelp: { data: [] }, displayLimit: currentTotalDisplay };
+    const displayLimit = currentTotalDisplay - startingCountDisplay;
+    let queries = { health: [], yelp: { data: [] }, displayLimit };
     let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, currentTotalDisplay);
     const phoneNumbers = await getPhoneNumbers;
     
     // Pass in placesToDisplay.length for starting point 
-    // to placesToDisplay.length + this.displayLimit
+    // to placesToDisplay.length + this.displayInc
     buildHealthQuery(allPlaces, phoneNumbers,startingCountDisplay,currentTotalDisplay, queries.health);
     buildYelpQuery(allPlaces, phoneNumbers, placeData, queries, startingCountDisplay, currentTotalDisplay);
     return queries;
   }
   
+  getMore = () => {
+    const allPlacesTotal = this.state.allPlaces.length
+    if (this.state.currentTotalDisplay < allPlacesTotal){
+      const totalInc = this.displayInc + this.state.placesToDisplay.length;
+      const currentTotalDisplay = totalInc >= allPlacesTotal ? allPlacesTotal : totalInc
+      this.setState({ currentTotalDisplay }, this.getPlacesToDisplay);
+    }
+    else{
+      // DISPLAY MESSAGE NO MORE RESULTS OR UPDATE NUMBER SHOW max/max
+    }
+  }
   render() { 
     const { placesToDisplay}  = this.state;
  
     return ( 
       <div>
         <Search setPlaceDataForQuery={this.setPlaceDataForQuery}  setAllPlaces={this.setAllPlaces}/>
+        <Btn clickAction={this.getMore}/>
         <Results placesToDisplay={placesToDisplay}/> 
       </div>
      )
   }
+}
+
+
+function rtBtn(){
+
+   const btn = (props) => {
+
+    return (
+      <button onClick={props.clickAction}>more</button>
+    )
+  } 
+
+  return btn;
 }
  
 export default Layout;

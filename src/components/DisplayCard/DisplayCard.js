@@ -7,7 +7,7 @@ const DisplayCard = (props) => {
   const { googlePlace } = props.placeData;
   const { yelpPlace } = props.placeData;
   const { healthPlace } = props.placeData;
-
+  // STOCK PHOTO OR MAYBE USE YELP IF GOOGLE PHOTO NULL
   return (
     <div className="display-card" >
       <div className="google">
