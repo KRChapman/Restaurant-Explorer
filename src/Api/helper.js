@@ -79,7 +79,7 @@ class GoogleMaps {
               // NEED REJECT FOR ERROR (connection / wrong data ect...)
               // Iif not found then keep resolve
               function callback(place, status) {
-                console.log('status', status);
+                //console.log('status', status);
                 if (status) {
                   resolve(place);
                 }

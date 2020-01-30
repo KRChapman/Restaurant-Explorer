@@ -84,7 +84,7 @@ class Layout extends Component {
     
     buildHealthQuery(slectedPlaces, phoneNumbers, queries.health);
     buildYelpQuery(slectedPlaces, phoneNumbers, placeData, queries);
-    console.log('phoneNumbers', phoneNumbers, queries);
+
     return queries;
   }
   

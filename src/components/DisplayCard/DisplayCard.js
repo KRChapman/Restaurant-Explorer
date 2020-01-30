@@ -1,18 +1,6 @@
 
 import React from 'react';
-import halfStar from './../../assets/google/half.png'
-const GoogleInfo = (props) => {
-  const { googlePlace } = props;
-  
-  return (
-    <div className="google">
-      <img src={googlePlace.photo || ""} alt="" />
-      <h5>{googlePlace.name || ""}</h5>
-      <div className="rating">{googlePlace.rating || ""}G</div>
-    </div>
-  )
-}
-
+import GoogleInfo from './../GoogleInfo/index'
 const DisplayCard = (props) => {
 
   const { googlePlace, yelpPlace, healthPlace } = props.placeData
