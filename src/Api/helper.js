@@ -62,8 +62,8 @@ class GoogleMaps {
     for (let index = 0; index < places.length; index++) {
       let request = {
         placeId: places[index].place_id,
-        fields: [ 'name','international_phone_number','formatted_phone_number']
-      };
+        fields: ['name','international_phone_number','formatted_phone_number']
+      };// 'name',
       requests.push(request)
     }
     let phoneNumbers = []
@@ -79,13 +79,14 @@ class GoogleMaps {
               // NEED REJECT FOR ERROR (connection / wrong data ect...)
               // Iif not found then keep resolve
               function callback(place, status) {
-             
+                console.log('status', status);
                 if (status) {
                   resolve(place);
                 }
                 else {
-
-                  resolve({ name: "", formatted_phone_number: "",international_phone_number: ""})
+                  console.log('statusgetPhoneToReturn', status);
+                 reject()
+                //  resolve({ name: "", formatted_phone_number: "",international_phone_number: ""})
                 }
               }
             });
@@ -93,6 +94,11 @@ class GoogleMaps {
               phoneNumbers.push(place);
        
               getPhoneToReturn(requests, index+1, phoneNumbers, service);
+            }, e => {
+
+              phoneNumbers.push({ name: "", formatted_phone_number: "", international_phone_number: "" });
+
+              getPhoneToReturn(requests, index + 1, phoneNumbers, service);
             })
           }
           else {

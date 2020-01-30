@@ -1,8 +1,9 @@
 
 import React from 'react';
-//import halfStar from './../../assets/google/half.png'
+import halfStar from './../../assets/google/half.png'
 const GoogleInfo = (props) => {
-  const { googlePlace } = props
+  const { googlePlace } = props;
+  
   return (
     <div className="google">
       <img src={googlePlace.photo || ""} alt="" />
