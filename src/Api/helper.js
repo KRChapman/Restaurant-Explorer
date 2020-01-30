@@ -57,12 +57,12 @@ class GoogleMaps {
     }
   }
 
-  getPhone = (places,limit) => {
+  getPhone = (places,) => {
     const requests = [];
-    for (let index = 0; index < limit; index++) {
+    for (let index = 0; index < places.length; index++) {
       let request = {
         placeId: places[index].place_id,
-        fields: ['name', 'international_phone_number','formatted_phone_number']
+        fields: [ 'name','international_phone_number','formatted_phone_number']
       };
       requests.push(request)
     }
@@ -73,7 +73,7 @@ class GoogleMaps {
       getPhoneToReturn(requests, 0, phoneNumbers, service)
       
         function getPhoneToReturn(requests, index, phoneNumbers, service) {
-          if (index < limit) {
+          if (index < requests.length) {
             const promise1 = new Promise(function (resolve, reject) {
               service.getDetails(requests[index], callback);
               // NEED REJECT FOR ERROR (connection / wrong data ect...)
@@ -84,7 +84,8 @@ class GoogleMaps {
                   resolve(place);
                 }
                 else {
-                  resolve({ name: "", formatted_phone_number: ""})
+
+                  resolve({ name: "", formatted_phone_number: "",international_phone_number: ""})
                 }
               }
             });
@@ -103,10 +104,10 @@ class GoogleMaps {
 }
 
 export const yelpUrl = 'http://localhost:5000/api'
-export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries, start, limit) => {
+export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) => {
   const { city, state, country } = placeDetails;
 
-  for (let i = 0; i < limit; i++) {
+  for (let i = 0; i < allPlaces.length; i++) {
     
     let phoneNumbersFormated;
     if (phoneNumbers[i].international_phone_number) {
@@ -123,18 +124,17 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries, s
   }
 }
 
-export const buildHealthQuery = (places, phoneNumbers,start, limit, queries) => {
+export const buildHealthQuery = (places, phoneNumbers, queries) => {
   return getNames();
 
   function getNames(coordsToSearch) {
-    for (let i = start; i < limit; i++) {
+    for (let i = 0; i < places.length; i++) {
       let healthName = formatHealthName(places[i].name.toUpperCase());
       let address = formatAddress(places[i].address);
       let partialAddressQuery = '%20'
       // if (phoneNumbers[i].formatted_phone_number) {
       // buildHealthQuery  partialAddressQuery = createPartialAddress(phoneNumbers[i].formatted_phone_number);
       // }
-
       let healthAPiQuery = formatUrlQuery(healthName, address, partialAddressQuery);
      // let nameOnly = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=upper(address)%20like%20'%25${address}%25'%20AND%20(name%20${t}%20OR%20name%20=%20'${healthName}'%20OR%20${firstHealth})&$order=inspection_date%20DESC`
 

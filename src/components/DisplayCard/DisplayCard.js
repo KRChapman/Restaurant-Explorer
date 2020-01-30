@@ -1,5 +1,16 @@
 
 import React from 'react';
+//import halfStar from './../../assets/google/half.png'
+const GoogleInfo = (props) => {
+  const { googlePlace } = props
+  return (
+    <div className="google">
+      <img src={googlePlace.photo || ""} alt="" />
+      <h5>{googlePlace.name || ""}</h5>
+      <div className="rating">{googlePlace.rating || ""}G</div>
+    </div>
+  )
+}
 
 const DisplayCard = (props) => {
 
@@ -7,11 +18,7 @@ const DisplayCard = (props) => {
   
   return (
     <div className="display-card" >
-      <div className="google">
-        <img src={googlePlace.photo || ""} alt="" />
-        <h5>{googlePlace.name || ""}</h5>
-        <div className="rating">{googlePlace.rating || ""}G</div>
-      </div>
+      <GoogleInfo googlePlace={googlePlace}/>
       <div className="yelp">
         <img src={props.picture || ""} alt="" />
         <h5>{yelpPlace.name || ""}</h5>

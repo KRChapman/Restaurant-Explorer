@@ -48,12 +48,14 @@ class Layout extends Component {
     const start = placesToDisplay.length;
     const end = currentTotalDisplay;
     const slectedPlaces = allPlaces.slice(start, end);
+    const slectedYelpData = yelpData.slice(start, end);
+    const slectedHealthData = healthData.slice(start, end);
 
     const places = slectedPlaces.map((ele, i) => {
-      const  yelp  = yelpData[i].yelp;
-      const  health  = healthData[i].data;
-      const healthPlace = new Healthplace(healthData[i].placeId, health)
-      const yelpPlace = new Yelpplace(yelpData[i].placeId, yelp);
+      const  yelp  = slectedYelpData[i].yelp;
+      const  health  = slectedHealthData[i].data;
+      const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
+      const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
       
       return { googlePlace: new GooglePlace(ele.place_id, ele), yelpPlace, healthPlace }
     })
@@ -75,12 +77,14 @@ class Layout extends Component {
     const { allPlaces, placeData, currentTotalDisplay, placesToDisplay} = this.state; 
     const startingCountDisplay = placesToDisplay.length
     const displayLimit = currentTotalDisplay - startingCountDisplay;
+    const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
     let queries = { health: [], yelp: { data: [] }, displayLimit };
-    let getPhoneNumbers = googleMapsApi.getPhone(allPlaces, currentTotalDisplay);
+    let getPhoneNumbers = googleMapsApi.getPhone(slectedPlaces);
     const phoneNumbers = await getPhoneNumbers;
-
-    buildHealthQuery(allPlaces, phoneNumbers,startingCountDisplay,currentTotalDisplay, queries.health);
-    buildYelpQuery(allPlaces, phoneNumbers, placeData, queries, startingCountDisplay, currentTotalDisplay);
+    
+    buildHealthQuery(slectedPlaces, phoneNumbers, queries.health);
+    buildYelpQuery(slectedPlaces, phoneNumbers, placeData, queries);
+    console.log('phoneNumbers', phoneNumbers, queries);
     return queries;
   }
   
