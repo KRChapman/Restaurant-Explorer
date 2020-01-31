@@ -1,24 +1,21 @@
 
 import React from 'react';
-import GoogleInfo from './../GoogleInfo/index'
+import GoogleInfo from './GoogleInfo/index';
+import YelpInfo from './YelpInfo/index';
+import HealthInfo from './HealthInfo/index.js';
 const DisplayCard = (props) => {
-
   const { googlePlace, yelpPlace, healthPlace } = props.placeData
   
   return (
     <div className="display-card" >
+      <img className="location-image" src={googlePlace.photo || ""} alt="" />
       <GoogleInfo googlePlace={googlePlace}/>
       <div className="yelp">
-        <img src={props.picture || ""} alt="" />
-        <h5>{yelpPlace.name || ""}</h5>
-        <div className="rating">{yelpPlace.rating || ""}</div>
+        <YelpInfo yelpPlace={yelpPlace}/>
       </div>
       <div className="health">
-        <h5>{healthPlace.name || ""}</h5>
-        <div className="rating">{healthPlace.recentGrade}</div>
+        <HealthInfo healthPlace={healthPlace}/>
       </div>
-
-     
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import halfStar from './../../assets/google/half.png';
-import wholeStar from './../../assets/google/full.png';
-import emptyStar from './../../assets/google/empty.png';
+import halfStar from './../../../assets/google/half.png';
+import wholeStar from './../../../assets/google/full.png';
+import emptyStar from './../../../assets/google/empty.png';
 
 const GoogleInfo = (props) => {
   const { googlePlace } = props;
@@ -25,12 +25,15 @@ const GoogleInfo = (props) => {
     }
   }
 
+ const googleStars = starsToDisplay.map((ele,i)=>{
+    return <img className="google-stars" src={ele} key={i} alt="" />
+  })
+  
   return (
     <div className="google">
-      <img src={googlePlace.photo || ""} alt="" />
-      <img src={halfStar} alt="" />
-      <img src={wholeStar} alt="" />
-      <img src={emptyStar} alt="" />
+      <div className="google-stars-container">
+       {googleStars}
+      </div>
       <h5>{googlePlace.name || ""}</h5>
       <div className="rating">{googlePlace.rating || ""}G</div>
     </div>
