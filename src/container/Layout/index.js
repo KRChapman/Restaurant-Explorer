@@ -3,6 +3,7 @@ import Search from './../Search/index';
 import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} from '../../Api/helper'
 import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
 import Results from './../Results/index';
+import AppBar from './../AppBar/index';
 
 const Btn = rtBtn();
 class Layout extends Component {
@@ -104,6 +105,7 @@ class Layout extends Component {
  
     return ( 
       <div>
+        <AppBar/>
         <Search setPlaceDataForQuery={this.setPlaceDataForQuery}  setAllPlaces={this.setAllPlaces}/>
         <Btn clickAction={this.getMore}/>
         <Results placesToDisplay={placesToDisplay}/> 

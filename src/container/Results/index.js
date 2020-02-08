@@ -13,7 +13,7 @@ const Results = (props) => {
   } 
 
   return (
-    <div>{toDisplay}</div>
+    <div className="card-container">{toDisplay}</div>
   )
 }
 
