@@ -105,8 +105,8 @@ class Layout extends Component {
  
     return ( 
       <div>
-        <AppBar/>
-        <Search setPlaceDataForQuery={this.setPlaceDataForQuery}  setAllPlaces={this.setAllPlaces}/>
+        <AppBar setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces}/>
+       
         <Btn clickAction={this.getMore}/>
         <Results placesToDisplay={placesToDisplay}/> 
       </div>

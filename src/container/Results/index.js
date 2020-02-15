@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import DisplayCard from './../../components/DisplayCard/DisplayCard'
 
 const Results = (props) => {
+  // KEEP TRACK OF if start display passInIncrement
   const { placesToDisplay} = props;
 
   let toDisplay = null;

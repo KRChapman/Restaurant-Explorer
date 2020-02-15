@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Place from './Place/index';
-import {googleMapsApi} from '../../Api/helper'
-import Subject from './Subject/index'
+import {googleMapsApi} from '../../Api/helper';
+import Subject from './Subject/index';
+import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
+
+
+
 
 
 
@@ -13,6 +17,7 @@ const Search = props => {
   const [allPlaces, setPlaces] = useState([]);
   const {setAllPlaces} = props
 
+  //SEPERATE OUT INTO HOOK
   const isFirstRun = useRef(true);
   useEffect(()=>{
     if(isFirstRun.current){
@@ -49,13 +54,27 @@ const Search = props => {
     googleMapsApi.findPlaces(query, setPlaces );
   }
 
+  // set up this like search area in docs
+  // have the hook give logic to inputBase componnet
+  // PASS IN id to place hooks (maybe)
+  // pass in InputBase component to subject
+
+  // PLACE
+  // const id = 'id'
+  // useGoogleAutocmplete('id', cb)
+  // <InputBase id={"searchPlace"}/>
+
+  // SEARCH SUBJECT
+  //   <InputBase type="text" value={T} onChange={props.handleChange} />
+ // <button onClick={getT}>Search</button>
+  //
+  
   const content =  (
 
-   <div>
-      <h1>{props.tester}</h1>
+   <React.Fragment>
       <Subject handleSearch={handleSearch} handleChange={handleChange} />
       <Place setPlaceDataForQuery={props.setPlaceDataForQuery} />
-    </div>
+    </React.Fragment>
    
      
    

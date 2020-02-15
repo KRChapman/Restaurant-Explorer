@@ -1,7 +1,12 @@
 // TURN INTO HOOK
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {googleMapsApi} from '../../../Api/helper';
+import InputBase from '@material-ui/core/InputBase';
 import { useDidUpdateEffect} from './../../../hooks/index'
+
+
+
+
 const Place = props => {
   const { setPlaceDataForQuery } = props
   const [place, setPlace] = useState("");
@@ -37,10 +42,19 @@ const Place = props => {
   }, [place, formatPlaceDataForQuery]);
 
     return ( 
-      <div>
-        <input id={"searchPlace"} type="text" />
-      </div>
+      <React.Fragment>
+        <InputBase id={"searchPlace"}/>
+    </React.Fragment>
      )
 }
+
+{/* <InputBase
+  placeholder="Search…"
+  classes={{
+    root: classes.inputRoot,
+    input: classes.inputInput,
+  }}
+  inputProps={{ 'aria-label': 'search' }}
+/> */}
  
 export default Place;
