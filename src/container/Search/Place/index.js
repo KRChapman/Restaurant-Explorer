@@ -1,14 +1,11 @@
-// TURN INTO HOOK
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {googleMapsApi} from '../../../Api/helper';
-import InputBase from '@material-ui/core/InputBase';
-import { useDidUpdateEffect} from './../../../hooks/index'
 
 
 
 
-const Place = props => {
-  const { setPlaceDataForQuery } = props
+
+const Place = (id, setPlaceDataForQuery) => {
   const [place, setPlace] = useState("");
 
   // prevents useEffect from rerender like with a normal function
@@ -25,7 +22,7 @@ const Place = props => {
 
   useEffect(()=> {
     // https://developers.google.com/maps/documentation/javascript/places-autocomplete
-    var input = document.getElementById('searchPlace');
+    var input = document.getElementById(id);
     // use google api and set up listener for input to change when it does setPlace state
     googleMapsApi.autoCompletePlace(input, setPlace);
   }, [])//works as ComponentDidMount if empty array passed
@@ -41,11 +38,13 @@ const Place = props => {
     }
   }, [place, formatPlaceDataForQuery]);
 
-    return ( 
-      <React.Fragment>
-        <InputBase id={"searchPlace"}/>
-    </React.Fragment>
-     )
+    //  return ( 
+   
+    //    <Comp id={id}/>
+ 
+    //  )
+
+  return place;
 }
 
 {/* <InputBase
