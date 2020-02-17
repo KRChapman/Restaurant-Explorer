@@ -3,6 +3,18 @@ import React from 'react';
 import GoogleInfo from './GoogleInfo/index';
 import YelpInfo from './YelpInfo/index';
 import HealthInfo from './HealthInfo/index.js';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => {
+
+  // return {
+  //   displayCard:{
+  //      boxShadow:
+
+  //   }
+  // }
+})
 const DisplayCard = (props) => {
   const { googlePlace, yelpPlace, healthPlace } = props.placeData
   

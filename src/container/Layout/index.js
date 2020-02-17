@@ -17,7 +17,7 @@ class Layout extends Component {
       placeData: {},
       currentTotalDisplay: 0,
      }
-    this.displayInc = 4;
+    this.displayInc = 6;
   }
 
   componentDidUpdate(prevProps, prevState){
