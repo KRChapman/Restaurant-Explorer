@@ -5,7 +5,7 @@ import {googleMapsApi} from '../../../Api/helper';
 
 
 
-const Place = (id, setPlaceDataForQuery) => {
+const usePlace = (id, setPlaceDataForQuery) => {
   const [place, setPlace] = useState("");
 
   // prevents useEffect from rerender like with a normal function
@@ -21,11 +21,12 @@ const Place = (id, setPlaceDataForQuery) => {
   }, [place, setPlaceDataForQuery])
 
   useEffect(()=> {
+    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAA');
     // https://developers.google.com/maps/documentation/javascript/places-autocomplete
     var input = document.getElementById(id);
     // use google api and set up listener for input to change when it does setPlace state
     googleMapsApi.autoCompletePlace(input, setPlace);
-  }, [])//works as ComponentDidMount if empty array passed
+  }, [id])
 
   // on initial component load sets reference to current place
   const previousPlace = useRef(place);
@@ -56,4 +57,4 @@ const Place = (id, setPlaceDataForQuery) => {
   inputProps={{ 'aria-label': 'search' }}
 /> */}
  
-export default Place;
+export default usePlace;

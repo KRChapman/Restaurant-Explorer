@@ -4,13 +4,16 @@ import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} fro
 import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
 import Results from './../Results/index';
 import AppBar from './../AppBar/index';
+import { localAdd, localupdate} from '../../utils/testing';
 
 const Btn = rtBtn();
+
 class Layout extends Component {
   constructor(props) {
     super(props);
     this.state = { 
       allPlaces: [],
+      placeDetails: [],
       yelpData: [],
       healthData:[],
       placesToDisplay: [],
@@ -19,12 +22,14 @@ class Layout extends Component {
      }
     this.displayInc = 6;
   }
+  componentDidMount(){
+   localupdate(this.placesLocal);
+  }
 
   componentDidUpdate(prevProps, prevState){
     if (prevState.allPlaces !== this.state.allPlaces ){
-      this.setState(currentState => {
-        return { placesToDisplay: [], yelpData: [], healthData:[] }
-      }, this.getPlacesToDisplay);
+   
+      this.displayNewPlaces();
     }
 
     if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData && (this.state.healthData.length > 0 || this.state.yelpData.length > 0)){
@@ -32,13 +37,21 @@ class Layout extends Component {
     }
   }
 
+  displayNewPlaces = () => {
+    this.setState(currentState => {
+      return { placesToDisplay: [], yelpData: [], healthData: [] }
+    }, this.getPlacesToDisplay);
+  }
+
   getPlacesToDisplay = async () =>{
-    let queries = await this.buildQueries();
+    let details = await this.getDetails();
+    let queries = this.buildQueries(details.details, details.slectedPlaces);
     const setData = (data) => {
       this.setState(currentState => {
         const yelpData = currentState.yelpData.concat(data.yelpData)
         const healthData = currentState.healthData.concat(data.healthData)
-        return { yelpData, healthData}
+        const placeDetails = currentState.placeDetails.concat(details.details)
+        return { yelpData, healthData, placeDetails}
       });
     }
     getYelpHealthData(queries, setData);
@@ -61,7 +74,9 @@ class Layout extends Component {
       return { googlePlace: new GooglePlace(ele.place_id, ele), yelpPlace, healthPlace }
     })
     this.setState(currentState => {
-      return { placesToDisplay: currentState.placesToDisplay.concat(places)}
+      const placesToDisplay = currentState.placesToDisplay.concat(places)
+      localAdd(placesToDisplay)
+      return { placesToDisplay}
     });
   }
 
@@ -74,20 +89,31 @@ class Layout extends Component {
     this.setState({ placeData  });
   }
 
-  async buildQueries() {
-    const { allPlaces, placeData, currentTotalDisplay, placesToDisplay} = this.state; 
+   buildQueries(phoneNumbers, slectedPlaces) {
+    const { placeData, currentTotalDisplay, placesToDisplay} = this.state; 
     const startingCountDisplay = placesToDisplay.length
     const displayLimit = currentTotalDisplay - startingCountDisplay;
-    const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
+   
     let queries = { health: [], yelp: { data: [] }, displayLimit };
-    let getPhoneNumbers = googleMapsApi.getPhone(slectedPlaces);
-    const phoneNumbers = await getPhoneNumbers;
+
+    // const { url, website} = phoneNumbers;
     
     buildHealthQuery(slectedPlaces, phoneNumbers, queries.health);
     buildYelpQuery(slectedPlaces, phoneNumbers, placeData, queries);
 
     return queries;
   }
+  async getDetails(){
+    const { allPlaces, currentTotalDisplay, placesToDisplay } = this.state;
+    const startingCountDisplay = placesToDisplay.length
+
+    const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
+    
+    const getDetails = googleMapsApi.getDetails(slectedPlaces);
+    const details = await getDetails;
+    return { slectedPlaces, details}
+  }
+
   
   getMore = () => {
     const allPlacesTotal = this.state.allPlaces.length
@@ -100,9 +126,15 @@ class Layout extends Component {
       // DISPLAY MESSAGE NO MORE RESULTS OR UPDATE NUMBER SHOW max/max
     }
   }
+
+  placesLocal = (data) => {
+    this.setState({ placesToDisplay: data });
+  }
   render() { 
+  
+    
     const { placesToDisplay}  = this.state;
- 
+    
     return ( 
       <div>
         <AppBar setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces}/>

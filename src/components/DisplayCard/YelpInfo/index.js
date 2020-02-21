@@ -7,7 +7,7 @@ const YelpInfo = (props) => {
 
   return (
     <div>
-      <h5>{yelpPlace.name || ""}</h5>
+
       <RatingImages rating={rating} />
       <div className="rating">{rating || ""}</div>
     </div>

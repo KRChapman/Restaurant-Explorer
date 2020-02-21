@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Place from './Place/index';
+import usePlace from './Place/index';
 import {googleMapsApi} from '../../Api/helper';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -71,7 +71,7 @@ const Search = props => {
   const searchPlaceId = "searchPlace";
   const searchSubjectId = "searchPlace";
 
-  const placeInput = Place(searchPlaceId, props.setPlaceDataForQuery);
+  const placeInput = usePlace(searchPlaceId, props.setPlaceDataForQuery);
 
   //SEPERATE OUT INTO HOOK
   const isFirstRun = useRef(true);

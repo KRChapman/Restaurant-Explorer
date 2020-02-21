@@ -57,12 +57,12 @@ class GoogleMaps {
     }
   }
 
-  getPhone = (places,) => {
+  getDetails = (places,) => {
     const requests = [];
     for (let index = 0; index < places.length; index++) {
       let request = {
         placeId: places[index].place_id,
-        fields: ['name','international_phone_number','formatted_phone_number']
+        fields: ['place_id','name', 'international_phone_number', 'formatted_phone_number', 'url', 'website' ]
       };// 'name',
       requests.push(request)
     }

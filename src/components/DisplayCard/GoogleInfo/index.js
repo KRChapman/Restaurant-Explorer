@@ -12,11 +12,13 @@ const GoogleInfo = (props) => {
   const totalStars = 5;
   const starsToDisplay = [];
 
+  // Google shows half stars from .3 to .7
   for (let i = 0; i < totalStars; i++) {
     if (i < truncRating) {
       starsToDisplay.push(wholeStar);
     }
     else if (i === truncRating) {
+      // when the iteration reaches the last star
       const partialStar = partialRatingStar(partialRating);
       starsToDisplay.push(partialStar);
     }
@@ -30,12 +32,14 @@ const GoogleInfo = (props) => {
   })
   
   return (
-    <div className="google">
+    <div className="google-container">
+   
+
+      <div className="google-rating">Google: {googlePlace.rating || ""}</div>
       <div className="google-stars-container">
-       {googleStars}
+        
+        {googleStars}
       </div>
-      <h5>{googlePlace.name || ""}</h5>
-      <div className="rating">{googlePlace.rating || ""}G</div>
     </div>
   )
 

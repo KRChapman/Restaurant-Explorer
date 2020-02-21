@@ -12,6 +12,10 @@ border: 1px solid red;
 
 }
 
+.google-container{
+  display: flex;
+  justify-content: space-evenly
+}
 .google-stars{
   width: 20px;
   height: 20px;
