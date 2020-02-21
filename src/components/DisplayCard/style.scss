@@ -14,11 +14,34 @@ border: 1px solid red;
 
 .google-container{
   display: flex;
-  justify-content: space-evenly
+  justify-content: space-evenly;
+  margin-bottom: 2%;
 }
 .google-stars{
   width: 20px;
   height: 20px;
+}
+
+.yelp-container{
+  display: flex;
+  //  justify-content: space-between;
+    justify-content: space-evenly;
+   height: 18px;
+   margin-top: 2%;
+
+}
+.yelp-rating{
+     position: relative;
+   bottom: 2px;
+}
+
+.health-container{
+  margin-top: 4%;
+}
+.health-data-container{
+  display: flex;
+   justify-content: center;
+   margin-top: 2%;
 }
 
 // box-shadow:    inset 0 0 50px #fff,

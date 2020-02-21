@@ -20,11 +20,7 @@ const useStyles = makeStyles({
    maxWidth: 225,
      flexGrow: 1,
     margin: '0.5%',
-
-   // boxShadow: "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
-
-//transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-
+     
   },
   media: {
     height: 120,
@@ -32,6 +28,10 @@ const useStyles = makeStyles({
 
   content: {
     cursor: 'auto',
+    padding: "1px",
+    "&:last-child" :{
+      paddingBottom: "12px",
+    },
   }
 
 });
@@ -40,8 +40,6 @@ const DisplayCard = (props) => {
   const { googlePlace, yelpPlace, healthPlace } = props.placeData
 
   
-  
-  // 
   return (
 
     <Card className={classes.root} elevation={8}>
@@ -58,32 +56,19 @@ const DisplayCard = (props) => {
           <Typography variant="body1" color="textPrimary" component="p">
               <GoogleInfo googlePlace={googlePlace} />
         </Typography>
-              <YelpInfo yelpPlace={yelpPlace} />
-              <HealthInfo healthPlace={healthPlace} />
-         
+        <Typography variant="body1" color="textPrimary" component="p">
+          <YelpInfo yelpPlace={yelpPlace} />
+        </Typography>
+        <Typography variant="body1" color="textPrimary" component="p">
+          <HealthInfo healthPlace={healthPlace} />
+        </Typography>
+       
+        
         </CardContent>
    
-      <CardActions>
-          
-     
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
-      </CardActions>
     </Card>
    
   )
     }
-
-// const thing = <div className="display-card" >
-//   <img className="location-image" src={googlePlace.photo || ""} alt="" />
-//   <GoogleInfo googlePlace={googlePlace} />
-//   <div className="yelp">
-//     <YelpInfo yelpPlace={yelpPlace} />
-//   </div>
-//   <div className="health">
-//     <HealthInfo healthPlace={healthPlace} />
-//   </div>
-// </div>
 
 export default DisplayCard;

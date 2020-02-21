@@ -55,7 +55,6 @@ class Layout extends Component {
       });
     }
     getYelpHealthData(queries, setData);
-
   }
   combineDataForPlacesToDisplay  = () => {
     const { allPlaces, placesToDisplay, currentTotalDisplay, yelpData,healthData } = this.state;
@@ -93,11 +92,8 @@ class Layout extends Component {
     const { placeData, currentTotalDisplay, placesToDisplay} = this.state; 
     const startingCountDisplay = placesToDisplay.length
     const displayLimit = currentTotalDisplay - startingCountDisplay;
-   
     let queries = { health: [], yelp: { data: [] }, displayLimit };
 
-    // const { url, website} = phoneNumbers;
-    
     buildHealthQuery(slectedPlaces, phoneNumbers, queries.health);
     buildYelpQuery(slectedPlaces, phoneNumbers, placeData, queries);
 
@@ -105,8 +101,7 @@ class Layout extends Component {
   }
   async getDetails(){
     const { allPlaces, currentTotalDisplay, placesToDisplay } = this.state;
-    const startingCountDisplay = placesToDisplay.length
-
+    const startingCountDisplay = placesToDisplay.length;
     const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
     
     const getDetails = googleMapsApi.getDetails(slectedPlaces);
