@@ -4,6 +4,7 @@ import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} fro
 import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
 import Results from './../Results/index';
 import AppBar from './../AppBar/index';
+import GoogleMapDisplay from './../GoogleMap/index'
 import { localAdd, localupdate} from '../../utils/testing';
 
 const Btn = rtBtn();
@@ -111,6 +112,7 @@ class Layout extends Component {
 
   
   getMore = () => {
+    // argument for this.displayInc or 1 for map marker increase
     const allPlacesTotal = this.state.allPlaces.length
     if (this.state.currentTotalDisplay < allPlacesTotal){
       const totalInc = this.displayInc + this.state.placesToDisplay.length;
@@ -128,7 +130,7 @@ class Layout extends Component {
   render() { 
   
     
-    const { placesToDisplay}  = this.state;
+    const { placesToDisplay, allPlaces}  = this.state;
     
     return ( 
       <div>
@@ -136,6 +138,7 @@ class Layout extends Component {
        
         <Btn clickAction={this.getMore}/>
         <Results placesToDisplay={placesToDisplay}/> 
+        <GoogleMapDisplay places={allPlaces}/>
       </div>
      )
   }
@@ -143,7 +146,7 @@ class Layout extends Component {
 
 
 function rtBtn(){
-
+// SEND TO Rsults and keep track of view window
    const btn = (props) => {
 
     return (

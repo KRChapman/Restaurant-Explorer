@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Layout />
-      <div style={{ width: 50, height: 50 }} id="map"></div>
+      
     </div>
   );
 }

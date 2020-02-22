@@ -94,7 +94,9 @@ const Search = props => {
           name: ele.name,
           address,
           rating: ele.rating,
-          photo
+          photo,
+          lat: ele.geometry.location.lat,
+          lng: ele.geometry.location.lng
         }
       })
      setAllPlaces(locationData);
