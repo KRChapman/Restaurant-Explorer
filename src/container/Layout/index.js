@@ -15,6 +15,7 @@ class Layout extends Component {
     this.state = { 
       allPlaces: [],
       placeDetails: [],
+      googleData: [],
       yelpData: [],
       healthData:[],
       placesToDisplay: [],
@@ -71,7 +72,7 @@ class Layout extends Component {
       const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
       const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
       
-      return { googlePlace: new GooglePlace(ele.place_id, ele), yelpPlace, healthPlace }
+      return { googlePlace: new GooglePlace(ele.placeId, ele), yelpPlace, healthPlace }
     })
     this.setState(currentState => {
       const placesToDisplay = currentState.placesToDisplay.concat(places)
@@ -82,7 +83,8 @@ class Layout extends Component {
 
   setAllPlaces = (data) => {
     const currentTotalDisplay = this.displayInc >= data.length ? data.length : this.displayInc
-      this.setState({ allPlaces: data, currentTotalDisplay });
+    const googleData = [...data];
+    this.setState({ allPlaces: data, googleData, currentTotalDisplay });
   }
 
   setPlaceDataForQuery = (placeData) =>{
@@ -124,21 +126,46 @@ class Layout extends Component {
     }
   }
 
+  changeMapIcon = (placeId, event) =>{
+   
+    this.setState(currentState => {
+
+      const googleData = [...currentState.googleData];
+      const prevIconIndex = googleData.findIndex((ele)=> {
+        return ele.marker === 'selected';
+      })
+      const newIConIndex = googleData.findIndex((ele) => {
+        return ele.placeId === placeId;
+      })
+ 
+
+      if (prevIconIndex >= 0){
+       
+        googleData[prevIconIndex].marker = 'default';
+      }
+      if (newIConIndex >= 0) {
+        googleData[newIConIndex].marker  = 'selected';
+      }
+
+      return { googleData}
+    });
+  }
+
   placesLocal = (data) => {
     this.setState({ placesToDisplay: data });
   }
   render() { 
   
     
-    const { placesToDisplay, allPlaces}  = this.state;
+    const { placesToDisplay,googleData}  = this.state;
     
     return ( 
       <div>
         <AppBar setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces}/>
        
         <Btn clickAction={this.getMore}/>
-        <Results placesToDisplay={placesToDisplay}/> 
-        <GoogleMapDisplay places={allPlaces}/>
+        <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon}/> 
+        <GoogleMapDisplay googleData={googleData}/>
       </div>
      )
   }

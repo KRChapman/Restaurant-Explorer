@@ -45,15 +45,15 @@ const HealthInfo = (props) => {
       
       <CardActions>
 
+          <Button size="small" color="primary" variant="outlined">
+            Inspections
+        </Button>
       </CardActions>
       </div>
     </div>
 
     
 
-    // <Button size="small" color="primary" variant="outlined">
-    //   Inspections
-    //     </Button>
 
  
   )

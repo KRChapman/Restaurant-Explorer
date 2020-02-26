@@ -1,4 +1,7 @@
 import { apiRequest } from './../utils/index';
+import markers from './markers'
+
+
 
 class GoogleMapsApi {
   constructor() {
@@ -143,7 +146,7 @@ class GoogleMapsApi {
     const requests = [];
     for (let index = 0; index < places.length; index++) {
       let request = {
-        placeId: places[index].place_id,
+        placeId: places[index].placeId,
         fields: ['place_id','name', 'international_phone_number', 'formatted_phone_number', 'url', 'website' ]
       };// 'name',
       requests.push(request)
@@ -191,19 +194,43 @@ class GoogleMapsApi {
   }
 
   getMarkers = (places) => {
-   
+
    return places.map(ele=> {
-      
-      const latitude = ele.lat()
-      const longitude = ele.lng();
+ 
+      const latitude = ele.lat
+      const longitude = ele.lng;
       const myLatlng = new window.google.maps.LatLng(latitude, longitude);
-      var marker = new window.google.maps.Marker({
+     const chosenMarkericon = markers[ele.marker];
+      const markerOptions = {
         position: myLatlng,
-         title: ele.name,
-      }); 
+        title: ele.name,
+        icon: chosenMarkericon,
+      }
+  
+      let marker = new window.google.maps.Marker(markerOptions); 
        return marker
     })
    
+  }
+
+  changeMarker = (marker) => {
+
+  
+
+    const latitude = marker.lat
+    const longitude = marker.lng;
+      const myLatlng = new window.google.maps.LatLng(latitude, longitude);
+    const chosenMarkericon = markers[marker.marker];
+      const markerOptions = {
+        position: myLatlng,
+        title: marker.name,
+        icon: chosenMarkericon,
+      }
+
+      let newMarker = new window.google.maps.Marker(markerOptions);
+      return newMarker
+
+
   }
 }
 
@@ -224,7 +251,7 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) =
       phoneNumbersFormated = null;
     }
 
-    queries.yelp.data.push({ placeId: allPlaces[i].place_id, phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
+    queries.yelp.data.push({ placeId: allPlaces[i].placeId, phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
   }
 }
 
@@ -249,7 +276,7 @@ export const buildHealthQuery = (places, phoneNumbers, queries) => {
           "$$app_token": "5m2NIQFlbJa6mE8SmXjznEIKH"
         }
       }
-      let apiSearchValue = { health: { url: healthAPiQuery, request, placeId: places[i].place_id } }
+      let apiSearchValue = { health: { url: healthAPiQuery, request, placeId: places[i].placeId } }
       queries.push(apiSearchValue);
     }
   }

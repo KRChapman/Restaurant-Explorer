@@ -90,13 +90,14 @@ const Search = props => {
         address = address.join('');
         let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
         return {
-          place_id: ele.place_id,
+          placeId: ele.place_id,
           name: ele.name,
           address,
           rating: ele.rating,
           photo,
-          lat: ele.geometry.location.lat,
-          lng: ele.geometry.location.lng
+          lat: ele.geometry.location.lat(),
+          lng: ele.geometry.location.lng(),
+          marker: 'default',
         }
       })
      setAllPlaces(locationData);

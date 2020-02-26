@@ -39,10 +39,10 @@ const DisplayCard = (props) => {
   const classes = useStyles();
   const { googlePlace, yelpPlace, healthPlace } = props.placeData
 
-  
+
   return (
 
-    <Card className={classes.root} elevation={8}>
+    <Card className={classes.root} elevation={8} onMouseEnter={(event) => props.changeMapIcon(googlePlace.placeId,event)}>
 
         <CardMedia
           className={classes.media}
