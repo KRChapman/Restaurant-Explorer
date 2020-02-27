@@ -53,13 +53,13 @@ const DisplayCard = (props) => {
           <Typography gutterBottom variant="h6" color="primary" component="h6">
               {googlePlace.name}
           </Typography>
-          <Typography variant="body1" color="textPrimary" component="p">
+          <Typography variant="body1" color="textPrimary" component="div">
               <GoogleInfo googlePlace={googlePlace} />
         </Typography>
-        <Typography variant="body1" color="textPrimary" component="p">
+        <Typography variant="body1" color="textPrimary" component="div">
           <YelpInfo yelpPlace={yelpPlace} />
         </Typography>
-        <Typography variant="body1" color="textPrimary" component="p">
+        <Typography variant="body1" color="textPrimary" component="div">
           <HealthInfo healthPlace={healthPlace} />
         </Typography>
        

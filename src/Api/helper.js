@@ -11,9 +11,9 @@ class GoogleMapsApi {
     this.exactLocation = null
   }
 
-   initiateMap(){
-      const lat = this.place.geometry.location.lat();
-      const lon = this.place.geometry.location.lng();
+  initiateMap(latitude = null,longitude = null){
+    const lat = latitude == null ? this.place.geometry.location.lat() :  latitude;
+    const lon = longitude == null ? this.place.geometry.location.lng() : longitude;
       const exactLocation = new window.google.maps.LatLng(lat, lon);
       const map = new window.google.maps.Map(document.getElementById('map'), {
         center: exactLocation,
@@ -232,6 +232,8 @@ class GoogleMapsApi {
 
 
   }
+
+
 }
 
 export const yelpUrl = 'http://localhost:5000/api'

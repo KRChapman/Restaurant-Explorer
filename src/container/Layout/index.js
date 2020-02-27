@@ -4,7 +4,8 @@ import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} fro
 import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
 import Results from './../Results/index';
 import AppBar from './../AppBar/index';
-import GoogleMapDisplay from './../GoogleMap/index'
+import GoogleMapDisplay from './../GoogleMap/index';
+import ControlButtons from './../ControlButtons/index';
 import { localAdd, localupdate} from '../../utils/testing';
 
 const Btn = rtBtn();
@@ -22,7 +23,7 @@ class Layout extends Component {
       placeData: {},
       currentTotalDisplay: 0,
      }
-    this.displayInc = 6;
+    this.displayInc = 4;
   }
   componentDidMount(){
    localupdate(this.placesLocal);
@@ -162,7 +163,7 @@ class Layout extends Component {
     return ( 
       <div>
         <AppBar setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces}/>
-       
+        <ControlButtons setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery}/>
         <Btn clickAction={this.getMore}/>
         <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon}/> 
         <GoogleMapDisplay googleData={googleData}/>

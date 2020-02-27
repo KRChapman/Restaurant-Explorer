@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import usePlace from './Place/index';
 import {googleMapsApi} from '../../Api/helper';
+import {AllPlaces} from './../../Models/place'
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -84,21 +85,23 @@ const Search = props => {
     formatAllPlaceDataForQuery();
     function formatAllPlaceDataForQuery() {
       let locationData = allPlaces.map(ele => {
-        let addressArray = ele.formatted_address.split('');
-        let index = addressArray.indexOf(',');
-        let address = addressArray.slice(0, index);
-        address = address.join('');
-        let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
-        return {
-          placeId: ele.place_id,
-          name: ele.name,
-          address,
-          rating: ele.rating,
-          photo,
-          lat: ele.geometry.location.lat(),
-          lng: ele.geometry.location.lng(),
-          marker: 'default',
-        }
+        const allPlace = new AllPlaces(ele)
+        // let addressArray = ele.formatted_address.split('');
+        // let index = addressArray.indexOf(',');
+        // let address = addressArray.slice(0, index);
+        // address = address.join('');
+        // let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
+        // return {
+        //   placeId: ele.place_id,
+        //   name: ele.name,
+        //   address,
+        //   rating: ele.rating,
+        //   photo,
+        //   lat: ele.geometry.location.lat(),
+        //   lng: ele.geometry.location.lng(),
+        //   marker: 'default',
+        // }
+        return allPlace;
       })
      setAllPlaces(locationData);
     }

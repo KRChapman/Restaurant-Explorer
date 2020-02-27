@@ -41,3 +41,26 @@ export class Healthplace {
     this.inspectionHistory = healthData || "";
   }
 }
+
+
+export class AllPlaces {
+
+  constructor(ele){
+
+    let addressArray = ele.formatted_address.split('');
+    let index = addressArray.indexOf(',');
+    let address = addressArray.slice(0, index);
+    address = address.join('');
+    let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
+   
+      this.placeId= ele.place_id;
+      this.name= ele.name;
+      this.address = address
+      this.rating= ele.rating;
+      this.photo = photo;
+      this.lat= ele.geometry.location.lat();
+      this.lng= ele.geometry.location.lng();
+      this.marker= 'default';
+
+  }
+}
