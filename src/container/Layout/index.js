@@ -5,7 +5,7 @@ import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
 import Results from './../Results/index';
 import AppBar from './../AppBar/index';
 import GoogleMapDisplay from './../GoogleMap/index';
-import ControlButtons from './../ControlButtons/index';
+
 import { localAdd, localupdate} from '../../utils/testing';
 
 const Btn = rtBtn();
@@ -96,10 +96,10 @@ class Layout extends Component {
     const { placeData, currentTotalDisplay, placesToDisplay} = this.state; 
     const startingCountDisplay = placesToDisplay.length
     const displayLimit = currentTotalDisplay - startingCountDisplay;
-    let queries = { health: [], yelp: { data: [] }, displayLimit };
-
-    buildHealthQuery(slectedPlaces, phoneNumbers, queries.health);
-    buildYelpQuery(slectedPlaces, phoneNumbers, placeData, queries);
+   // let queries = { yelp: { data: [] }, displayLimit };
+     const queries = { displayLimit};
+    queries["health"] = buildHealthQuery(slectedPlaces, phoneNumbers);
+     queries["yelp"] =  buildYelpQuery(slectedPlaces, phoneNumbers, placeData);
 
     return queries;
   }
@@ -114,7 +114,7 @@ class Layout extends Component {
   }
 
   
-  getMore = () => {
+  getMorePlaces = () => {
     // argument for this.displayInc or 1 for map marker increase
     const allPlacesTotal = this.state.allPlaces.length
     if (this.state.currentTotalDisplay < allPlacesTotal){
@@ -163,9 +163,10 @@ class Layout extends Component {
     return ( 
       <div>
         <AppBar setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces}/>
-        <ControlButtons setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery}/>
-        <Btn clickAction={this.getMore}/>
-        <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon}/> 
+      
+        <Btn clickAction={this.getMorePlaces}/>
+        <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces}
+          setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc}  /> 
         <GoogleMapDisplay googleData={googleData}/>
       </div>
      )

@@ -237,9 +237,9 @@ class GoogleMapsApi {
 }
 
 export const yelpUrl = 'http://localhost:5000/api'
-export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) => {
+export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails) => {
   const { city, state, country } = placeDetails;
-
+  const queries = { data:[]}
   for (let i = 0; i < allPlaces.length; i++) {
     
     let phoneNumbersFormated;
@@ -253,14 +253,15 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails, queries) =
       phoneNumbersFormated = null;
     }
 
-    queries.yelp.data.push({ placeId: allPlaces[i].placeId, phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
+    queries.data.push({ placeId: allPlaces[i].placeId, phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
   }
 }
 
-export const buildHealthQuery = (places, phoneNumbers, queries) => {
+export const buildHealthQuery = (places, phoneNumbers) => {
   return getNames();
 
   function getNames(coordsToSearch) {
+    const queries = [];
     for (let i = 0; i < places.length; i++) {
       let healthName = formatHealthName(places[i].name.toUpperCase());
       let address = formatAddress(places[i].address);
@@ -281,6 +282,7 @@ export const buildHealthQuery = (places, phoneNumbers, queries) => {
       let apiSearchValue = { health: { url: healthAPiQuery, request, placeId: places[i].placeId } }
       queries.push(apiSearchValue);
     }
+    return queries;
   }
 
   function formatHealthName(name) {

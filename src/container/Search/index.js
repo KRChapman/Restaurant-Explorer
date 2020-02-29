@@ -86,21 +86,7 @@ const Search = props => {
     function formatAllPlaceDataForQuery() {
       let locationData = allPlaces.map(ele => {
         const allPlace = new AllPlaces(ele)
-        // let addressArray = ele.formatted_address.split('');
-        // let index = addressArray.indexOf(',');
-        // let address = addressArray.slice(0, index);
-        // address = address.join('');
-        // let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
-        // return {
-        //   placeId: ele.place_id,
-        //   name: ele.name,
-        //   address,
-        //   rating: ele.rating,
-        //   photo,
-        //   lat: ele.geometry.location.lat(),
-        //   lng: ele.geometry.location.lng(),
-        //   marker: 'default',
-        // }
+
         return allPlace;
       })
      setAllPlaces(locationData);

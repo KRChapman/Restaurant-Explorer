@@ -1,5 +1,6 @@
-import React, {useState, useEffect, useRef,} from 'react';
+import React from 'react';
 import {googleMapsApi }from './../../Api/helper'
+import { AllPlaces} from './../../Models/place'
 const ControlButtons = (props) => {
   const { setAllPlaces, setPlaceDataForQuery} = props;
   const seattleCoordinates = { lat: 47.6062095, lng: -122.3320708, }
@@ -12,19 +13,14 @@ const ControlButtons = (props) => {
   const burgerInput = 'pizza';
 
 
-  // long_name: "Seattle"
-  // short_name: "Seattle"
 
-  // long_name: "King County"
-  // short_name: "King County"
-
-  // long_name: "Washington"
-  // short_name: "WA"
-
-
-  // long_name: "United States"
-  // short_name: "US"
-  // setPlaceDataForQuery(PlaceData)
+  const formatPlaces = (allPlaceData) =>{
+   const allPlaces = allPlaceData.map(ele=> {
+     return  new AllPlaces(ele);
+      
+    })
+    setAllPlaces(allPlaces);
+  }
   return (
     <div>
       <button onClick={getAllPlaces}>Seattle burgers</button>
@@ -34,7 +30,7 @@ const ControlButtons = (props) => {
   function getAllPlaces(){
     setPlaceDataForQuery(seattleData);
     googleMapsApi.initiateMap(seattleCoordinates.lat, seattleCoordinates.lng);
-    googleMapsApi.findPlaces(burgerInput, setAllPlaces );
+    googleMapsApi.findPlaces(burgerInput, formatPlaces );
   }
 }
 
