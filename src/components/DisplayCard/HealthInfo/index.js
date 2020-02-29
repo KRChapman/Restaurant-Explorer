@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import excelent from './../../../assets/health/excellent.png'
 import good from './../../../assets/health/good.png';
 import okay from './../../../assets/health/okay.png';
@@ -10,7 +10,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-
+import { WarnPopover} from './../../PopOver/index'
+import InspectionsTable from './../../InspectionsTable/index'
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles({
@@ -24,10 +25,16 @@ const useStyles = makeStyles({
 });
 const HealthInfo = (props) => {
   const classes = useStyles();
+  const  [anchorEl, setanchorEl] = useState(null);
   const { healthPlace} = props;
   const recentGrade = healthPlace.recentGrade.toString();
   const healthImages = {'1': excelent, '2': good, '3': okay, '4': improve}
   const healthImage = healthImages[recentGrade];
+
+  const handlePopTable = (e) => {
+    setanchorEl(e.currentTarget);
+  }
+
   return (
     
       <div className='health-container'>
@@ -45,9 +52,10 @@ const HealthInfo = (props) => {
       
       <CardActions>
 
-          <Button size="small" color="primary" variant="outlined">
+          <Button onClick={handlePopTable} size="small" color="primary" variant="outlined">
             Inspections
         </Button>
+          <WarnPopover anchorEl={anchorEl} warningText={'test'} ><InspectionsTable/></WarnPopover>
       </CardActions>
       </div>
     </div>

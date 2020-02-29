@@ -107,7 +107,7 @@ const Search = props => {
     }
  
   }
-
+//  const popOver = anchorEl == null ? null : <WarnPopover anchorEl={anchorEl} warningText={"Fill out all fields"} />
   const content =  (
     <div className={classes.container} >
         <div className={classes.search}>
@@ -121,7 +121,7 @@ const Search = props => {
             }}
             inputProps={{ 'aria-label': 'search' }}/>
         </div>
-          <WarnPopover anchorEl={anchorEl} warningText={"Fill out all fields"}/>
+      <WarnPopover anchorEl={anchorEl} warningText={"Fill out all fields"} />
         <div className={classes.search}>
         <div className={classes.searchIcon} onClick={(event) => handleSearch(searchSubjectId, event)}>
             <SearchIcon style={{ cursor: 'pointer'}} />

@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function WarnPopover({anchorEl,warningText}) {
+export function WarnPopover({anchorEl,warningText},props) {
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,7 +25,7 @@ export function WarnPopover({anchorEl,warningText}) {
   }, [setIsOpen, anchorEl])
 
   const id = isOpen ? 'simple-popover' : undefined;
-
+  //debugger;
   return (
       <Popover
         id={id}
@@ -41,6 +41,7 @@ export function WarnPopover({anchorEl,warningText}) {
           horizontal: 'center',
         }}
       >
+        {props.children}
       <Typography className={classes.typography}>{warningText}</Typography>
       </Popover>
  
