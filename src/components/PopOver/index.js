@@ -11,12 +11,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function WarnPopover({anchorEl,warningText},props) {
+export function WarnPopover({ anchorEl, setanchorEl, warningText, children}) {
   const classes = useStyles();
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClose = () => {
     setIsOpen(false);
+    setanchorEl(null);
   };
 
   useEffect(()=> {
@@ -25,7 +26,7 @@ export function WarnPopover({anchorEl,warningText},props) {
   }, [setIsOpen, anchorEl])
 
   const id = isOpen ? 'simple-popover' : undefined;
-  //debugger;
+ // debugger;
   return (
       <Popover
         id={id}
@@ -41,7 +42,8 @@ export function WarnPopover({anchorEl,warningText},props) {
           horizontal: 'center',
         }}
       >
-        {props.children}
+     
+      {children}
       <Typography className={classes.typography}>{warningText}</Typography>
       </Popover>
  

@@ -11,6 +11,9 @@
 
 .App {
   text-align: center;
+ // background-color: #f9f8ff45;
+ background-color: #f9f8ff;
+ font-family: "Roboto, Helvetica, Arial, sans-serif",
 }
 
 .App-logo {
@@ -32,6 +35,11 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.pac-container{
+//  margin-top: 50px;
+  z-index: 2000;
 }
 
 @keyframes App-logo-spin {

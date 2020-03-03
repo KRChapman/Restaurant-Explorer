@@ -55,7 +55,8 @@ const HealthInfo = (props) => {
           <Button onClick={handlePopTable} size="small" color="primary" variant="outlined">
             Inspections
         </Button>
-          <WarnPopover anchorEl={anchorEl} warningText={'test'} ><InspectionsTable/></WarnPopover>
+          
+          <WarnPopover setanchorEl={setanchorEl} anchorEl={anchorEl}><InspectionsTable tableData={healthPlace.inspectionHistory}/></WarnPopover>
       </CardActions>
       </div>
     </div>

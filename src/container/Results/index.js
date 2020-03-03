@@ -2,8 +2,26 @@ import React, { useState, useEffect, useRef, useReducer } from 'react';
 import DisplayCard from './../../components/DisplayCard/DisplayCard'
 import QuickSearch from '../../components/QuickSearch/index';
 import ControlButtons from './../../components/ControlButtons/index';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Container from '@material-ui/core/Container';
+
+
+const useStyles = makeStyles(theme => ({
+  root: {
+     position: "fixed", 
+     margin: "100px auto", 
+
+  },
+  main: {
+
+    margin: "150px auto", 
+  }
+
+}));
 
 const Results = (props) => {
+  const classes = useStyles();
   const [placesViewRange, dispatchPlacesViewRange] = useReducer(navigatePlacesViewRangeReducer,{start:0, end:0});
   const [currentPlacesToDisplay, setCurrentPlacesToDisplay] = useState([]);
   const { placesToDisplay, getMorePlaces, displayInc,changeMapIcon, setAllPlaces, setPlaceDataForQuery} = props;
@@ -34,16 +52,22 @@ const Results = (props) => {
     }
   }
   return (
-    <div>
-      <div>
-        <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />
-        <ControlButtons changeViewRange={changeViewRangeHandler}/>
-      </div>
+    <React.Fragment>
+      
+      <Container className={classes.root} >
 
+        <ControlButtons changeViewRange={changeViewRangeHandler} />
+</Container> 
+      <Container className={classes.main} >
+      <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />
+      </Container> 
+      
       <div className="card-container">{toDisplay}</div>
-    </div>
+  
+    </React.Fragment>
   )
 }
+//
 
 function navigatePlacesViewRangeReducer(currentState, action) {
   const placesViewRange = { ...currentState};

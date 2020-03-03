@@ -8,56 +8,86 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-
+import excelent from './../../assets/health/excellent.png'
+import good from './../../assets/health/good.png';
+import okay from './../../assets/health/okay.png';
+import improve from './../../assets/health/improve.png';
 const useStyles = makeStyles({
+  root:{
+    maxWidth: 630,
+  },
   table: {
-    minWidth: 350,
+   width: "100%",
+   // maxWidth: 200,
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 
 
 
-export default function InspectionsTable() {
+
+export default function InspectionsTable(props) {
   const classes = useStyles();
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
+  const {tableData} = props;
+
+ const rows = createData(tableData);
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} className={classes.root}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>Business Name</TableCell>
+            <TableCell align="right">Inspection Date</TableCell>
+        
+            <TableCell align="right">Inspection Result&nbsp;</TableCell>
+           
+      
+            <TableCell align="right">Violation Points&nbsp;</TableCell>
+            <TableCell align="right">Violation Destription</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-            </TableRow>
-          ))}
+          {rows}
         </TableBody>
       </Table>
     </TableContainer>
   );
 }
 
+function createData(tableData) {
+  const rows = tableData.map(ele => {
+    const { name, grade, inspection_date, violation_points,
+      inspection_result, inspection_score, inspection_type,
+      violation_description } = ele
+
+    const violationDestription = violation_description || 'none available'
+    const recentGrade = grade.toString();
+    const healthImages = { '1': excelent, '2': good, '3': okay, '4': improve }
+   // const healthImage = healthImages[recentGrade];
+
+  // return { name, inspection_date, healthImage, inspection_result, inspection_type, inspection_score, violation_points, violationDestription };
+ //     < TableCell align = "right" > Inspection Grade& nbsp; (g)</TableCell >
+ //   <TableCell align="right">{grade}</TableCell>
+  //      <TableCell align="right">Inspection Score&nbsp;(g)</TableCell>
+  //        <TableCell align="right">{inspection_score}</TableCell>
+  //  <TableCell align="right">Inspection Type&nbsp;(g)</TableCell>
+  //   < TableCell align = "right" > { inspection_type }</TableCell>  
+  return (
+      <TableRow key={inspection_date}>
+        <TableCell component="th" scope="row">
+          {name}
+        </TableCell>
+        <TableCell align="right">{inspection_date}</TableCell>
+     
+        <TableCell align="right">{inspection_result}</TableCell>
+ 
+
+        <TableCell align="right">{violation_points}</TableCell>
+        <TableCell align="right">{violationDestription}</TableCell>
+      </TableRow >
+    )
+  })
+  return rows;
+
+}
 

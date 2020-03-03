@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => ({
       display: 'block',
       //marginRight: theme.spacing(1),
     },
+   
   },
   title: {
    // width: "470px",
@@ -68,7 +69,7 @@ export default function ButtonAppBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed" className={classes.root}>
         <Toolbar className={classes.toolbar}>
           <EmojiTransportationIcon className={classes.logo}/>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
