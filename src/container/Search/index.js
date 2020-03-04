@@ -70,7 +70,7 @@ const Search = props => {
   const [anchorEl, setanchorEl] = useState(null);
   const {setAllPlaces} = props
   const searchPlaceId = "searchPlace";
-  const searchSubjectId = "searchPlace";
+  
 
   const placeInput = usePlace(searchPlaceId, props.setPlaceDataForQuery);
 
@@ -93,25 +93,28 @@ const Search = props => {
     }
   }, [allPlaces, setAllPlaces])
 
+
+
   const handleChange = (event) =>{
     setInputForSearch(event.target.value );
   }
-  const handleSearch = (id,event) => {
 
-    if (placeInput === "" || inputForSearch === ""){
-      setanchorEl(event.currentTarget);
-    
-    }
-    else{
-      googleMapsApi.findPlaces(inputForSearch, setPlaces );
-    }
- 
+  const handleSearch = (event) => {
+    checkInputResult(event);
   }
+
+  const handleEnterPress = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      checkInputResult(event);
+    }
+  }
+
   const popOver = anchorEl == null ? null : <WarnPopover setanchorEl={setanchorEl} anchorEl={anchorEl} warningText={"Fill out all fields"} />
   const content =  (
-    <div className={classes.container} >
+    <div className={classes.container} onKeyPress={handleEnterPress} >
         <div className={classes.search}>
-          <div className={classes.searchIcon} onClick={(event) => handleSearch(searchPlaceId,event)}>
+          <div className={classes.searchIcon} onClick={handleSearch}>
             <SearchIcon />
           </div>
           <InputBase type="text" id={searchPlaceId} placeholder="Location"
@@ -123,10 +126,10 @@ const Search = props => {
         </div>
       {popOver}
         <div className={classes.search}>
-        <div className={classes.searchIcon} onClick={(event) => handleSearch(searchSubjectId, event)}>
+        <div className={classes.searchIcon} onClick={handleSearch}>
             <SearchIcon style={{ cursor: 'pointer'}} />
             </div>
-            <InputBase type="text" onChange={handleChange}
+        <InputBase  type="text" onChange={handleChange}
             placeholder="Search For: Burgers, Pizza, Tacos, ect.. or a specific place"
             classes={{
               root: classes.inputRoot,
@@ -139,6 +142,16 @@ const Search = props => {
       
   )
   return content;
+
+  function checkInputResult(event){
+    if (placeInput === "" || inputForSearch === "") {
+      setanchorEl(event.currentTarget);
+
+    }
+    else {
+      googleMapsApi.findPlaces(inputForSearch, setPlaces);
+    }
+  }
 }
 
 export default Search;

@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   menuButton: {
     
     display: 'none',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'block',
       //marginRight: theme.spacing(1),
     },
@@ -45,13 +45,13 @@ const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(2),
   },
   optionsBtn:{
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     },
    
   },
   logo:{
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     },
   },
@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
-
+  
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.root}>
@@ -80,7 +80,7 @@ export default function ButtonAppBar(props) {
             Restaurant Explorer
     
           </Typography>
-          <Typography className={classes.details} variant="subtitle2" >
+            <Typography className={classes.details} variant="subtitle2" >
             Google Ratings, Yelp Ratings and King County Health Department Data
           </Typography>
           </div>

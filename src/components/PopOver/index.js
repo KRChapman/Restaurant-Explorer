@@ -1,5 +1,6 @@
 import React, { useEffect, useState}from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import  makeStyles  from '@material-ui/core/styles/makeStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -10,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
   },
 }));
+
 
 export function WarnPopover({ anchorEl, setanchorEl, warningText, children}) {
   const classes = useStyles();
@@ -49,3 +51,4 @@ export function WarnPopover({ anchorEl, setanchorEl, warningText, children}) {
  
   );
 }
+

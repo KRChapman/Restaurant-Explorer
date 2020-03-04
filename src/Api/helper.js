@@ -9,6 +9,7 @@ class GoogleMapsApi {
     this.service = null
     this.place = null
     this.exactLocation = null
+    this.markers = []
   }
 
   initiateMap(latitude = null,longitude = null){
@@ -194,8 +195,8 @@ class GoogleMapsApi {
   }
 
   getMarkers = (places) => {
-
-   return places.map(ele=> {
+   // this.markers
+     return places.map(ele=> {
  
       const latitude = ele.lat
       const longitude = ele.lng;
@@ -210,13 +211,13 @@ class GoogleMapsApi {
       let marker = new window.google.maps.Marker(markerOptions); 
        return marker
     })
-   
+    // this.markers;
   }
 
   changeMarker = (marker) => {
 
   
-
+ // USE this.markers
     const latitude = marker.lat
     const longitude = marker.lng;
       const myLatlng = new window.google.maps.LatLng(latitude, longitude);

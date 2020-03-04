@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Search from './../Search/index';
 import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} from '../../Api/helper'
 import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
 import Results from './../Results/index';
@@ -158,7 +157,7 @@ class Layout extends Component {
   render() { 
   
     
-    const { placesToDisplay,googleData}  = this.state;
+    const { placesToDisplay, googleData, allPlaces}  = this.state;
     
     return ( 
       <div>
@@ -166,7 +165,7 @@ class Layout extends Component {
       
         <Btn clickAction={this.getMorePlaces}/>
         <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces}
-          setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc}  /> 
+          setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} TotalNumberOfAllPlaces={allPlaces.length}  /> 
         <GoogleMapDisplay googleData={googleData}/>
       </div>
      )

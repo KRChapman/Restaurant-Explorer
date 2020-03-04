@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import {googleMapsApi} from './../../Api/helper';
 import markers from './../../Api/markers'
 const GoogleMapDisplay = (props) => {
@@ -12,6 +12,7 @@ const GoogleMapDisplay = (props) => {
   //   return ele.marker === 'selected';
   // })
 
+  // UPDATE
   // const prevIndex = mapMarkers.findIndex((ele) => {
   //  debugger;
   //   return ele.icon.url === basePaddle;
@@ -22,13 +23,29 @@ const GoogleMapDisplay = (props) => {
   //   }
   // }, [selectedIndex])
 
+  //DELETE
+  // const prevGoogleData = useRef();
+  // useEffect(()=> {
+  //   prevGoogleData.current = googleData;
+  // })
+
+  // useEffect(()=> {
+  //   if (prevGoogleData.current !== googleData){
+
+     
+  //     googleMapsApi.markers.length = 0;
+  //     setmapMarkers([]);
+
+  // }
+  // }, [googleData])
+
   useEffect(()=>{
 
   
     //skip first render of empty array and no marker has been selected 
     // && selectedIndex < 0
     if (googleData.length > 0){
-  
+
       const markers = googleMapsApi.getMarkers(googleData);
       
       setmapMarkers(markers);
@@ -51,19 +68,10 @@ const GoogleMapDisplay = (props) => {
 
   useEffect(() => {
 
-   // debugger;
-
       mapMarkers.forEach(ele => {
         ele.setMap(googleMapsApi.map);
       })
 
-    //  mapMarkers[selectedIndex].setMap(googleMapsApi.map);
- 
-    
-
-  
-  
-     //   , selectedIndex, prevIndex
   }, [mapMarkers])
   return (
     <div className="map-container">
