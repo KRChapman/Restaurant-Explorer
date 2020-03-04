@@ -66,7 +66,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
-  
+  const { setPlaceDataForQuery, setAllPlaces} = props;
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.root}>
@@ -87,7 +87,7 @@ export default function ButtonAppBar(props) {
       
          
        
-            < Search setPlaceDataForQuery={props.setPlaceDataForQuery} setAllPlaces={props.setAllPlaces}/>
+          < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
           <div className={classes.optionsBtn}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -103,7 +103,3 @@ export default function ButtonAppBar(props) {
   );
 }
 
-
-{/* <Typography variant="h6" className={classes.title}>
-  News
-          </Typography> */}

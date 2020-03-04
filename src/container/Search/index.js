@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useReducer } from 'react';
 import usePlace from './Place/index';
 import {googleMapsApi} from '../../Api/helper';
 import {AllPlaces} from './../../Models/place'
@@ -65,10 +65,17 @@ const useStyles= makeStyles(theme => {
 
 const Search = props => {
   const classes = useStyles();
+  const fillOutText = "Fill out all fields";
+  const emptyPlace = "select place from autocomplete drop down"
   const [inputForSearch, setInputForSearch] = useState("");
   const [allPlaces, setPlaces] = useState([]);
-  const [anchorEl, setanchorEl] = useState(null);
-  const {setAllPlaces} = props
+ // const [anchorEl, setanchorEl] = useState(null);
+  const [warnState, setanchorEl] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    { anchorEl: null, text: fillOutText }
+  )
+
+  const { setAllPlaces} = props
   const searchPlaceId = "searchPlace";
   
 
@@ -99,22 +106,23 @@ const Search = props => {
     setInputForSearch(event.target.value );
   }
 
-  const handleSearch = (event) => {
-    checkInputResult(event);
-  }
 
-  const handleEnterPress = (event) => {
+  const handleSearch = (event) => {
+
     if (event.key === "Enter") {
       event.preventDefault();
       checkInputResult(event);
     }
+    else if (event.type === "click"){
+      checkInputResult(event);
+    }
   }
 
-  const popOver = anchorEl == null ? null : <WarnPopover setanchorEl={setanchorEl} anchorEl={anchorEl} warningText={"Fill out all fields"} />
+  const popOver = warnState.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setanchorEl({ anchorEl: inp})} anchorEl={warnState.anchorEl} warningText={warnState.text} />
   const content =  (
-    <div className={classes.container} onKeyPress={handleEnterPress} >
+    <div className={classes.container} onKeyPress={handleSearch} >
         <div className={classes.search}>
-          <div className={classes.searchIcon} onClick={handleSearch}>
+        <div className={classes.searchIcon} onClick={handleSearch}>
             <SearchIcon />
           </div>
           <InputBase type="text" id={searchPlaceId} placeholder="Location"
@@ -144,10 +152,16 @@ const Search = props => {
   return content;
 
   function checkInputResult(event){
-    if (placeInput === "" || inputForSearch === "") {
-      setanchorEl(event.currentTarget);
+    
+   
+    if (placeInput === "" ) {
+      setanchorEl({ anchorEl: event.currentTarget, text: emptyPlace });
+      }
+       else if (inputForSearch === ""){
+      setanchorEl({ anchorEl: event.currentTarget, text: fillOutText });
 
     }
+  
     else {
       googleMapsApi.findPlaces(inputForSearch, setPlaces);
     }

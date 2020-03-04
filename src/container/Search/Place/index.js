@@ -21,7 +21,6 @@ const usePlace = (id, setPlaceDataForQuery) => {
   }, [place, setPlaceDataForQuery])
 
   useEffect(()=> {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAA');
     // https://developers.google.com/maps/documentation/javascript/places-autocomplete
     var input = document.getElementById(id);
     // use google api and set up listener for input to change when it does setPlace state
