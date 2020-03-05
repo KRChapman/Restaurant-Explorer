@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
+import MapIcon from '@material-ui/icons/Map';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import ThreeSixtyIcon from '@material-ui/icons/ThreeSixty';
 
@@ -89,9 +90,9 @@ export default function ButtonAppBar(props) {
        
           < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
           <div className={classes.optionsBtn}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+            <IconButton title="Map"  aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={"light"} color="secondary">
+                <MapIcon />
               </Badge>
             </IconButton>
             <Button color="inherit" className={'temp'}>Login</Button>
