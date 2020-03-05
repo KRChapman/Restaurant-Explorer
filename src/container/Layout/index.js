@@ -20,6 +20,7 @@ class Layout extends Component {
       healthData:[],
       placesToDisplay: [],
       placeData: {},
+      mapTheme: 'light',
       currentTotalDisplay: 0,
      }
     this.displayInc = 4;
@@ -106,7 +107,7 @@ class Layout extends Component {
     const { allPlaces, currentTotalDisplay, placesToDisplay } = this.state;
     const startingCountDisplay = placesToDisplay.length;
     const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
-    
+    debugger;
     const getDetails = googleMapsApi.getDetails(slectedPlaces);
     const details = await getDetails;
     return { slectedPlaces, details}
@@ -154,14 +155,19 @@ class Layout extends Component {
   placesLocal = (data) => {
     this.setState({ placesToDisplay: data });
   }
+  toggleMapTheme = () => {
+      const choices = {'light': 'dark', 'dark': 'light'}
+    const newTheme = choices[this.state.mapTheme] 
+    this.setState({ mapTheme: newTheme });
+  }
   render() { 
   
     
-    const { placesToDisplay, googleData, allPlaces}  = this.state;
+    const { placesToDisplay, googleData, allPlaces, mapTheme}  = this.state;
     
     return ( 
       <div>
-        <AppBar setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
+        <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
       
         <Btn clickAction={this.getMorePlaces}/>
         <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces}

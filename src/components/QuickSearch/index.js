@@ -45,6 +45,7 @@ const ControlButtons = (props) => {
   function getAllPlaces(){
     setPlaceDataForQuery(seattleData);
     googleMapsApi.initiateMap(seattleCoordinates.lat, seattleCoordinates.lng);
+ 
     googleMapsApi.findPlaces(searchTerm, formatPlaces );
   }
 }

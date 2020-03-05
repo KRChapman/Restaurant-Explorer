@@ -9,7 +9,7 @@ import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  root: {
+  container: {
     display: 'flex',
   },
   paper: {
@@ -57,7 +57,7 @@ export default function MobileMenu(props) {
   }, [open]);
 ///     
   return (
-    <div className={classes.root}>
+    <div className={classes.container}>
    
       <div>
         <Button

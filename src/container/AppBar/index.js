@@ -4,12 +4,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Badge from '@material-ui/core/Badge';
-import MailIcon from '@material-ui/icons/Mail';
-import MapIcon from '@material-ui/icons/Map';
+import InfoIcon from '@material-ui/icons/Info';
+import MapIcon from '@material-ui/icons/Public';
+
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import MobileMenu from './../../components/MobileMenu/index'
 
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
   },
   menuButton: {
-    
+    padding: "2px",
     display: 'none',
     [theme.breakpoints.down('md')]: {
       display: 'block',
@@ -70,11 +71,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
-  const { setPlaceDataForQuery, setAllPlaces} = props;
-
-  const handleMobileMenu = (event)=> {
-      console.log('event.currentTarget', event.currentTarget);
-  }
+  const { setPlaceDataForQuery, setAllPlaces, toggleMapTheme, mapTheme} = props;
 
   return (
     <div className={classes.root}>
@@ -102,11 +99,17 @@ export default function ButtonAppBar(props) {
           < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
           <div className={classes.optionsBtn}>
             <IconButton title="Map"  aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={"light"} color="secondary">
+              <Badge onClick={toggleMapTheme} badgeContent={mapTheme} color="secondary">
                 <MapIcon />
               </Badge>
             </IconButton>
-            <Button color="inherit" className={'temp'}>Login</Button>
+            <IconButton title="information" aria-label="show 4 new mails" color="inherit">
+           
+                <InfoIcon />
+           
+            </IconButton>
+            
+           
           </div>
          
         </Toolbar>
