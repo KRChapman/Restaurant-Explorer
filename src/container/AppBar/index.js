@@ -11,7 +11,7 @@ import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
 import MapIcon from '@material-ui/icons/Map';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
-import ThreeSixtyIcon from '@material-ui/icons/ThreeSixty';
+import MobileMenu from './../../components/MobileMenu/index'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,20 +62,31 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       fontSize: 9,
     },
+  },
+  menuIcon:{
+    color: "white",
   }
 }));
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
   const { setPlaceDataForQuery, setAllPlaces} = props;
+
+  const handleMobileMenu = (event)=> {
+      console.log('event.currentTarget', event.currentTarget);
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.root}>
         <Toolbar className={classes.toolbar}>
           <EmojiTransportationIcon className={classes.logo}/>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
+          <IconButton  edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MobileMenu >
+              <MenuIcon className={classes.menuIcon} />
+            </MobileMenu >
           </IconButton>
+     
           <div className={classes.titleContainer}>
         <Typography className={classes.title} variant="h4" >
             Restaurant Explorer

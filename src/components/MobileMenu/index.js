@@ -17,14 +17,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MenuListComposition() {
+export default function MobileMenu(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  //const [ele, setEle] = React.useState(null);
+  //const {element} = props;
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
+  // useEffect(() => {
+  //   setOpen(prevOpen => !prevOpen);
+  // }, [element])
 
   const handleClose = event => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -50,16 +55,10 @@ export default function MenuListComposition() {
 
     prevOpen.current = open;
   }, [open]);
-
+///     
   return (
     <div className={classes.root}>
-      <Paper className={classes.paper}>
-        <MenuList>
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>My account</MenuItem>
-          <MenuItem>Logout</MenuItem>
-        </MenuList>
-      </Paper>
+   
       <div>
         <Button
           ref={anchorRef}
@@ -67,7 +66,7 @@ export default function MenuListComposition() {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          Toggle Menu Grow
+          {props.children}
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
@@ -91,3 +90,12 @@ export default function MenuListComposition() {
     </div>
   );
 }
+
+
+{/* <Paper className={classes.paper}>
+  <MenuList>
+    <MenuItem>Profile</MenuItem>
+    <MenuItem>My account</MenuItem>
+    <MenuItem>Logout</MenuItem>
+  </MenuList>
+</Paper> */}
