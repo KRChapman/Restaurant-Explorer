@@ -107,7 +107,7 @@ class Layout extends Component {
     const { allPlaces, currentTotalDisplay, placesToDisplay } = this.state;
     const startingCountDisplay = placesToDisplay.length;
     const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
-    debugger;
+    // debugger;
     const getDetails = googleMapsApi.getDetails(slectedPlaces);
     const details = await getDetails;
     return { slectedPlaces, details}
@@ -158,7 +158,7 @@ class Layout extends Component {
   toggleMapTheme = () => {
       const choices = {'light': 'dark', 'dark': 'light'}
     const newTheme = choices[this.state.mapTheme] 
-    this.setState({ mapTheme: newTheme });
+    this.setState({ mapTheme: newTheme }, googleMapsApi.changeMapTheme(this.state.mapTheme));
   }
   render() { 
   

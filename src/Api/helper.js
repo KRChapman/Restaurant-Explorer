@@ -109,7 +109,13 @@ class GoogleMapsApi {
       this.map = map;
   }
 
-  // changeMapTheme()
+  changeMapTheme(mapTheme){
+    if (this.map){
+      this.map.setOptions({ styles: mapThemes[mapTheme] })
+    }
+    
+ 
+ }
 
   autoCompletePlace(inputElement, setPlace) {
     const searchBox = new window.google.maps.places.Autocomplete(inputElement);

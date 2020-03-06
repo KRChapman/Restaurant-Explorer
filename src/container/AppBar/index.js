@@ -10,10 +10,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Badge from '@material-ui/core/Badge';
 import InfoIcon from '@material-ui/icons/Info';
 import MapIcon from '@material-ui/icons/Public';
-
+import Container from '@material-ui/core/Container';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import MobileMenu from './../../components/MobileMenu/index'
-
+//     margin-left: -12px;
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -23,6 +23,9 @@ const useStyles = makeStyles(theme => ({
     display: 'none',
     [theme.breakpoints.down('md')]: {
       display: 'block',
+      marginLeft: "-12px",
+      marginRight: 0,
+      width: "64px"
       //marginRight: theme.spacing(1),
     },
    
@@ -66,6 +69,13 @@ const useStyles = makeStyles(theme => ({
   },
   menuIcon:{
     color: "white",
+  },
+  badge: {
+    '& span': {
+   
+       top: "-3px",
+    }
+   
   }
 }));
 
@@ -78,11 +88,11 @@ export default function ButtonAppBar(props) {
       <AppBar position="fixed" className={classes.root}>
         <Toolbar className={classes.toolbar}>
           <EmojiTransportationIcon className={classes.logo}/>
-          <IconButton  edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <Container   className={classes.menuButton} color="inherit" aria-label="menu">
             <MobileMenu >
               <MenuIcon className={classes.menuIcon} />
             </MobileMenu >
-          </IconButton>
+          </Container>
      
           <div className={classes.titleContainer}>
         <Typography className={classes.title} variant="h4" >
@@ -98,8 +108,8 @@ export default function ButtonAppBar(props) {
        
           < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
           <div className={classes.optionsBtn}>
-            <IconButton title="Map"  aria-label="show 4 new mails" color="inherit">
-              <Badge onClick={toggleMapTheme} badgeContent={mapTheme} color="secondary">
+            <IconButton onClick={toggleMapTheme} title="Map" color="inherit">
+              <Badge badgeContent={mapTheme} className={classes.badge} color="secondary">
                 <MapIcon />
               </Badge>
             </IconButton>
