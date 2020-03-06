@@ -6,7 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import { makeStyles } from '@material-ui/core/styles';
+import  makeStyles from '@material-ui/core/styles/makeStyles';
+import { MapTheme, InfoCardBtn} from './../shared/AppBarBtns';
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -21,7 +23,7 @@ export default function MobileMenu(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   //const [ele, setEle] = React.useState(null);
-  //const {element} = props;
+  const { badgeContent, toggleMapTheme, toggleInfoCard} = props;
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
@@ -55,7 +57,7 @@ export default function MobileMenu(props) {
 
     prevOpen.current = open;
   }, [open]);
-///     
+  
   return (
     <div className={classes.container}>
    
@@ -77,9 +79,8 @@ export default function MobileMenu(props) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem ><MapTheme badgeContent={badgeContent} toggleMapTheme={toggleMapTheme}/></MenuItem>
+                    <MenuItem ><InfoCardBtn toggleInfoCard={toggleInfoCard}/></MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

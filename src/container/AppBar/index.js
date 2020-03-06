@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Search from './../Search/index';
-import { makeStyles } from '@material-ui/core/styles';
+import  makeStyles  from '@material-ui/core/styles/makeStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +13,10 @@ import MapIcon from '@material-ui/icons/Public';
 import Container from '@material-ui/core/Container';
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import MobileMenu from './../../components/MobileMenu/index'
-//     margin-left: -12px;
+import {WarnPopover} from './../../components/PopOver/index'
+import InfoCard from './../../components/InfoCard/index';
+import { MapTheme, InfoCardBtn} from './../../components/shared/AppBarBtns';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -81,15 +84,22 @@ const useStyles = makeStyles(theme => ({
 
 export default function ButtonAppBar(props) {
   const classes = useStyles();
+  const [anchorEl, setanchorEl] = useState();
   const { setPlaceDataForQuery, setAllPlaces, toggleMapTheme, mapTheme} = props;
+  
+  const toggleInfoCard = (event) =>{
+    
+    setanchorEl(event.currentTarget);
 
+  }
+ const popOver = <WarnPopover anchorEl={anchorEl} setanchorEl={setanchorEl}><InfoCard/></WarnPopover>
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.root}>
         <Toolbar className={classes.toolbar}>
           <EmojiTransportationIcon className={classes.logo}/>
           <Container   className={classes.menuButton} color="inherit" aria-label="menu">
-            <MobileMenu >
+            <MobileMenu toggleInfoCard={toggleInfoCard} badgeContent={mapTheme} toggleMapTheme={toggleMapTheme}>
               <MenuIcon className={classes.menuIcon} />
             </MobileMenu >
           </Container>
@@ -108,17 +118,11 @@ export default function ButtonAppBar(props) {
        
           < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
           <div className={classes.optionsBtn}>
-            <IconButton onClick={toggleMapTheme} title="Map" color="inherit">
-              <Badge badgeContent={mapTheme} className={classes.badge} color="secondary">
-                <MapIcon />
-              </Badge>
-            </IconButton>
-            <IconButton title="information" aria-label="show 4 new mails" color="inherit">
-           
-                <InfoIcon />
-           
-            </IconButton>
+            <MapTheme toggleMapTheme={toggleMapTheme} badgeContent={mapTheme}/>
+         
             
+              <InfoCardBtn toggleInfoCard={toggleInfoCard} />
+            {popOver}
            
           </div>
          
@@ -128,3 +132,15 @@ export default function ButtonAppBar(props) {
   );
 }
 
+{/* <IconButton onClick={toggleMapTheme} title="Map" color="inherit">
+  <Badge badgeContent={mapTheme} className={classes.badge} color="secondary">
+    <MapIcon />
+  </Badge>
+</IconButton> */}
+
+
+// <IconButton onClick={toggleInfoCard} title="information" aria-label="show 4 new mails" color="inherit">
+
+//   <InfoIcon />
+
+//   <IconButton />
