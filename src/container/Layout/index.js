@@ -158,7 +158,8 @@ class Layout extends Component {
   toggleMapTheme = () => {
       const choices = {'light': 'dark', 'dark': 'light'}
     const newTheme = choices[this.state.mapTheme] 
-    this.setState({ mapTheme: newTheme }, googleMapsApi.changeMapTheme(this.state.mapTheme));
+  
+    this.setState({ mapTheme: newTheme }, ()=> googleMapsApi.changeMapTheme(this.state.mapTheme));
   }
   render() { 
   

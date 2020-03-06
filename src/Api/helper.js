@@ -94,7 +94,8 @@ class GoogleMapsApi {
    
   }
 
-  initiateMap(latitude = null,longitude = null,mapTheme = "dark"){
+    // pUT STYLES AND MAP THEM VARIABLE START IN OWN FILE AND IMPORT TO THIS AND LAYOUT mapTheme State
+  initiateMap(latitude = null,longitude = null,mapTheme = "light"){
     const lat = latitude == null ? this.place.geometry.location.lat() :  latitude;
     const lon = longitude == null ? this.place.geometry.location.lng() : longitude;
       const exactLocation = new window.google.maps.LatLng(lat, lon);

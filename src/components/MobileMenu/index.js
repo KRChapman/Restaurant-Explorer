@@ -22,16 +22,12 @@ const useStyles = makeStyles(theme => ({
 export default function MobileMenu(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  //const [ele, setEle] = React.useState(null);
   const { badgeContent, toggleMapTheme, toggleInfoCard} = props;
   const anchorRef = React.useRef(null);
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
-  // useEffect(() => {
-  //   setOpen(prevOpen => !prevOpen);
-  // }, [element])
 
   const handleClose = event => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -93,10 +89,3 @@ export default function MobileMenu(props) {
 }
 
 
-{/* <Paper className={classes.paper}>
-  <MenuList>
-    <MenuItem>Profile</MenuItem>
-    <MenuItem>My account</MenuItem>
-    <MenuItem>Logout</MenuItem>
-  </MenuList>
-</Paper> */}

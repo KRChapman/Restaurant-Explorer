@@ -103,44 +103,24 @@ export default function ButtonAppBar(props) {
               <MenuIcon className={classes.menuIcon} />
             </MobileMenu >
           </Container>
-     
+    
           <div className={classes.titleContainer}>
         <Typography className={classes.title} variant="h4" >
-            Restaurant Explorer
-    
+            Restaurant Explorer   
           </Typography>
             <Typography className={classes.details} variant="subtitle2" >
             Google Ratings, Yelp Ratings and King County Health Department Data
           </Typography>
-          </div>
-      
-         
-       
-          < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
+          </div>     
+            < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
           <div className={classes.optionsBtn}>
-            <MapTheme toggleMapTheme={toggleMapTheme} badgeContent={mapTheme}/>
-         
-            
+            <MapTheme toggleMapTheme={toggleMapTheme} badgeContent={mapTheme}/>         
               <InfoCardBtn toggleInfoCard={toggleInfoCard} />
-            {popOver}
-           
-          </div>
-         
+            {popOver}     
+          </div>     
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-{/* <IconButton onClick={toggleMapTheme} title="Map" color="inherit">
-  <Badge badgeContent={mapTheme} className={classes.badge} color="secondary">
-    <MapIcon />
-  </Badge>
-</IconButton> */}
-
-
-// <IconButton onClick={toggleInfoCard} title="information" aria-label="show 4 new mails" color="inherit">
-
-//   <InfoIcon />
-
-//   <IconButton />
