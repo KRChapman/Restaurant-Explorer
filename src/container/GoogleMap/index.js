@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef} from 'react';
 import {googleMapsApi} from './../../Api/helper';
 import markers from './../../Api/markers'
+// import { styled } from '@material-ui/core/styles';
+
+
+
+
 const GoogleMapDisplay = (props) => {
   const [mapMarkers, setmapMarkers] = useState([]);
   const [selectedMarker, setselectedMarker] = useState({});
@@ -85,11 +90,17 @@ const GoogleMapDisplay = (props) => {
       })
 
   }, [mapMarkers])
+  // const DisplayMap  = 
+ // const IsDisplayMap = mapMarkers.length > 0 ? <DisplayMap /> : <div></div>;
   return (
+  
     <div className="map-container">
-    <div id="map"></div>
+     
+      <div id="map"></div>
     </div>
   )
 }
+
+
 
 export default GoogleMapDisplay
