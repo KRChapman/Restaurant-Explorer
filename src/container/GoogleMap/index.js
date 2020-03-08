@@ -3,40 +3,39 @@ import {googleMapsApi} from './../../Api/helper';
 import markers from './../../Api/markers'
 // import { styled } from '@material-ui/core/styles';
 
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+  initialContainer: {
+    margin: "10px auto",
+  },
+  // initialMap: {
+  //   backgroundColor: props => props.backgroundColor,
+  // },
+  styledMapContainer: {
+     //  margin: "10px auto",
+      maxWidth: "800px",
+
+ 
+    boxShadow: "0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)",
+  },
+  styledMap: {
+    width: "100%",
+
+    height:"350px",
+  },
+});
 
 
 
 const GoogleMapDisplay = (props) => {
+  const classes = useStyles();
   const [mapMarkers, setmapMarkers] = useState([]);
-  const [selectedMarker, setselectedMarker] = useState({});
   const {googleData} = props;
   const basePaddle = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png"
 
 
 
-  // UPDATE
-
-  // useEffect(()=>{
-  //   if (selectedIndex > 0){
-  //     setselectedMarker(selectedIndex);
-  //   }
-  // }, [selectedIndex])
-
-  //DELETE
-  // const prevGoogleData = useRef();
-  // useEffect(()=> {
-  //   prevGoogleData.current = googleData;
-  // })
-
-  // useEffect(()=> {
-  //   if (prevGoogleData.current !== googleData){
-
-     
-  //     googleMapsApi.markers.length = 0;
-  //     setmapMarkers([]);
-
-  // }
-  // }, [googleData])
 
   useEffect(()=>{
 
@@ -64,22 +63,7 @@ const GoogleMapDisplay = (props) => {
       
       setmapMarkers(markers);
     }
-    //  if (selectedIndex > 0 && prevIndex > 0){
-
-
-    //  }
-     
-    //   setmapMarkers(currentState => {
-    //     const newMapMarkers = [...currentState]
-    //     debugger;
-    //     newMapMarkers[prevIndex].icon.url = googleData[prevIndex].marker
-    //     const selected = googleMapsApi.changeMarker(googleData[prevIndex]);
-    //     newMapMarkers[selectedIndex] = null;
-    //     newMapMarkers[selectedIndex] = selected;
-    //     return newMapMarkers;
-    //   });
-    // }
-    //  ,selectedIndex, prevIndex]
+   
   }, [googleData])
 
 
@@ -92,11 +76,15 @@ const GoogleMapDisplay = (props) => {
   }, [mapMarkers])
   // const DisplayMap  = 
  // const IsDisplayMap = mapMarkers.length > 0 ? <DisplayMap /> : <div></div>;
-  return (
+  const isMarkersContainer = mapMarkers.length > 0 ? classes.styledMapContainer : ""; 
+  const isMarkersMap = mapMarkers.length > 0 ? classes.styledMap : ""; 
+  const containerStyle = `${classes.initialContainer} ${isMarkersContainer}`
+  const mapStyle = `${classes.initialContainer} ${isMarkersMap}`
+ return (
   
-    <div className="map-container">
+   <div className={containerStyle}>
      
-      <div id="map"></div>
+     <div className={mapStyle} id="map"></div>
     </div>
   )
 }
