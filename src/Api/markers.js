@@ -11,8 +11,8 @@ const purpleMarker = 'purple-stars.png';
   anchor: new window.google.maps.Point(0, 22),
 
   // This marker is 20 pixels wide by 32 pixels high.
-  size: new window.google.maps.Size(20, 22),
-  scaledSize: new window.google.maps.Size(18, 18)
+  size: new window.google.maps.Size(30, 32),
+  scaledSize: new window.google.maps.Size(35, 35)
 
 }
 
@@ -24,8 +24,8 @@ const purpleMarker = 'purple-stars.png';
   anchor: new window.google.maps.Point(0, 22),
 
   // This marker is 20 pixels wide by 32 pixels high.
-  size: new window.google.maps.Size(20, 22),
-  scaledSize: new window.google.maps.Size(18, 18)
+    size: new window.google.maps.Size(30, 32),
+    scaledSize: new window.google.maps.Size(35, 35)
 
 }
 const markers = { 'selected': selectedMarker, 'default': defaultMarker }

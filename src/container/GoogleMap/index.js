@@ -8,15 +8,9 @@ const GoogleMapDisplay = (props) => {
   const basePaddle = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png"
 
 
-  // const selectedIndex = googleData.findIndex((ele) => {
-  //   return ele.marker === 'selected';
-  // })
 
   // UPDATE
-  // const prevIndex = mapMarkers.findIndex((ele) => {
-  //  debugger;
-  //   return ele.icon.url === basePaddle;
-  // })
+
   // useEffect(()=>{
   //   if (selectedIndex > 0){
   //     setselectedMarker(selectedIndex);
@@ -41,16 +35,34 @@ const GoogleMapDisplay = (props) => {
 
   useEffect(()=>{
 
-  
+    const selectedIndex = googleData.findIndex((ele) => {
+      return ele.marker === 'selected';
+    })
     //skip first render of empty array and no marker has been selected 
     // && selectedIndex < 0
-    if (googleData.length > 0){
+    if (selectedIndex > 0 ){
+      setmapMarkers(prev=> {
+ 
+        const updateMarkers = [...prev]
+        const prevIndex = updateMarkers.findIndex((ele) => {
+          return ele.icon.url === basePaddle;
+        })
+    
+        updateMarkers[prevIndex].setIcon(markers['default']);
+        updateMarkers[selectedIndex].setIcon(markers['selected']);
+        return updateMarkers;
+      });
+    }
+    else if (googleData.length > 0){
 
       const markers = googleMapsApi.getMarkers(googleData);
       
       setmapMarkers(markers);
     }
-    // else if (selectedIndex > 0 && prevIndex > 0){
+    //  if (selectedIndex > 0 && prevIndex > 0){
+
+
+    //  }
      
     //   setmapMarkers(currentState => {
     //     const newMapMarkers = [...currentState]
