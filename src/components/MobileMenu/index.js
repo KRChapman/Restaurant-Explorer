@@ -13,10 +13,16 @@ import { MapTheme, InfoCardBtn} from './../shared/AppBarBtns';
 const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      width: '52px'
+    },
   },
   paper: {
     marginRight: theme.spacing(2),
   },
+  menueBtn: {
+  
+  }
 }));
 
 export default function MobileMenu(props) {
@@ -57,8 +63,8 @@ export default function MobileMenu(props) {
   return (
     <div className={classes.container}>
    
-      <div>
-        <Button
+     
+      <Button className={classes.menueBtn}
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : undefined}
           aria-haspopup="true"
@@ -83,7 +89,7 @@ export default function MobileMenu(props) {
             </Grow>
           )}
         </Popper>
-      </div>
+     
     </div>
   );
 }

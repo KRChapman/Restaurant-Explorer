@@ -1,3 +1,6 @@
+
+
+
 export class GooglePlace {
   constructor(placeId, googleData ){
     // if not photo get 
@@ -51,6 +54,7 @@ export class AllPlaces {
     let index = addressArray.indexOf(',');
     let address = addressArray.slice(0, index);
     address = address.join('');
+;
     let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
    
       this.placeId= ele.place_id;
@@ -63,4 +67,6 @@ export class AllPlaces {
       this.marker= 'default';
 
   }
+
+
 }

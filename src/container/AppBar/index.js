@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
    // width: "470px",
     [theme.breakpoints.down('sm')]: {
      
-      fontSize: "1.200rem",
+      fontSize: "1.100rem",
     },
   },
   titleContainer: {
@@ -51,6 +51,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: theme.spacing(0),
+    },
+    // 
+    // paddingRight: theme.spacing(1),
   },
   optionsBtn:{
     [theme.breakpoints.down('md')]: {
@@ -67,11 +72,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: 12,
     display: 'inline-block',
     [theme.breakpoints.down('sm')]: {
-      fontSize: 9,
+      fontSize: 8,
     },
   },
   menuIcon:{
     color: "white",
+    
   },
   badge: {
     '& span': {
@@ -109,7 +115,7 @@ export default function ButtonAppBar(props) {
             Restaurant Explorer   
           </Typography>
             <Typography className={classes.details} variant="subtitle2" >
-            Google Ratings, Yelp Ratings and King County Health Department Data
+            Google and Yelp Ratings with King County Health Department Data
           </Typography>
           </div>     
             < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>

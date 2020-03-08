@@ -13,6 +13,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import useStockPhotos from './GoogleInfo/useStockPhotos'
+
 
 
 const useStyles = makeStyles({
@@ -39,14 +41,14 @@ const DisplayCard = (props) => {
   const classes = useStyles();
   const { googlePlace, yelpPlace, healthPlace } = props.placeData
 
-
+  const photo = useStockPhotos(googlePlace.photo);
   return (
 
     <Card className={classes.root} elevation={8} onMouseEnter={(event) => props.changeMapIcon(googlePlace.placeId,event)}>
 
         <CardMedia
           className={classes.media}
-          image={googlePlace.photo || "na"}
+          image={photo || 'na'}
             title={googlePlace.name}
         />
         <CardContent className={classes.content}>
