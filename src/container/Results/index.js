@@ -37,7 +37,8 @@ const Results = (props) => {
   const [placesViewRange, dispatchPlacesViewRange] = useReducer(navigatePlacesViewRangeReducer,{start:0, end:0});
   const [currentPlacesToDisplay, setCurrentPlacesToDisplay] = useState([]);
   const [checked, setChecked] = React.useState(false);
-  const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, setPlaceDataForQuery, TotalNumberOfAllPlaces} = props;
+  const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
+    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData} = props;
   const totalPlaces = placesToDisplay.length;
 
   useEffect(()=> {
@@ -53,7 +54,7 @@ const Results = (props) => {
   let toDisplay = null;
   if (totalPlaces > 0) {
     toDisplay = currentPlacesToDisplay.map((ele, i) => {
-      return <DisplayCard changeMapIcon={changeMapIcon} key={i} placeData={ele}/>
+      return <DisplayCard placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
     })
   } 
   const changeViewRangeHandler = (e,type) => {
@@ -99,7 +100,6 @@ const Results = (props) => {
     </React.Fragment>
   )
 }
-//  <Container className={classes.root} >  </Container> 
 
 function navigatePlacesViewRangeReducer(currentState, action) {
   const placesViewRange = { ...currentState};

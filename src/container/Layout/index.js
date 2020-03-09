@@ -23,7 +23,7 @@ class Layout extends Component {
       mapTheme: 'light',
       currentTotalDisplay: 0,
      }
-    this.displayInc = 4;
+    this.displayInc = 2;
   }
   componentDidMount(){
    localupdate(this.placesLocal);
@@ -72,7 +72,9 @@ class Layout extends Component {
       const  health  = slectedHealthData[i].data;
       const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
       const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
-      
+      // const url = this.state.placeDetails.find(ele=> {
+
+      // })
       return { googlePlace: new GooglePlace(ele.placeId, ele), yelpPlace, healthPlace }
     })
     this.setState(currentState => {
@@ -164,14 +166,14 @@ class Layout extends Component {
   render() { 
   
     
-    const { placesToDisplay, googleData, allPlaces, mapTheme}  = this.state;
+    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData}  = this.state;
     
     return ( 
       <div>
         <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
       
         <Btn clickAction={this.getMorePlaces}/>
-        <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces}
+        <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData}
           setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} TotalNumberOfAllPlaces={allPlaces.length}  /> 
         <GoogleMapDisplay googleData={googleData}/>
       </div>

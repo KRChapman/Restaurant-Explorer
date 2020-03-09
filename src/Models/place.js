@@ -8,7 +8,7 @@ export class GooglePlace {
     this.name = googleData.name || "";
     this.rating = googleData.rating || "";
     this.photo = googleData.photo || "";
-
+    this.address = googleData.address || ""
 
   }
 }

@@ -39,9 +39,11 @@ const useStyles = makeStyles({
 });
 const DisplayCard = (props) => {
   const classes = useStyles();
-  const { googlePlace, yelpPlace, healthPlace } = props.placeData
-
+  const { placeData} =props;
+  const { googlePlace, yelpPlace, healthPlace } = props.googleYelpHealthData
+ 
   const photo = useStockPhotos(googlePlace.photo);
+
   return (
 
     <Card className={classes.root} elevation={8} onMouseEnter={(event) => props.changeMapIcon(googlePlace.placeId,event)}>
@@ -56,7 +58,7 @@ const DisplayCard = (props) => {
               {googlePlace.name}
           </Typography>
           <Typography variant="body1" color="textPrimary" component="div">
-              <GoogleInfo googlePlace={googlePlace} />
+          <GoogleInfo placeData={placeData} googlePlace={googlePlace} />
         </Typography>
         <Typography variant="body1" color="textPrimary" component="div">
           <YelpInfo yelpPlace={yelpPlace} />
