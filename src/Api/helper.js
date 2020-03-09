@@ -101,7 +101,7 @@ class GoogleMapsApi {
       const exactLocation = new window.google.maps.LatLng(lat, lon);
       const map = new window.google.maps.Map(document.getElementById('map'), {
         center: exactLocation,
-        zoom: 13,
+        zoom: 14,
         styles: mapThemes[mapTheme],
   
         

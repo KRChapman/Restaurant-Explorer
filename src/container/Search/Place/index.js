@@ -38,22 +38,9 @@ const usePlace = (id, setPlaceDataForQuery) => {
     }
   }, [place, formatPlaceDataForQuery]);
 
-    //  return ( 
-   
-    //    <Comp id={id}/>
- 
-    //  )
 
   return place;
 }
 
-{/* <InputBase
-  placeholder="Search…"
-  classes={{
-    root: classes.inputRoot,
-    input: classes.inputInput,
-  }}
-  inputProps={{ 'aria-label': 'search' }}
-/> */}
- 
+
 export default usePlace;

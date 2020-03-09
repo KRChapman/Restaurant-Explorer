@@ -42,17 +42,18 @@ const GoogleMapDisplay = (props) => {
     const selectedIndex = googleData.findIndex((ele) => {
       return ele.marker === 'selected';
     })
+  
     //skip first render of empty array and no marker has been selected 
     // && selectedIndex < 0
-    if (selectedIndex > 0 ){
-      setmapMarkers(prev=> {
- 
+    if (selectedIndex >= 0 ){
+      setmapMarkers(prev=> {  
         const updateMarkers = [...prev]
         const prevIndex = updateMarkers.findIndex((ele) => {
           return ele.icon.url === basePaddle;
         })
-    
-        updateMarkers[prevIndex].setIcon(markers['default']);
+        if (prevIndex >= 0){
+           updateMarkers[prevIndex].setIcon(markers['default']);
+         }      
         updateMarkers[selectedIndex].setIcon(markers['selected']);
         return updateMarkers;
       });

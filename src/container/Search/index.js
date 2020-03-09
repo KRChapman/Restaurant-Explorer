@@ -66,7 +66,7 @@ const useStyles= makeStyles(theme => {
 const Search = props => {
   const classes = useStyles();
   const fillOutText = "Fill out all fields";
-  const emptyPlace = "select place from autocomplete drop down"
+  const emptyPlace = "select location from autocomplete drop down"
   const [inputForSearch, setInputForSearch] = useState("");
   const [allPlaces, setPlaces] = useState([]);
  // const [anchorEl, setanchorEl] = useState(null);

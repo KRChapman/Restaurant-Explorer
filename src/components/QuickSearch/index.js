@@ -19,7 +19,7 @@ const ControlButtons = (props) => {
   }
  
 
-  const terms = { pasta: "Pasta" , seafood: "Seafood"};
+  const terms = { pasta: "Pasta" , seafood: "Seafood", bars: "Bars"};
 
 
 
