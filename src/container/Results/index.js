@@ -34,12 +34,14 @@ const useStyles = makeStyles(theme => ({
 
 const Results = (props) => {
   const classes = useStyles();
-  const [placesViewRange, dispatchPlacesViewRange] = useReducer(navigatePlacesViewRangeReducer,{start:0, end:0});
+  const [placesViewRange, dispatchPlacesViewRange] = useReducer(navigatePlacesViewRange,{start:0, end:0});
   const [currentPlacesToDisplay, setCurrentPlacesToDisplay] = useState([]);
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
   const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
-    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData} = props;
+    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData, yelpId} = props;
   const totalPlaces = placesToDisplay.length;
+  const tabletSize = 900;
 
   useEffect(()=> {
     dispatchPlacesViewRange({ type: "INITIAL", payload: { totalPlaces, displayInc } });
@@ -50,11 +52,16 @@ const Results = (props) => {
    const partialDisplay = placesToDisplay.slice(start,end)
    setCurrentPlacesToDisplay(partialDisplay)
   }, [placesViewRange, placesToDisplay])
+
+  useEffect(() => {
+    updateWindow();
+    window.addEventListener("resize", updateWindow);
+  }, [])
  
   let toDisplay = null;
   if (totalPlaces > 0) {
     toDisplay = currentPlacesToDisplay.map((ele, i) => {
-      return <DisplayCard placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
+      return <DisplayCard yelpId={yelpId} isDesktop={isDesktop} placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
     })
   } 
   const changeViewRangeHandler = (e,type) => {
@@ -99,9 +106,14 @@ const Results = (props) => {
   
     </React.Fragment>
   )
+
+  function updateWindow() {
+    setIsDesktop(window.innerWidth > tabletSize)
+  }
+  
 }
 
-function navigatePlacesViewRangeReducer(currentState, action) {
+function navigatePlacesViewRange(currentState, action) {
   const placesViewRange = { ...currentState};
   const { totalPlaces, displayInc } = action.payload;
   const min = 0;
@@ -127,5 +139,7 @@ function navigatePlacesViewRangeReducer(currentState, action) {
       break;
   }
 }
+
+
 
 export default Results;

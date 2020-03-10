@@ -362,7 +362,29 @@ export const getYelpHealthData = (queries, setState) => {
     }).catch(e=>{
       console.log('req.body.yelp', e);
     })
+};
+
+export const getYelpReviews = (yelpId) => {
+  const url = yelpUrl + '/yelp-review';
+  const request = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: yelpId
+  }
+ return Promise.resolve(
+    apiRequest(url, request)
+  )
+    .then((response) => {
+      return response.json()
+    }).then((data) => {
+      return data;
+    }).catch(e => {
+      console.log('req.body.yelp', e);
+    })
+
 }
-;
 
 export let googleMapsApi = new GoogleMapsApi();

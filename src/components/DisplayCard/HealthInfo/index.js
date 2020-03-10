@@ -39,26 +39,26 @@ const HealthInfo = (props) => {
     
       <div className='health-container'>
    
-    <div>Health Department Rating</div>
-    
-    <div className="health-data-container">
-    
-      <CardMedia
-        className={classes.media}
-        image={healthImage || "na"}
-        title={healthPlace.name}
-      />
+        <div>Health Department Rating</div>
+        
+        <div className="health-data-container">
+        
+          <CardMedia
+            className={classes.media}
+            image={healthImage || "na"}
+            title={healthPlace.name}
+          />
 
-      
-      <CardActions>
-
-          <Button onClick={handlePopTable} size="small" color="primary" variant="outlined">
-            Inspections
-        </Button>
           
-          <WarnPopover setanchorEl={setanchorEl} anchorEl={anchorEl}><InspectionsTable tableData={healthPlace.inspectionHistory}/></WarnPopover>
-      </CardActions>
-      </div>
+          <CardActions>
+
+              <Button onClick={handlePopTable} size="small" color="primary" variant="outlined">
+                Inspections
+            </Button>
+              
+              <WarnPopover setanchorEl={setanchorEl} anchorEl={anchorEl}><InspectionsTable tableData={healthPlace.inspectionHistory}/></WarnPopover>
+          </CardActions>
+          </div>
     </div>
 
     

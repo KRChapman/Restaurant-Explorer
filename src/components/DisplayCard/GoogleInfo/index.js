@@ -2,10 +2,11 @@ import React from 'react';
 import halfStar from './../../../assets/google/half.png';
 import wholeStar from './../../../assets/google/full.png';
 import emptyStar from './../../../assets/google/empty.png';
-import {Link} from './../SharedCardBtns/index'
+import { Link, Reviews} from './../SharedCardBtns/index'
+
 
 const GoogleInfo = (props) => {
-  const { googlePlace, placeData } = props;
+  const { googlePlace, placeData, isDesktop } = props;
   const starsToDisplay = getStarsToDisplay(googlePlace);
   const url = formatUrl(googlePlace, placeData);
  const googleStars = starsToDisplay.map((ele,i)=>{
@@ -21,8 +22,9 @@ const GoogleInfo = (props) => {
         
         {googleStars}
       </div>
-      <div>
-        <Link url={url}>Directions</Link>
+      <div className={'test'}>
+        <Link isDesktop={isDesktop} url={url}>Directions</Link>
+        <Reviews > </Reviews>
       </div>
     </div>
   )
@@ -79,11 +81,10 @@ function formatUrl(googlePlace, placeData){
   const regSpace = "\s";
   const placeId = googlePlace.placeId;
   const name = googlePlace.name.replace(regSpace, '+');
-  const address = googlePlace.address;
+ // const address = googlePlace.address;
  
   const cityState = `${placeData.city}+${placeData.state}`
-  // p.replace(regex, 'ferret')
-  //&travelmode=bicycling
+
  // https://developers.google.com/maps/documentation/urls/guide#directions-action
   const baseUrl = `https://www.google.com/maps/dir/?api=1&destination_place_id=${placeId}&destination=${name}+${cityState}`
   return baseUrl;

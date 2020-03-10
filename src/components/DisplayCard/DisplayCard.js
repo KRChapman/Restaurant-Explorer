@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 });
 const DisplayCard = (props) => {
   const classes = useStyles();
-  const { placeData} =props;
+  const { placeData, isDesktop, yelpId} =props;
   const { googlePlace, yelpPlace, healthPlace } = props.googleYelpHealthData
  
   const photo = useStockPhotos(googlePlace.photo);
@@ -58,10 +58,10 @@ const DisplayCard = (props) => {
               {googlePlace.name}
           </Typography>
           <Typography variant="body1" color="textPrimary" component="div">
-          <GoogleInfo placeData={placeData} googlePlace={googlePlace} />
+          <GoogleInfo isDesktop={isDesktop} placeData={placeData} googlePlace={googlePlace} />
         </Typography>
         <Typography variant="body1" color="textPrimary" component="div">
-          <YelpInfo yelpPlace={yelpPlace} />
+          <YelpInfo yelpId={yelpId} isDesktop={isDesktop} yelpPlace={yelpPlace} />
         </Typography>
         <Typography variant="body1" color="textPrimary" component="div">
           <HealthInfo healthPlace={healthPlace} />
