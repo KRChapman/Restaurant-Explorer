@@ -61,7 +61,7 @@ const DisplayCard = (props) => {
           <GoogleInfo isDesktop={isDesktop} placeData={placeData} googlePlace={googlePlace} />
         </Typography>
         <Typography variant="body1" color="textPrimary" component="div">
-          <YelpInfo yelpId={yelpId} isDesktop={isDesktop} yelpPlace={yelpPlace} />
+          <YelpInfo isDesktop={isDesktop} yelpPlace={yelpPlace} />
         </Typography>
         <Typography variant="body1" color="textPrimary" component="div">
           <HealthInfo healthPlace={healthPlace} />

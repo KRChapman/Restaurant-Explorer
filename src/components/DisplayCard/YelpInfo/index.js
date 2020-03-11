@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import {Link,Reviews} from './../SharedCardBtns/index'
 
 const YelpInfo = (props) => {
-  const { yelpPlace, isDesktop, yelpId} = props;
+  const { yelpPlace, isDesktop} = props;
   const rating = yelpPlace.rating.toString();
   const handleReviewShow = async() =>{
 

@@ -39,7 +39,7 @@ const Results = (props) => {
   const [checked, setChecked] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
-    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData, yelpId} = props;
+    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData} = props;
   const totalPlaces = placesToDisplay.length;
   const tabletSize = 900;
 
@@ -61,7 +61,7 @@ const Results = (props) => {
   let toDisplay = null;
   if (totalPlaces > 0) {
     toDisplay = currentPlacesToDisplay.map((ele, i) => {
-      return <DisplayCard yelpId={yelpId} isDesktop={isDesktop} placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
+      return <DisplayCard isDesktop={isDesktop} placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
     })
   } 
   const changeViewRangeHandler = (e,type) => {

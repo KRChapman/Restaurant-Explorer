@@ -252,7 +252,7 @@ class GoogleMapsApi {
 export const yelpUrl = 'http://localhost:5000/api'
 export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails) => {
   const { city, state, country } = placeDetails;
-  const queries = { data:[]}
+  const queries = { data: [] }; 
   for (let i = 0; i < allPlaces.length; i++) {
     
     let phoneNumbersFormated;
@@ -268,6 +268,7 @@ export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails) => {
 
     queries.data.push({ placeId: allPlaces[i].placeId, phoneNumber: phoneNumbersFormated, city, state, country, name: allPlaces[i].name, address: allPlaces[i].address })
   }
+  return queries;
 }
 
 export const buildHealthQuery = (places, phoneNumbers) => {
