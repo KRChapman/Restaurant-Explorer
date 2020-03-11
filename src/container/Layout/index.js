@@ -98,11 +98,11 @@ class Layout extends Component {
     const { placeData, currentTotalDisplay, placesToDisplay} = this.state; 
     const startingCountDisplay = placesToDisplay.length
     const displayLimit = currentTotalDisplay - startingCountDisplay;
-   // let queries = { yelp: { data: [] }, displayLimit };
-     const queries = { displayLimit};
+    const queries = { displayLimit};
+    
     queries["health"] = buildHealthQuery(slectedPlaces, phoneNumbers);
-     queries["yelp"] =  buildYelpQuery(slectedPlaces, phoneNumbers, placeData);
-    debugger;
+    queries["yelp"] =  buildYelpQuery(slectedPlaces, phoneNumbers, placeData);
+    
     return queries;
   }
   async getDetails(){

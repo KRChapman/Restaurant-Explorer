@@ -301,10 +301,14 @@ export const buildHealthQuery = (places, phoneNumbers) => {
 
   function formatHealthName(name) {
     const regex = /%20and%20/gi;
-    const regex2 = /'/gi;
+   // const regex2 = /'/gi;
+    const regex3 = /'s/gi;
     let healthName = fixedEncodeURIComponent(name.toUpperCase());
     healthName = healthName.replace(regex, '%20%26%20');
-    healthName = healthName.replace(regex2, '%34');
+    // Error no return data with 's escaped so replace with empty string instead
+   // healthName = healthName.replace(regex2, '%34'); 
+    healthName = healthName.replace(regex3, '')
+    debugger;
     return healthName;
   }
 
