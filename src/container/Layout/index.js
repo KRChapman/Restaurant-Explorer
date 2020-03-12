@@ -99,10 +99,10 @@ class Layout extends Component {
     const startingCountDisplay = placesToDisplay.length
     const displayLimit = currentTotalDisplay - startingCountDisplay;
     const queries = { displayLimit};
-    
+
     queries["health"] = buildHealthQuery(slectedPlaces, phoneNumbers);
     queries["yelp"] =  buildYelpQuery(slectedPlaces, phoneNumbers, placeData);
-    
+   // debugger;
     return queries;
   }
   async getDetails(){

@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 });
 const DisplayCard = (props) => {
   const classes = useStyles();
-  const { placeData, isDesktop, yelpId} =props;
+  const { placeData, isDesktop} =props;
   const { googlePlace, yelpPlace, healthPlace } = props.googleYelpHealthData
  
   const photo = useStockPhotos(googlePlace.photo);

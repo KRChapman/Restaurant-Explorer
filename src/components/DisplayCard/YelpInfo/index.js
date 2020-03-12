@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useState, useReducer} from 'react';
 import RatingImages from './RatingImages';
 import Typography from '@material-ui/core/Typography';
-import {Link,Reviews} from './../SharedCardBtns/index'
-
+import {Link,Reviews} from './../SharedCardBtns/index';
+import { getYelpReviews} from './../../../Api/helper';
+import { WarnPopover} from './../../../components/PopOver/index';
+import ReviewsDisplay from './ReviewsDisplay';
 const YelpInfo = (props) => {
+  const [yelpReviewState, setYelpReviewState] = useReducer((state,newState)=>{
+                                                  return {...state,...newState}
+                                                }, { anchorEl: null, reviews: [], total: 0 })
+  
+  
   const { yelpPlace, isDesktop} = props;
-  const rating = yelpPlace.rating.toString();
-  const handleReviewShow = async() =>{
-
+  const rating = yelpPlace.rating
+  const yelpId = yelpPlace.yelpId;
+  const handleReview = async(e) =>{
+  
+    const anchorEl = e.currentTarget;
+    try {
+     var data  =  await getYelpReviews(yelpId);
+    } catch (error) {
+      console.log('errorYelpInfo', error);
+    }
+    const reviews = data.yelpData.reviews;
+    const total = data.yelpData.total;
+    setYelpReviewState({ anchorEl, reviews, total });
   }
+
+  const popOver = yelpReviewState.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setYelpReviewState({anchorEl: inp})} anchorEl={yelpReviewState.anchorEl}><ReviewsDisplay reviews={yelpReviewState.reviews} /></WarnPopover>
+
   return (
     <div className={"yelp-container"}>
     
@@ -19,10 +39,11 @@ const YelpInfo = (props) => {
    
       <div>
         <Link isDesktop={isDesktop} >Page</Link>
-        <Reviews action={handleReviewShow}> </Reviews>
+        <Reviews action={handleReview}> </Reviews>
+        {popOver}
       </div>
     </div>
   )
 }
-
+// (e) => handleReview(e, yelpId)
 export default YelpInfo;

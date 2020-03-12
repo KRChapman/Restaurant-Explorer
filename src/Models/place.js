@@ -17,17 +17,17 @@ export class Yelpplace {
   constructor(placeId,yelpData ) {
     let name = "";
     let rating = "";
-  //  let yelpId = "";
+    let yelpId = "";
 
     if (Object.entries(yelpData).length > 0 && yelpData.constructor === Object){//DO empty oBJ keep consistant
       name = yelpData.name;
       rating = yelpData.rating;
-    //  yelpId = yelpData.id;
+      yelpId = yelpData.id;
     }
     this.placeId = placeId;
     this.name = name;
     this.rating = rating;
-   // this.yelpId = yelpId;
+    this.yelpId = yelpId;
   }
 }
 

@@ -308,7 +308,7 @@ export const buildHealthQuery = (places, phoneNumbers) => {
     // Error no return data with 's escaped so replace with empty string instead
    // healthName = healthName.replace(regex2, '%34'); 
     healthName = healthName.replace(regex3, '')
-    debugger;
+
     return healthName;
   }
 
@@ -371,6 +371,7 @@ export const getYelpHealthData = (queries, setState) => {
 
 export const getYelpReviews = (yelpId) => {
   const url = yelpUrl + '/yelp-review';
+  yelpId = JSON.stringify({yelpId})
   const request = {
     method: 'POST',
     headers: {

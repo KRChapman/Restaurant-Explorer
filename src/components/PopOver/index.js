@@ -29,6 +29,7 @@ export function WarnPopover({ anchorEl, setanchorEl, warningText, children}) {
 
   const id = isOpen ? 'simple-popover' : undefined;
  // debugger;
+  const text = warningText == null ? null : <Typography className={classes.typography}>{warningText}</Typography>
   return (
       <Popover
         id={id}
@@ -46,7 +47,7 @@ export function WarnPopover({ anchorEl, setanchorEl, warningText, children}) {
       >
      
       {children}
-      <Typography className={classes.typography}>{warningText}</Typography>
+      {text}
       </Popover>
  
   );
