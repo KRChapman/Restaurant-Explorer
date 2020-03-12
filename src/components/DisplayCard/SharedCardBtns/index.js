@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 export const Link = (props) => {
-  const {children,url,isDesktop} = props;
+  const { children, url, isDesktop} = props;
 
   const target = isDesktop ? "_blank" : "";
   return (
@@ -16,9 +16,9 @@ export const Link = (props) => {
 
 
 export const Reviews = (props) => {
-  const { action} = props;
+  const { action, reviewCount} = props;
   return (
-    <Button onClick={action} variant="outlined" color="primary" size="small">Reviews (18)</Button  >
+    <Button onClick={action} variant="outlined" color="primary" size="small">Reviews ({reviewCount})</Button  >
   )
 }
 

@@ -8,12 +8,15 @@ import ReviewsDisplay from './ReviewsDisplay';
 const YelpInfo = (props) => {
   const [yelpReviewState, setYelpReviewState] = useReducer((state,newState)=>{
                                                   return {...state,...newState}
-                                                }, { anchorEl: null, reviews: [], total: 0 })
+                                                }, { anchorEl: null, reviews: [] })
   
   
   const { yelpPlace, isDesktop} = props;
-  const rating = yelpPlace.rating
+  const rating = yelpPlace.rating;
   const yelpId = yelpPlace.yelpId;
+  const url = yelpPlace.url;
+  const reviewCount = yelpPlace.reviewCount;
+ // debugger;
   const handleReview = async(e) =>{
   
     const anchorEl = e.currentTarget;
@@ -23,8 +26,7 @@ const YelpInfo = (props) => {
       console.log('errorYelpInfo', error);
     }
     const reviews = data.yelpData.reviews;
-    const total = data.yelpData.total;
-    setYelpReviewState({ anchorEl, reviews, total });
+    setYelpReviewState({ anchorEl, reviews });
   }
 
   const popOver = yelpReviewState.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setYelpReviewState({anchorEl: inp})} anchorEl={yelpReviewState.anchorEl}><ReviewsDisplay reviews={yelpReviewState.reviews} /></WarnPopover>
@@ -38,8 +40,8 @@ const YelpInfo = (props) => {
       </div>
    
       <div>
-        <Link isDesktop={isDesktop} >Page</Link>
-        <Reviews action={handleReview}> </Reviews>
+        <Link isDesktop={isDesktop} url={url} >Page</Link>
+        <Reviews reviewCount={reviewCount} action={handleReview}> </Reviews>
         {popOver}
       </div>
     </div>

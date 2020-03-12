@@ -14,7 +14,7 @@ class Layout extends Component {
     super(props);
     this.state = { 
       allPlaces: [],
-      placeDetails: [],
+      placesDetails: [],
       googleData: [],
       yelpData: [],
       healthData:[],
@@ -53,8 +53,8 @@ class Layout extends Component {
       this.setState(currentState => {
         const yelpData = currentState.yelpData.concat(data.yelpData)
         const healthData = currentState.healthData.concat(data.healthData)
-        const placeDetails = currentState.placeDetails.concat(details.details)
-        return { yelpData, healthData, placeDetails}
+        const placesDetails = currentState.placesDetails.concat(details.details)
+        return { yelpData, healthData, placesDetails}
       });
     }
     getYelpHealthData(queries, setData);
@@ -72,16 +72,40 @@ class Layout extends Component {
       const  health  = slectedHealthData[i].data;
       const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
       const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
-      // const url = this.state.placeDetails.find(ele=> {
-
-      // })
-      return { googlePlace: new GooglePlace(ele.placeId, ele), yelpPlace, healthPlace }
+      const detailsData = this.getDataByPlaceId("placesDetails", ele.placeId);
+     
+      return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace, healthPlace }
     })
     this.setState(currentState => {
       const placesToDisplay = currentState.placesToDisplay.concat(places)
       localAdd(placesToDisplay)
       return { placesToDisplay}
     });
+  }
+
+  getDataByPlaceId = (dataToLook,placeId) => {
+    let foundData = null; 
+    switch (dataToLook) {
+      case "placesDetails":
+        const placesDetails=  [...this.state["placesDetails"]];
+        foundData  = placesDetails.find(ele=> {
+          return ele.place_id === placeId
+            })
+        break;
+ 
+      case "allPlaces":
+        const allPlaces = [...this.state["allPlaces"]];
+        foundData =  allPlaces.find(ele=> {
+          return ele.placeId === placeId
+            })
+        break;
+    
+      default:
+        break;
+    }
+
+    return foundData;
+ 
   }
 
   setAllPlaces = (data) => {

@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function MediaCard(props) {
+export default function ReviewDisplay(props) {
   const classes = useStyles();
   const { reviews } = props;
  // debugger;

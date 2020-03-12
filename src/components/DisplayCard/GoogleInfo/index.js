@@ -8,7 +8,7 @@ import { Link, Reviews} from './../SharedCardBtns/index'
 const GoogleInfo = (props) => {
   const { googlePlace, placeData, isDesktop } = props;
   const starsToDisplay = getStarsToDisplay(googlePlace);
-  const url = formatUrl(googlePlace, placeData);
+  const directionUrl = formatDirectionUrl(googlePlace, placeData);
  const googleStars = starsToDisplay.map((ele,i)=>{
     return <img className="google-stars" src={ele} key={i} alt="" />
   })
@@ -23,8 +23,8 @@ const GoogleInfo = (props) => {
         {googleStars}
       </div>
       <div className={'test'}>
-        <Link isDesktop={isDesktop} url={url}>Directions</Link>
-        <Reviews > </Reviews>
+        <Link isDesktop={isDesktop} url={directionUrl}>Directions</Link>
+        <Reviews reviewCount={googlePlace.reviewsTotal}> </Reviews>
       </div>
     </div>
   )
@@ -77,7 +77,7 @@ function partialRatingStar(partialRating) {
   return star;
 }
 
-function formatUrl(googlePlace, placeData){
+function formatDirectionUrl(googlePlace, placeData){
   const regSpace = "\s";
   const placeId = googlePlace.placeId;
   const name = googlePlace.name.replace(regSpace, '+');
@@ -85,9 +85,9 @@ function formatUrl(googlePlace, placeData){
  
   const cityState = `${placeData.city}+${placeData.state}`
 
- // https://developers.google.com/maps/documentation/urls/guide#directions-action
-  const baseUrl = `https://www.google.com/maps/dir/?api=1&destination_place_id=${placeId}&destination=${name}+${cityState}`
-  return baseUrl;
+ // https://developers.google.com/maps/documentation/directionUrls/guide#directions-action
+  const basedirectionUrl = `https://www.google.com/maps/dir/?api=1&destination_place_id=${placeId}&destination=${name}+${cityState}`
+  return basedirectionUrl;
 }
 
 export default GoogleInfo;

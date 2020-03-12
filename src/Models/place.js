@@ -2,14 +2,18 @@
 
 
 export class GooglePlace {
-  constructor(placeId, googleData ){
+  constructor(placeId, googleData,detailsObject ){
+    const {reviews,url } = detailsObject;
+
     // if not photo get 
     this.placeId = placeId;
     this.name = googleData.name || "";
     this.rating = googleData.rating || "";
     this.photo = googleData.photo || "";
-    this.address = googleData.address || ""
-
+    this.address = googleData.address || "";
+    this.reviewsTotal = googleData.reviewsTotal || 0;
+    this.reviews = reviews;
+    this.url = url;
   }
 }
 
@@ -18,16 +22,23 @@ export class Yelpplace {
     let name = "";
     let rating = "";
     let yelpId = "";
+    let url = "";
+    let reviewCount = 0;
 
     if (Object.entries(yelpData).length > 0 && yelpData.constructor === Object){//DO empty oBJ keep consistant
       name = yelpData.name;
       rating = yelpData.rating;
       yelpId = yelpData.id;
+      url = yelpData.url;
+      reviewCount = yelpData.review_count
+ 
     }
     this.placeId = placeId;
     this.name = name;
     this.rating = rating;
     this.yelpId = yelpId;
+    this.url = url;
+    this.reviewCount = reviewCount
   }
 }
 
@@ -57,7 +68,7 @@ export class AllPlaces {
     let index = addressArray.indexOf(',');
     let address = addressArray.slice(0, index);
     address = address.join('');
-;
+
     let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
    
       this.placeId= ele.place_id;
@@ -68,6 +79,8 @@ export class AllPlaces {
       this.lat= ele.geometry.location.lat();
       this.lng= ele.geometry.location.lng();
       this.marker= 'default';
+      this.reviewsTotal = ele.user_ratings_total || 0;
+
 
   }
 
