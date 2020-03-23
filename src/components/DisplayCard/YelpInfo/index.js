@@ -1,7 +1,7 @@
 import React, { useState, useReducer} from 'react';
 import RatingImages from './RatingImages';
 import Typography from '@material-ui/core/Typography';
-import {Link,Reviews} from './../SharedCardBtns/index';
+import {Link,Reviews} from '../SharedComponents/index';
 import { getYelpReviews} from './../../../Api/helper';
 import { WarnPopover} from './../../../components/PopOver/index';
 import ReviewsDisplay from './ReviewsDisplay';
