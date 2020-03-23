@@ -22,7 +22,7 @@ const GoogleInfo = (props) => {
         
         {googleStars}
       </div>
-      <div className={'test'}>
+      <div className={'google-btns'}>
         <Link isDesktop={isDesktop} url={directionUrl}>Directions</Link>
         <Reviews reviewCount={googlePlace.reviewsTotal}> </Reviews>
       </div>
