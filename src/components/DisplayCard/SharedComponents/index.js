@@ -62,6 +62,7 @@ export const Reviews = (props) => {
 
  export const ReviewContainer = (props) => {
    const classes = useStyles();
+   const {children} = props;
   return (
     
     <Card className={classes.root}>
@@ -70,7 +71,7 @@ export const Reviews = (props) => {
         Revew Excerpts
         </Typography>
       <CardContent className={classes.content}>
-
+        {children}
       </CardContent>
 
     </Card>

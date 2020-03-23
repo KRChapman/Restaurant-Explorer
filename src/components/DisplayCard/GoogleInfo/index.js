@@ -1,18 +1,29 @@
-import React from 'react';
-import halfStar from './../../../assets/google/half.png';
-import wholeStar from './../../../assets/google/full.png';
-import emptyStar from './../../../assets/google/empty.png';
-import { Link, Reviews} from '../SharedComponents/index'
-import { getStarsToDisplay, partialRatingStar} from './getStars'
-
+import React, { useState, useReducer } from 'react';
+import { Link, Reviews, ReviewContainer} from '../SharedComponents/index'
+import { getStarsToDisplay} from './getStars'
+import ReviewsDisplay from './ReviewsDisplay';
+import { WarnPopover } from './../../../components/PopOver/index';
 
 const GoogleInfo = (props) => {
+  const [isShowReviews, setIsShowReviews] = useState({ anchorEl: null});
   const { googlePlace, placeData, isDesktop } = props;
-  const starsToDisplay = getStarsToDisplay(googlePlace);
+  const starsToDisplay = getStarsToDisplay(googlePlace.rating);
   const directionUrl = formatDirectionUrl(googlePlace, placeData);
  const googleStars = starsToDisplay.map((ele,i)=>{
     return <img className="google-stars" src={ele} key={i} alt="" />
   })
+
+  const handleReview = (e) => {
+    const anchorEl = e.currentTarget;
+    setIsShowReviews({ anchorEl})
+  }
+
+  const reviewsToDisplay = <ReviewContainer>
+    <ReviewsDisplay reviews={googlePlace.reviews} />
+  </ReviewContainer>;
+
+  const popOver = isShowReviews.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setIsShowReviews({ anchorEl: inp })} anchorEl={isShowReviews.anchorEl}>{reviewsToDisplay}</WarnPopover>
+
   
   return (
     <div className="google-container">
@@ -25,7 +36,8 @@ const GoogleInfo = (props) => {
       </div>
       <div className={'google-btns'}>
         <Link isDesktop={isDesktop} url={directionUrl}>Directions</Link>
-        <Reviews reviewCount={googlePlace.reviewsTotal}> </Reviews>
+        <Reviews reviewCount={googlePlace.reviewsTotal} action={handleReview}> </Reviews>
+        {popOver}
       </div>
     </div>
   )

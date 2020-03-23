@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import RatingImages from './RatingImages';
+import { getStarsToDisplay } from './getStars'
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
@@ -48,11 +48,22 @@ const useStyles = makeStyles({
 export default function ReviewDisplay(props) {
   const classes = useStyles();
   const { reviews } = props;
-  // debugger;
+
+  
+
+
+
   const display = reviews.map((ele, i) => {
+    const starsToDisplay = getStarsToDisplay(ele.rating);
+    const googleStars = starsToDisplay.map((ele, i) => {
+      return <img className="google-stars" src={ele} key={i} alt="" />
+    })
+
     return (
       <div key={ele.id} className={classes.container}>
-        <RatingImages rating={ele.rating} /><span className={classes.relative_time_description}>{ele.time_created}</span>
+        <div className="google-stars-container">
+          {googleStars}
+        </div>
         <Typography variant="body2" color="textPrimary" component="p">
           {ele.text}
         </Typography>

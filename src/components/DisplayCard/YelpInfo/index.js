@@ -1,7 +1,7 @@
 import React, { useState, useReducer} from 'react';
 import RatingImages from './RatingImages';
 import Typography from '@material-ui/core/Typography';
-import {Link,Reviews} from '../SharedComponents/index';
+import { Link, Reviews, ReviewContainer} from '../SharedComponents/index';
 import { getYelpReviews} from './../../../Api/helper';
 import { WarnPopover} from './../../../components/PopOver/index';
 import ReviewsDisplay from './ReviewsDisplay';
@@ -28,8 +28,11 @@ const YelpInfo = (props) => {
     const reviews = data.yelpData.reviews;
     setYelpReviewState({ anchorEl, reviews });
   }
-
-  const popOver = yelpReviewState.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setYelpReviewState({anchorEl: inp})} anchorEl={yelpReviewState.anchorEl}><ReviewsDisplay reviews={yelpReviewState.reviews} /></WarnPopover>
+  const reviewsToDisplay = <ReviewContainer>
+                    <ReviewsDisplay reviews={yelpReviewState.reviews} />
+                   </ReviewContainer>;
+ 
+  const popOver = yelpReviewState.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setYelpReviewState({ anchorEl: inp })} anchorEl={yelpReviewState.anchorEl}>{reviewsToDisplay}</WarnPopover>
 
   return (
     <div className={"yelp-container"}>

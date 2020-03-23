@@ -4,11 +4,11 @@ import emptyStar from './../../../assets/google/empty.png';
 
 
 
-export function getStarsToDisplay(googlePlace) {
+export function getStarsToDisplay(rating) {
   const multiplier = 10;
   // multiply by 10 to avoid potential floating point errors since javascript numbers are just floats
-  const originalRating = googlePlace.rating * multiplier;
-  const truncRating = Math.trunc(googlePlace.rating);
+  const originalRating = rating * multiplier;
+  const truncRating = Math.trunc(rating);
   const partialRating = originalRating - truncRating * multiplier;
   const totalStars = 5;
   const starsToDisplay = [];
