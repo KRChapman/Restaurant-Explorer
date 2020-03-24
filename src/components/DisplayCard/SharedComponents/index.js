@@ -62,13 +62,14 @@ export const Reviews = (props) => {
 
  export const ReviewContainer = (props) => {
    const classes = useStyles();
-   const {children} = props;
+   const {children,title} = props;
   return (
     
     <Card className={classes.root}>
 
       <Typography align={'center'} variant="h6" color="textSecondary" component="h6">
-        Revew Excerpts
+        
+        {title}
         </Typography>
       <CardContent className={classes.content}>
         {children}

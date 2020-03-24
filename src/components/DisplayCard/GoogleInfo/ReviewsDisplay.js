@@ -1,11 +1,6 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+
 import Typography from '@material-ui/core/Typography';
 import { getStarsToDisplay } from './getStars'
 const useStyles = makeStyles({
@@ -34,7 +29,10 @@ const useStyles = makeStyles({
   },
 
   date: {
-    marginLeft: "10px",
+    marginLeft: "15px",
+  },
+  starsTimeContainer: {
+    display: "flex",
   }
 });
 
@@ -47,7 +45,7 @@ const useStyles = makeStyles({
 
 export default function ReviewDisplay(props) {
   const classes = useStyles();
-  const { reviews } = props;
+  const { reviews,url } = props;
 
   
 
@@ -61,20 +59,28 @@ export default function ReviewDisplay(props) {
 
     return (
       <div key={ele.id} className={classes.container}>
-        <div className="google-stars-container">
-          {googleStars}
+        <div className={classes.starsTimeContainer}>
+          <div className="google-stars-container">
+            {googleStars}
+          </div>
+          <span className={classes.date}>{ele.relative_time_description}</span>
         </div>
+       
         <Typography variant="body2" color="textPrimary" component="p">
           {ele.text}
         </Typography>
-        <a href={ele.url}>full review</a>
+       
       </div>
 
     )
   })
   return (
     <React.Fragment>
-      {display}
+      <div>        
+        {display}
+        <a href={url}>All Reviews</a>
+      </div>
+    
     </React.Fragment>
   );
 }

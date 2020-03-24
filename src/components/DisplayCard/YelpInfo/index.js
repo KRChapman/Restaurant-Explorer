@@ -28,7 +28,7 @@ const YelpInfo = (props) => {
     const reviews = data.yelpData.reviews;
     setYelpReviewState({ anchorEl, reviews });
   }
-  const reviewsToDisplay = <ReviewContainer>
+  const reviewsToDisplay = <ReviewContainer title={"Revew Excerpts"}>
                     <ReviewsDisplay reviews={yelpReviewState.reviews} />
                    </ReviewContainer>;
  

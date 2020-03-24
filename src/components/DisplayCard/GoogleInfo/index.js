@@ -18,8 +18,8 @@ const GoogleInfo = (props) => {
     setIsShowReviews({ anchorEl})
   }
 
-  const reviewsToDisplay = <ReviewContainer>
-    <ReviewsDisplay reviews={googlePlace.reviews} />
+  const reviewsToDisplay = <ReviewContainer title={"Selected Reviews"}>
+    <ReviewsDisplay reviews={googlePlace.reviews} url={googlePlace.url} />
   </ReviewContainer>;
 
   const popOver = isShowReviews.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setIsShowReviews({ anchorEl: inp })} anchorEl={isShowReviews.anchorEl}>{reviewsToDisplay}</WarnPopover>
