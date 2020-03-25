@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} from '../../Api/helper'
-import { GooglePlace, Yelpplace, Healthplace} from './../../Models/place'
+import { GooglePlace, Yelpplace, Healthplace, GeneralInfo} from './../../Models/place'
 import Results from './../Results/index';
 import AppBar from './../AppBar/index';
 import GoogleMapDisplay from './../GoogleMap/index';
@@ -38,6 +38,7 @@ class Layout extends Component {
     if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData && (this.state.healthData.length > 0 || this.state.yelpData.length > 0)){
       this.combineDataForPlacesToDisplay()
     }
+
   }
 
   displayNewPlaces = () => {
@@ -73,8 +74,8 @@ class Layout extends Component {
       const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
       const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
       const detailsData = this.getDataByPlaceId("placesDetails", ele.placeId);
-     
-      return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace, healthPlace }
+      const generalInfo = new GeneralInfo(ele.placeId, detailsData, ele, yelp );
+      return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace, healthPlace, generalInfo }
     })
     this.setState(currentState => {
       const placesToDisplay = currentState.placesToDisplay.concat(places)
@@ -102,6 +103,7 @@ class Layout extends Component {
     
       default:
         break;
+     
     }
 
     return foundData;

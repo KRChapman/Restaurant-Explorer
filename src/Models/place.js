@@ -86,3 +86,21 @@ export class AllPlaces {
 
 
 }
+
+
+export class GeneralInfo {
+
+  constructor(placeId, placeDetails, allplaces, yelpData) {
+    this.placeId = placeId;
+    this.hours = placeDetails.opening_hours.weekday_text;
+    this.website = placeDetails.website || "";
+    this.address = allplaces.address;
+    this.phoneNumber = placeDetails.formatted_phone_number;
+    this.priceLevel = yelpData.price;
+
+
+
+  }
+
+
+}

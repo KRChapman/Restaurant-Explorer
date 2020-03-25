@@ -58,7 +58,7 @@ export default function ReviewDisplay(props) {
     })
 
     return (
-      <div key={ele.id} className={classes.container}>
+      <div key={i} className={classes.container}>
         <div className={classes.starsTimeContainer}>
           <div className="google-stars-container">
             {googleStars}

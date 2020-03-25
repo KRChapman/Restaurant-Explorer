@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import useStockPhotos from './GoogleInfo/useStockPhotos'
 
+import GeneralInfo from './GeneralInfo/index'
 
 
 const useStyles = makeStyles({
@@ -57,6 +58,7 @@ const DisplayCard = (props) => {
           <Typography gutterBottom variant="h6" color="primary" component="h6">
               {googlePlace.name}
           </Typography>
+        <GeneralInfo />
           <Typography variant="body1" color="textPrimary" component="div">
           <GoogleInfo isDesktop={isDesktop} placeData={placeData} googlePlace={googlePlace} />
         </Typography>

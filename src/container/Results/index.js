@@ -19,7 +19,8 @@ const useStyles = makeStyles(theme => ({
    // marginTop: "100px",
     top: 95,
     right: 0,
-    zIndex: 1000
+    zIndex: 1000,
+    opacity: 0.6,
  
   },
   main: {
@@ -91,7 +92,7 @@ const Results = (props) => {
          
 
             <ControlButtons changeViewRange={changeViewRangeHandler} />
-          <Typography varien={"caption"} className={classes.counter} >
+          <Typography varient={"caption"} className={classes.counter} >
             {startingDisplayCount} / {TotalNumberOfAllPlaces}
           </Typography>
          
@@ -116,21 +117,19 @@ const Results = (props) => {
 function navigatePlacesViewRange(currentState, action) {
   const placesViewRange = { ...currentState};
   const { totalPlaces, displayInc } = action.payload;
-  const min = 0;
   const incrementEnd = placesViewRange.end + displayInc;
   const incrementStart = incrementEnd - displayInc;
+
   switch (action.type) {
     case "INITIAL":
       const initialStart = totalPlaces - displayInc > 0 ? totalPlaces - displayInc : 0;
       const initialEnd = totalPlaces;
       return { start: initialStart, end: initialEnd};
-
     case "INCREMENT":  
       // If increment reaches beyond places total length then just return places total length;
       placesViewRange.end = incrementEnd < totalPlaces ? incrementEnd : totalPlaces;
       placesViewRange.start = incrementStart;
       return placesViewRange; 
-
     case "DECREMENT": 
      placesViewRange.start = placesViewRange.start - displayInc > 0 ?  placesViewRange.start - displayInc : 0;
      placesViewRange.end = placesViewRange.start + displayInc;
@@ -139,7 +138,6 @@ function navigatePlacesViewRange(currentState, action) {
       break;
   }
 }
-
 
 
 export default Results;

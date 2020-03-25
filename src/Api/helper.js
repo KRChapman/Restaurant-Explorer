@@ -160,7 +160,8 @@ class GoogleMapsApi {
     for (let index = 0; index < places.length; index++) {
       let request = {
         placeId: places[index].placeId,
-        fields: ['place_id', 'url','reviews','name', 'international_phone_number', 'formatted_phone_number', 'url', 'website' ]
+        fields: ['place_id', 'url','reviews','name', 'international_phone_number', 
+          'formatted_phone_number', 'url', 'website', "opening_hours" ]
       };
       requests.push(request)
     }
