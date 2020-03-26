@@ -92,7 +92,7 @@ export class GeneralInfo {
 
   constructor(placeId, placeDetails, allplaces, yelpData) {
     this.placeId = placeId;
-    this.hours = "hours" || placeDetails.opening_hours.weekday_text;
+    this.hours = placeDetails.opening_hours.weekday_text;
     this.priceLevel = yelpData.price;
     this.address = allplaces.address;
     this.website = placeDetails.website || "";

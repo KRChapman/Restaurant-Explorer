@@ -45,7 +45,7 @@ const DisplayCard = (props) => {
   const { googlePlace, yelpPlace, healthPlace, generalInfo } = props.googleYelpHealthData
  
   const photo = useStockPhotos(googlePlace.photo);
-
+ 
   return (
 
     <Card className={classes.root} elevation={8} onMouseEnter={(event) => props.changeMapIcon(googlePlace.placeId,event)}>

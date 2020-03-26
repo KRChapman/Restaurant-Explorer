@@ -24,6 +24,8 @@ const useStyles = makeStyles(theme => ({
   },
   nested: {
     paddingLeft: theme.spacing(4),
+    display: 'block',
+  
   },
   container: {
     display: 'flex',
@@ -40,10 +42,15 @@ const useStyles = makeStyles(theme => ({
     
   },
   siteLink: {
-   // textDecoration: "none",
-  //  color: '#3f9ade',
-    color: '#3f9ade',
+  textDecoration: "none",
+   // color: '#3f9ade',
+    color: theme.palette.primary.main,
+    marginRight: "5px",
+  //  color: 'black',
     //theme.text.primary,
+  },
+  hoursText: {
+    marginBottom: '8px',
   }
 }));
 
@@ -61,12 +68,16 @@ const useStyles = makeStyles(theme => ({
   //    const data = generalInfo[ele]
   //    return <Typography key={i} color="textPrimary" >{data}</Typography>
   //  })
+  
    const handleClick = () => {
      setOpen(!open);
    };
 
  
-  // const price = `${priceLevel}`
+  const price = `Price: ${priceLevel}`
+   const hoursDisplay = hours.map((ele,i)=> {
+     return <ListItemText className={classes.hoursText} primary={hours[i]} />
+   })
   return (
   
 
@@ -82,8 +93,10 @@ const useStyles = makeStyles(theme => ({
           <ListItemText primary={phoneNumber} />
         </ListItem>
         <ListItem className={classes.item} >
-          <a className={classes.siteLink} href={generalInfo.website}>Menu: {generalInfo.website}</a>
-          <ListItemText primary={} />
+          <a className={classes.siteLink} href={website}><ListItemText primary={"Menu"} />
+          </a>
+          <ListItemText primary={price} />
+         
         </ListItem>
 
       </List>
@@ -104,20 +117,27 @@ const useStyles = makeStyles(theme => ({
           <ListItemText primary="Hours" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
-        <Collapse style={{ display: 'block' }} in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
-
-              <ListItemText primary={hours} />
-            </ListItem>
-          </List>
-        </Collapse>
+  
       </List>
+      <Collapse style={{ display: 'block' }} in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+
+            {hoursDisplay}
+     
+          </ListItem>
+        </List>
+      </Collapse>
     </div>
   
   )
 }
-
+{/* <ListItemText primary={hours[1]} />
+  <ListItemText primary={hours[2]} />
+  <ListItemText primary={hours[3]} />
+  <ListItemText primary={hours[4]} />
+  <ListItemText primary={hours[5]} />
+  <ListItemText primary={hours[6]} />  */}
 export default GeneralInfo
 
 //  function l() {
