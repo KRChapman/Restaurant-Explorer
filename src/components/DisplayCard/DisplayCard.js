@@ -20,7 +20,7 @@ import GeneralInfo from './GeneralInfo/index'
 
 const useStyles = makeStyles({
   root: {
-   maxWidth: 225,
+   maxWidth: 350,
      flexGrow: 1,
     margin: '0.5%',
      
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
   content: {
     cursor: 'auto',
-    padding: "1px",
+  //  padding: "none",
     "&:last-child" :{
       paddingBottom: "12px",
     },
@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 const DisplayCard = (props) => {
   const classes = useStyles();
   const { placeData, isDesktop} =props;
-  const { googlePlace, yelpPlace, healthPlace } = props.googleYelpHealthData
+  const { googlePlace, yelpPlace, healthPlace, generalInfo } = props.googleYelpHealthData
  
   const photo = useStockPhotos(googlePlace.photo);
 
@@ -58,7 +58,7 @@ const DisplayCard = (props) => {
           <Typography gutterBottom variant="h6" color="primary" component="h6">
               {googlePlace.name}
           </Typography>
-        <GeneralInfo />
+        <GeneralInfo generalInfo={generalInfo} />
           <Typography variant="body1" color="textPrimary" component="div">
           <GoogleInfo isDesktop={isDesktop} placeData={placeData} googlePlace={googlePlace} />
         </Typography>

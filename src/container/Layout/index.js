@@ -23,7 +23,7 @@ class Layout extends Component {
       mapTheme: 'light',
       currentTotalDisplay: 0,
      }
-    this.displayInc = 2;
+    this.displayInc = 3;
   }
   componentDidMount(){
    localupdate(this.placesLocal);
