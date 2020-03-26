@@ -20,6 +20,7 @@ const useStyles = makeStyles(theme => ({
     // maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
     // display: 'flex'
+
   },
   nested: {
     paddingLeft: theme.spacing(4),
@@ -27,8 +28,22 @@ const useStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
-   width: '340px',
+    justifyContent: 'space-evenly',
+   width: '310px',
  //  width: "100%",
+  },
+  item:{
+    paddingTop:'4px',
+    paddingBottom: '4px',
+    paddingLeft: '2px',
+    paddingRight: '2px'
+    
+  },
+  siteLink: {
+   // textDecoration: "none",
+  //  color: '#3f9ade',
+    color: '#3f9ade',
+    //theme.text.primary,
   }
 }));
 
@@ -51,7 +66,7 @@ const useStyles = makeStyles(theme => ({
    };
 
  
-
+  // const price = `${priceLevel}`
   return (
   
 
@@ -62,13 +77,13 @@ const useStyles = makeStyles(theme => ({
 
         className={classes.root}
       >
-        <ListItem >
+        <ListItem className={classes.item}>
 
           <ListItemText primary={phoneNumber} />
         </ListItem>
-        <ListItem >
-
-          <ListItemText primary={priceLevel} />
+        <ListItem className={classes.item} >
+          <a className={classes.siteLink} href={generalInfo.website}>Menu: {generalInfo.website}</a>
+          <ListItemText primary={} />
         </ListItem>
 
       </List>
@@ -79,12 +94,12 @@ const useStyles = makeStyles(theme => ({
 
         className={classes.root}
       >
-        <ListItem >
+        <ListItem className={classes.item}>
 
           <ListItemText primary={address} />
         </ListItem>
 
-        <ListItem button onClick={handleClick}>
+        <ListItem className={classes.item} button onClick={handleClick}>
 
           <ListItemText primary="Hours" />
           {open ? <ExpandLess /> : <ExpandMore />}

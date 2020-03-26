@@ -18,12 +18,12 @@ import useStockPhotos from './GoogleInfo/useStockPhotos'
 import GeneralInfo from './GeneralInfo/index'
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
-   maxWidth: 350,
+   maxWidth: 320,
      flexGrow: 1,
     margin: '0.5%',
-     
+  //   padding: "10px",
   },
   media: {
     height: 120,
@@ -31,13 +31,14 @@ const useStyles = makeStyles({
 
   content: {
     cursor: 'auto',
-  //  padding: "none",
+    padding: "4px",
     "&:last-child" :{
       paddingBottom: "12px",
     },
-  }
+  },
 
-});
+
+}));
 const DisplayCard = (props) => {
   const classes = useStyles();
   const { placeData, isDesktop} =props;
@@ -55,10 +56,12 @@ const DisplayCard = (props) => {
             title={googlePlace.name}
         />
         <CardContent className={classes.content}>
-          <Typography gutterBottom variant="h6" color="primary" component="h6">
+          <Typography gutterBottom variant="h5" color="primary" component="h6">
               {googlePlace.name}
           </Typography>
+       
         <GeneralInfo generalInfo={generalInfo} />
+        
           <Typography variant="body1" color="textPrimary" component="div">
           <GoogleInfo isDesktop={isDesktop} placeData={placeData} googlePlace={googlePlace} />
         </Typography>
