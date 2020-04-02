@@ -91,12 +91,15 @@ export class AllPlaces {
 export class GeneralInfo {
 
   constructor(placeId, placeDetails, allplaces, yelpData) {
+
+    const hours = placeDetails.opening_hours || null;
+    const allDays = hours != null ? hours.weekday_text : ["None Available"]
     this.placeId = placeId;
-    this.hours = placeDetails.opening_hours.weekday_text;
-    this.priceLevel = yelpData.price;
-    this.address = allplaces.address;
+    this.hours = allDays;
+    this.priceLevel = yelpData.price || "";
+    this.address = allplaces.address || "None Available";
     this.website = placeDetails.website || "";
-    this.phoneNumber = placeDetails.formatted_phone_number;
+    this.phoneNumber = placeDetails.formatted_phone_number || "None Available";
    
 
 

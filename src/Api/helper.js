@@ -287,14 +287,7 @@ export const buildHealthQuery = (places, phoneNumbers) => {
       let healthAPiQuery = formatUrlQuery(healthName, address, partialAddressQuery);
      // let nameOnly = `https://data.kingcounty.gov/resource/gkhn-e8mn.json?$where=upper(address)%20like%20'%25${address}%25'%20AND%20(name%20${t}%20OR%20name%20=%20'${healthName}'%20OR%20${firstHealth})&$order=inspection_date%20DESC`
 
-      let request = {
-        method: "GET",
-        params: {
-          "$limit": 2,
-          "$$app_token": "5m2NIQFlbJa6mE8SmXjznEIKH"
-        }
-      }
-      let apiSearchValue = { health: { url: healthAPiQuery, request, placeId: places[i].placeId } }
+      let apiSearchValue = { health: { url: healthAPiQuery, placeId: places[i].placeId } }
       queries.push(apiSearchValue);
     }
     return queries;

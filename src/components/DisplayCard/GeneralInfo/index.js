@@ -132,12 +132,7 @@ const useStyles = makeStyles(theme => ({
   
   )
 }
-{/* <ListItemText primary={hours[1]} />
-  <ListItemText primary={hours[2]} />
-  <ListItemText primary={hours[3]} />
-  <ListItemText primary={hours[4]} />
-  <ListItemText primary={hours[5]} />
-  <ListItemText primary={hours[6]} />  */}
+
 export default GeneralInfo
 
 //  function l() {

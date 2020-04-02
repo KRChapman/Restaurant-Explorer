@@ -42,7 +42,7 @@ const YelpInfo = (props) => {
         <RatingImages rating={rating} />
       </div>
    
-      <div>
+      <div className={'yelp-btns'}>
         <Link isDesktop={isDesktop} url={url} >Page</Link>
         <Reviews reviewCount={reviewCount} action={handleReview}> </Reviews>
         {popOver}
