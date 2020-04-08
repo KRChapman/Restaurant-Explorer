@@ -40,7 +40,7 @@ const Results = (props) => {
   const [checked, setChecked] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
-    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData} = props;
+    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData, isShowQuickSearch} = props;
   const totalPlaces = placesToDisplay.length;
   const tabletSize = 900;
 
@@ -85,6 +85,7 @@ const Results = (props) => {
  
   const startingInc = totalPlaces > displayInc ? displayInc : totalPlaces;
   const startingDisplayCount = placesViewRange.start + startingInc;
+  
   return (
     <React.Fragment>
       <Slide timeout={{enter: 1000, exit:500}} direction="down" in={checked} mountOnEnter unmountOnExit>
@@ -100,7 +101,7 @@ const Results = (props) => {
       </Slide>
   
       <Container className={classes.main} >
-      <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />
+        {isShowQuickSearch && <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />}
       </Container> 
       
       <div className="card-container">{toDisplay}</div>

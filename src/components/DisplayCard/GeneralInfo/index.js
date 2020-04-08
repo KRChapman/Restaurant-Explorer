@@ -63,11 +63,7 @@ const useStyles = makeStyles(theme => ({
  
    const { generalInfo} = props;
    const { phoneNumber, priceLevel, address, hours,  website, } = generalInfo;
-  //  const generalInfoKeys = Object.keys(generalInfo)
-  //  const list = generalInfoKeys.map((ele,i)=> {
-  //    const data = generalInfo[ele]
-  //    return <Typography key={i} color="textPrimary" >{data}</Typography>
-  //  })
+
   
    const handleClick = () => {
      setOpen(!open);

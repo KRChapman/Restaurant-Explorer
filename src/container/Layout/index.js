@@ -192,14 +192,14 @@ class Layout extends Component {
   render() { 
   
     
-    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData}  = this.state;
-    
+    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData, placesDetails}  = this.state;
+    const isShowQuickSearch = placesDetails.length > 0 ? false : true;
     return ( 
       <div>
         <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
       
         <Btn clickAction={this.getMorePlaces}/>
-        <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} 
+        <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
           setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} TotalNumberOfAllPlaces={allPlaces.length}  /> 
         <GoogleMapDisplay googleData={googleData}/>
       </div>
