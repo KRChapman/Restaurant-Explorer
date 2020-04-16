@@ -192,8 +192,8 @@ class Layout extends Component {
   render() { 
   
     
-    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData, placesDetails}  = this.state;
-    const isShowQuickSearch = placesDetails.length > 0 ? false : true;
+    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData}  = this.state;
+    const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
     return ( 
       <div>
         <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
