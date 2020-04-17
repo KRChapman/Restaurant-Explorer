@@ -89,7 +89,7 @@ const useStyles = makeStyles(theme => ({
           <ListItemText primary={phoneNumber} />
         </ListItem>
         <ListItem className={classes.item} >
-          <a className={classes.siteLink} href={website}><ListItemText primary={"Menu"} />
+          <a className={classes.siteLink} href={website} target={"_blank"}><ListItemText primary={"Menu"} />
           </a>
           <ListItemText primary={price} />
          

@@ -297,6 +297,8 @@ export const buildHealthQuery = (places, phoneNumbers) => {
     const regex = /%20and%20/gi;
    // const regex2 = /'/gi;
     const regex3 = /'s/gi;
+
+    name = modifyAccent(name);
     let healthName = fixedEncodeURIComponent(name.toUpperCase());
     healthName = healthName.replace(regex, '%20%26%20');
     // Error no return data with 's escaped so replace with empty string instead
@@ -310,6 +312,17 @@ export const buildHealthQuery = (places, phoneNumbers) => {
     return encodeURIComponent(str).replace(/[!()*]/g, function (c) {
       return '%' + c.charCodeAt(0).toString(16);
     });
+  }
+
+  function modifyAccent(str){
+    const regex = RegExp('/[À-ÿ]/');
+    const isAccent =  regex.test(str);
+ 
+    if (isAccent){
+    str =  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    }
+   return str
+  
   }
 
   // function createPartialAddress(phone) {
