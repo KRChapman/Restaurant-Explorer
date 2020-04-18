@@ -7,6 +7,17 @@ import GeneralBtn from './../shared/GeneralBtn'
 import Container from '@material-ui/core/Container';
 //import classes from '*.module.css';
 
+  //  position: "fixed", 
+ 
+  //   backgroundColor: "#fff",
+  //   width: "175px",
+
+  //   top: 95,
+  //   right: 0,
+  //   zIndex: 1000,
+  //   opacity: 0.6,
+
+
 const useStyles = {
   root: {
     display: "flex",

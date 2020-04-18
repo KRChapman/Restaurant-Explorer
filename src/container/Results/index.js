@@ -13,16 +13,28 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles(theme => ({
   root: {
      position: "fixed", 
-   //  margin: "100px auto", 
-    backgroundColor: "#fff",
+
     width: "175px",
-   // marginTop: "100px",
-    top: 95,
+
+   bottom: 0,
+   // top: 95,
     right: 0,
     zIndex: 1000,
-    opacity: 0.6,
+
+    [theme.breakpoints.down('sm')]: {
+
+          width: "155px",
+
+    },
  
   },
+  // scale: {
+  //   [theme.breakpoints.down('sm')]: {
+
+  //     transform: "scale(0.7)",
+ 
+  //   },
+  // },
   main: {
 
     margin: "150px auto", 
@@ -88,16 +100,20 @@ const Results = (props) => {
   
   return (
     <React.Fragment>
-      <Slide timeout={{enter: 1000, exit:500}} direction="down" in={checked} mountOnEnter unmountOnExit>
-        <Paper elevation={4} className={classes.root}>
+      <Slide timeout={{enter: 1000, exit:500}} direction="up" in={checked} mountOnEnter unmountOnExit>
+     
          
-
+        <div className={classes.root} >
+    
             <ControlButtons changeViewRange={changeViewRangeHandler} />
-          <Typography varient={"caption"} className={classes.counter} >
-            {startingDisplayCount} / {TotalNumberOfAllPlaces}
-          </Typography>
+            <Typography varient={"caption"} className={classes.counter} >
+              {startingDisplayCount} / {TotalNumberOfAllPlaces}
+            </Typography>
+  
+  
+        </div>
+  
          
-        </Paper>
       </Slide>
   
       <Container className={classes.main} >
@@ -140,5 +156,6 @@ function navigatePlacesViewRange(currentState, action) {
   }
 }
 
+//<Paper elevation={4} className={classes.root}>
 
 export default Results;
