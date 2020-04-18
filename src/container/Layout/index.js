@@ -198,7 +198,7 @@ class Layout extends Component {
       <div>
         <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
       
-        <Btn clickAction={this.getMorePlaces}/>
+      
         <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
           setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} TotalNumberOfAllPlaces={allPlaces.length}  /> 
         <GoogleMapDisplay googleData={googleData}/>
