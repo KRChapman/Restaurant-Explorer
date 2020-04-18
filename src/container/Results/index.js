@@ -36,8 +36,9 @@ const useStyles = makeStyles(theme => ({
   //   },
   // },
   main: {
-
-    margin: "150px auto", 
+  //  textAlign: "center",
+  // margin: "50px auto", 
+  paddingTop: "100px",
   },
   counter:{
     alignSelf: "center"
@@ -99,30 +100,31 @@ const Results = (props) => {
   const startingDisplayCount = placesViewRange.start + startingInc;
   
   return (
-    <React.Fragment>
-      <Slide timeout={{enter: 1000, exit:500}} direction="up" in={checked} mountOnEnter unmountOnExit>
-     
-         
-        <div className={classes.root} >
-    
-            <ControlButtons changeViewRange={changeViewRangeHandler} />
-            <Typography varient={"caption"} className={classes.counter} >
-              {startingDisplayCount} / {TotalNumberOfAllPlaces}
-            </Typography>
+    <div className={classes.main}>
+
   
+ 
+      {isShowQuickSearch && <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />}
   
-        </div>
-  
-         
-      </Slide>
-  
-      <Container className={classes.main} >
-        {isShowQuickSearch && <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />}
-      </Container> 
       
       <div className="card-container">{toDisplay}</div>
-  
-    </React.Fragment>
+
+      <Slide timeout={{ enter: 1000, exit: 500 }} direction="up" in={checked} mountOnEnter unmountOnExit>
+
+
+        <div className={classes.root} >
+
+          <ControlButtons changeViewRange={changeViewRangeHandler} />
+          <Typography varient={"caption"} className={classes.counter} >
+            {startingDisplayCount} / {TotalNumberOfAllPlaces}
+          </Typography>
+
+
+        </div>
+
+
+      </Slide>
+    </div>
   )
 
   function updateWindow() {

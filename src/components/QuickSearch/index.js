@@ -7,7 +7,20 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 
+const useStyles = makeStyles(theme => {
+
+  return {
+    container: {
+      width: "200px",
+      display: "flex",
+        flexDirection: 'column',
+        margin: "20px auto",
+    }
+  }
+})
+
 const ControlButtons = (props) => {
+  const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState('Pasta');
   const { setAllPlaces, setPlaceDataForQuery} = props;
   const seattleCoordinates = { lat: 47.6062095, lng: -122.3320708, }
@@ -35,7 +48,8 @@ const ControlButtons = (props) => {
     setSearchTerm(e.target.value);
   }
   return (
-    <div>
+    <div className={classes.container}>
+      <h3>OR</h3>
       <h2>Imediate Search Option</h2>
       <GeberalBtn action={getAllPlaces}>Seattle {searchTerm}</GeberalBtn>
       <SearchTerms handleTermChange={handleTermChange} terms={terms} searchTerm={searchTerm}/>
