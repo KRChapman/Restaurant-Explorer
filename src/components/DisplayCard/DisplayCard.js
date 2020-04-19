@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 }));
 const DisplayCard = (props) => {
   const classes = useStyles();
-  const { placeData, isDesktop} =props;
+  const { placeData, isDesktop, isShowHealth} =props;
   const { googlePlace, yelpPlace, healthPlace, generalInfo } = props.googleYelpHealthData
  
   const photo = useStockPhotos(googlePlace.photo);
@@ -68,9 +68,11 @@ const DisplayCard = (props) => {
         <Typography variant="body1" color="textPrimary" component="div">
           <YelpInfo isDesktop={isDesktop} yelpPlace={yelpPlace} />
         </Typography>
+        {isShowHealth && 
         <Typography variant="body1" color="textPrimary" component="div">
           <HealthInfo healthPlace={healthPlace} />
-        </Typography>
+        </Typography>}
+      
        
         
         </CardContent>

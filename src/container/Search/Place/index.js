@@ -13,6 +13,7 @@ const usePlace = (id, setPlaceDataForQuery) => {
   const formatPlaceDataForQuery = useCallback(() => {
     const PlaceData = {
       city: place.address_components[0].long_name,
+      county: place.address_components[1].long_name,
       state: place.address_components[2].short_name,
       country: place.address_components[3].short_name,
     }

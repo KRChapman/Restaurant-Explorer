@@ -52,10 +52,23 @@ const Results = (props) => {
   const [currentPlacesToDisplay, setCurrentPlacesToDisplay] = useState([]);
   const [checked, setChecked] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
+  const [isShowHealth, setIsShowHealth] = useState(false);
   const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
     setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData, isShowQuickSearch} = props;
   const totalPlaces = placesToDisplay.length;
   const tabletSize = 900;
+  
+
+  useEffect(() => {
+    const counties = ['King County']
+ 
+    if (placeData.county){
+      const checkMatch = (element) => element === placeData.county;
+      const isShowHealth = counties.some(checkMatch);
+      setIsShowHealth(isShowHealth);
+    }
+    
+  }, [placeData])
 
   useEffect(()=> {
     dispatchPlacesViewRange({ type: "INITIAL", payload: { totalPlaces, displayInc } });
@@ -75,7 +88,7 @@ const Results = (props) => {
   let toDisplay = null;
   if (totalPlaces > 0) {
     toDisplay = currentPlacesToDisplay.map((ele, i) => {
-      return <DisplayCard isDesktop={isDesktop} placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
+      return <DisplayCard isDesktop={isDesktop} isShowHealth={isShowHealth} placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
     })
   } 
   const changeViewRangeHandler = (e,type) => {

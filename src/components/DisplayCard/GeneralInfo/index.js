@@ -72,7 +72,7 @@ const useStyles = makeStyles(theme => ({
  
   const price = `Price: ${priceLevel}`
    const hoursDisplay = hours.map((ele,i)=> {
-     return <ListItemText className={classes.hoursText} primary={hours[i]} />
+     return <ListItemText key={i} className={classes.hoursText} primary={hours[i]} />
    })
   return (
   

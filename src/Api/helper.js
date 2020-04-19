@@ -127,6 +127,7 @@ class GoogleMapsApi {
         return;
       }
       this.place = place;
+
       setPlace(place);
       this.initiateMap();
     });
