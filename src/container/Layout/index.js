@@ -7,7 +7,7 @@ import GoogleMapDisplay from './../GoogleMap/index';
 
 import { localAdd, localupdate} from '../../utils/testing';
 
-const Btn = rtBtn();
+
 
 class Layout extends Component {
   constructor(props) {
@@ -207,17 +207,4 @@ class Layout extends Component {
   }
 }
 
-
-function rtBtn(){
-// SEND TO Rsults and keep track of view window
-   const btn = (props) => {
-
-    return (
-      <button onClick={props.clickAction}>more</button>
-    )
-  } 
-
-  return btn;
-}
- 
 export default Layout;
