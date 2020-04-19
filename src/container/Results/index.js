@@ -54,7 +54,7 @@ const Results = (props) => {
   const [isDesktop, setIsDesktop] = useState(true);
   const [isShowHealth, setIsShowHealth] = useState(false);
   const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
-    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData, isShowQuickSearch} = props;
+    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData, isShowQuickSearch, isDataLoading} = props;
   const totalPlaces = placesToDisplay.length;
   const tabletSize = 900;
   
@@ -111,7 +111,7 @@ const Results = (props) => {
  
   const startingInc = totalPlaces > displayInc ? displayInc : totalPlaces;
   const startingDisplayCount = placesViewRange.start + startingInc;
-  
+ 
   return (
     <div className={classes.main}>
 
@@ -120,8 +120,12 @@ const Results = (props) => {
       {isShowQuickSearch && <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />}
   
       
-      <div className="card-container">{toDisplay}</div>
-
+   
+      {isDataLoading ? (
+        <Skeleton variant="rect" width={210} height={118} /> 
+      ) : (
+          <div className="card-container">{toDisplay}</div>
+        )}
       <Slide timeout={{ enter: 1000, exit: 500 }} direction="up" in={checked} mountOnEnter unmountOnExit>
 
 

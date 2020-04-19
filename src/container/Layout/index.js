@@ -20,6 +20,7 @@ class Layout extends Component {
       healthData:[],
       placesToDisplay: [],
       placeData: {},
+      isDataLoading: false,
       mapTheme: 'light',
       currentTotalDisplay: 0,
      }
@@ -48,6 +49,7 @@ class Layout extends Component {
   }
 
   getPlacesToDisplay = async () =>{
+    this.setIsDataLoading(true);
     let details = await this.getDetails();
     let queries = this.buildQueries(details.details, details.slectedPlaces);
     const setData = (data) => {
@@ -81,7 +83,7 @@ class Layout extends Component {
       const placesToDisplay = currentState.placesToDisplay.concat(places)
       localAdd(placesToDisplay)
       return { placesToDisplay}
-    });
+    }, this.setIsDataLoading(false));
   }
 
   getDataByPlaceId = (dataToLook,placeId) => {
@@ -180,6 +182,10 @@ class Layout extends Component {
     });
   }
 
+  setIsDataLoading = (isLoading) => {
+    this.setState({ isDataLoading: isLoading });
+  }
+
   placesLocal = (data) => {
     this.setState({ placesToDisplay: data });
   }
@@ -192,7 +198,7 @@ class Layout extends Component {
   render() { 
   
     
-    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData}  = this.state;
+    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData, isDataLoading}  = this.state;
     const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
     return ( 
       <div>
@@ -200,7 +206,7 @@ class Layout extends Component {
       
       
         <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
-          setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} TotalNumberOfAllPlaces={allPlaces.length}  /> 
+          setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} TotalNumberOfAllPlaces={allPlaces.length} isDataLoading={isDataLoading} /> 
         <GoogleMapDisplay googleData={googleData}/>
       </div>
      )
