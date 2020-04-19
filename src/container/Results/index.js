@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 import { flexbox } from '@material-ui/system';
 import Typography from '@material-ui/core/Typography';
-
+//import Skeleton from '@material-ui/lab/Skeleton';
 const useStyles = makeStyles(theme => ({
   root: {
      position: "fixed", 

@@ -27,6 +27,7 @@ const ControlButtons = (props) => {
   const seattleData = {
     
       city: "Seattle",
+      county: "King County",
       state: "WA",
       country: "US",
   }
