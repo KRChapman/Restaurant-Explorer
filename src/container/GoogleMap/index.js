@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
   initialContainer: {
-    margin: "10px auto",
+    margin: "20px auto",
   },
   // initialMap: {
   //   backgroundColor: props => props.backgroundColor,

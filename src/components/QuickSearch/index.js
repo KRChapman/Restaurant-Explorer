@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => {
   }
 })
 
-const ControlButtons = (props) => {
+const QuickSearch = (props) => {
   const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState('Pasta');
   const { setAllPlaces, setPlaceDataForQuery} = props;
@@ -65,4 +65,4 @@ const ControlButtons = (props) => {
   }
 }
 
-export default ControlButtons;
+export default QuickSearch;

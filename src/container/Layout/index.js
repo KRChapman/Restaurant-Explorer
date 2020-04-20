@@ -206,7 +206,7 @@ class Layout extends Component {
       
       
         <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
-          setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} TotalNumberOfAllPlaces={allPlaces.length} isDataLoading={isDataLoading} /> 
+          setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} allPlacesCount={allPlaces.length} isDataLoading={isDataLoading} /> 
         <GoogleMapDisplay googleData={googleData}/>
       </div>
      )

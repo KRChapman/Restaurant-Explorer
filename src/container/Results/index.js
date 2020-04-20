@@ -38,11 +38,16 @@ const useStyles = makeStyles(theme => ({
   main: {
   //  textAlign: "center",
   // margin: "50px auto", 
-  paddingTop: "100px",
+  paddingTop: "120px",
+  
   },
   counter:{
     alignSelf: "center"
   },
+  cardLocation: {
+   // height: "575px",
+   // margin: "10px auto";
+  }
 
 }));
 
@@ -53,12 +58,16 @@ const Results = (props) => {
   const [checked, setChecked] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const [isShowHealth, setIsShowHealth] = useState(false);
-  const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
-    setPlaceDataForQuery, TotalNumberOfAllPlaces, placeData, isShowQuickSearch, isDataLoading} = props;
-  const totalPlaces = placesToDisplay.length;
-  const tabletSize = 900;
-  
 
+  const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
+    setPlaceDataForQuery, allPlacesCount, placeData, isShowQuickSearch, isDataLoading} = props;
+  
+  const totalPlacesDisplay = placesToDisplay.length;
+  const tabletSize = 900;
+  const startingInc = totalPlacesDisplay > displayInc ? displayInc : totalPlacesDisplay;
+  const startingDisplayCount = placesViewRange.start + startingInc;
+  const skeletonDisplayCount =  displayInc;
+//totalPlacesDisplay + displayInc >= allPlacesCount ? totalPlacesDisplay - allPlacesCount :
   useEffect(() => {
     const counties = ['King County']
  
@@ -71,8 +80,8 @@ const Results = (props) => {
   }, [placeData])
 
   useEffect(()=> {
-    dispatchPlacesViewRange({ type: "INITIAL", payload: { totalPlaces, displayInc } });
-  }, [ displayInc, totalPlaces])
+    dispatchPlacesViewRange({ type: "INITIAL", payload: { totalPlacesDisplay, displayInc } });
+  }, [ displayInc, totalPlacesDisplay])
 
   useEffect(() => {
    const {start, end} = placesViewRange;
@@ -86,17 +95,17 @@ const Results = (props) => {
   }, [])
  
   let toDisplay = null;
-  if (totalPlaces > 0) {
+  if (totalPlacesDisplay > 0) {
     toDisplay = currentPlacesToDisplay.map((ele, i) => {
       return <DisplayCard isDesktop={isDesktop} isShowHealth={isShowHealth} placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
     })
   } 
   const changeViewRangeHandler = (e,type) => {
-    if (type === 'INCREMENT' && placesViewRange.end === totalPlaces){
+    if (type === 'INCREMENT' && placesViewRange.end === totalPlacesDisplay){
       getMorePlaces();
     }
     else{
-      dispatchPlacesViewRange({ type, payload: { totalPlaces, displayInc } });
+      dispatchPlacesViewRange({ type, payload: { totalPlacesDisplay, displayInc } });
     }
   }
 
@@ -109,9 +118,7 @@ const Results = (props) => {
   }, [placesToDisplay])
 
  
-  const startingInc = totalPlaces > displayInc ? displayInc : totalPlaces;
-  const startingDisplayCount = placesViewRange.start + startingInc;
- 
+  
   return (
     <div className={classes.main}>
 
@@ -120,12 +127,29 @@ const Results = (props) => {
       {isShowQuickSearch && <QuickSearch setAllPlaces={setAllPlaces} setPlaceDataForQuery={setPlaceDataForQuery} />}
   
       
-   
-      {isDataLoading ? (
-        <Skeleton variant="rect" width={210} height={118} /> 
-      ) : (
-          <div className="card-container">{toDisplay}</div>
-        )}
+      <div className={classes.cardLocation}>
+        {isDataLoading ? (
+
+          <div className="card-container">{
+
+            [...new Array(skeletonDisplayCount)].map((ele, i) => {
+              return (<div key={i} >
+                <Skeleton variant="rect" width={320} height={155} />
+                <Skeleton variant="text" />
+                <Skeleton variant="circle" width={40} height={40} />
+                <Skeleton variant="rect" width={320} height={310} />
+              </div>)
+            })
+          }
+          </div>
+
+
+
+        ) : (
+            <div className="card-container">{toDisplay}</div>
+          )}
+   </div>
+
       <Slide timeout={{ enter: 1000, exit: 500 }} direction="up" in={checked} mountOnEnter unmountOnExit>
 
 
@@ -133,7 +157,7 @@ const Results = (props) => {
 
           <ControlButtons changeViewRange={changeViewRangeHandler} />
           <Typography varient={"caption"} className={classes.counter} >
-            {startingDisplayCount} / {TotalNumberOfAllPlaces}
+            {startingDisplayCount} / {allPlacesCount}
           </Typography>
 
 
@@ -152,18 +176,18 @@ const Results = (props) => {
 
 function navigatePlacesViewRange(currentState, action) {
   const placesViewRange = { ...currentState};
-  const { totalPlaces, displayInc } = action.payload;
+  const { totalPlacesDisplay, displayInc } = action.payload;
   const incrementEnd = placesViewRange.end + displayInc;
   const incrementStart = incrementEnd - displayInc;
 
   switch (action.type) {
     case "INITIAL":
-      const initialStart = totalPlaces - displayInc > 0 ? totalPlaces - displayInc : 0;
-      const initialEnd = totalPlaces;
+      const initialStart = totalPlacesDisplay - displayInc > 0 ? totalPlacesDisplay - displayInc : 0;
+      const initialEnd = totalPlacesDisplay;
       return { start: initialStart, end: initialEnd};
     case "INCREMENT":  
       // If increment reaches beyond places total length then just return places total length;
-      placesViewRange.end = incrementEnd < totalPlaces ? incrementEnd : totalPlaces;
+      placesViewRange.end = incrementEnd < totalPlacesDisplay ? incrementEnd : totalPlacesDisplay;
       placesViewRange.start = incrementStart;
       return placesViewRange; 
     case "DECREMENT": 

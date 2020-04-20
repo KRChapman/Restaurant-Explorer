@@ -22,7 +22,8 @@ const useStyles = makeStyles(theme => ({
   root: {
    maxWidth: 320,
      flexGrow: 1,
-    margin: '0.5%',
+     margin: '15px',
+   // margin: '1.2%',
   //   padding: "10px",
   },
   media: {

@@ -6,6 +6,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles({
   root: {
@@ -46,6 +47,12 @@ const useStyles = makeStyles({
       backgroundColor: '#106ba3',
     },
   },
+
+  customInput:{
+    "& input": {
+      background: "#f5f8fa"
+    }
+  }
 });
 
 // Inspired by blueprintjs
@@ -68,7 +75,7 @@ function StyledRadio(props) {
 export default function CustomizedRadios(props) {
   const { handleTermChange, terms, searchTerm} = props;
   const radioOptions = [];
-  
+  const classes = useStyles();
   for (const key in terms) {
     if (terms.hasOwnProperty(key)) {
      const checked = terms[key] === searchTerm ? true:false;
@@ -80,6 +87,7 @@ export default function CustomizedRadios(props) {
       <RadioGroup defaultValue="female" aria-label="gender" name="customized-radios">
         {radioOptions}
       </RadioGroup>
+      <TextField onChange={handleTermChange} className={classes.customInput}  size="small" id="outlined-basic" label="Custom" variant="outlined" />
     </FormControl>
   );
 }
