@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef} from 'react';
 import {googleMapsApi} from './../../Api/helper';
 import markers from './../../Api/markers'
-// import { styled } from '@material-ui/core/styles';
+import useMarkerInfo from './useMarkerInfo'
+ 
 
 import { makeStyles } from '@material-ui/core';
 
@@ -35,7 +36,7 @@ const GoogleMapDisplay = (props) => {
   const basePaddle = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png"
 
 
-
+  useMarkerInfo(mapMarkers);
 
   useEffect(()=>{
 
@@ -44,24 +45,25 @@ const GoogleMapDisplay = (props) => {
     })
   
     //skip first render of empty array and no marker has been selected 
-    // && selectedIndex < 0
     if (selectedIndex >= 0 ){
       setmapMarkers(prev=> {  
-        const updateMarkers = [...prev]
-        const prevIndex = updateMarkers.findIndex((ele) => {
+        const markersToUpdate = [...prev]
+        const prevIndex = markersToUpdate.findIndex((ele) => {
           return ele.icon.url === basePaddle;
         })
         if (prevIndex >= 0){
-           updateMarkers[prevIndex].setIcon(markers['default']);
+           markersToUpdate[prevIndex].setIcon(markers['default']);
          }      
-        updateMarkers[selectedIndex].setIcon(markers['selected']);
-        return updateMarkers;
+        markersToUpdate[selectedIndex].setIcon(markers['selected']);
+        return markersToUpdate;
       });
     }
     else if (googleData.length > 0){
 
       const markers = googleMapsApi.getMarkers(googleData);
-      
+  
+  
+   
       setmapMarkers(markers);
     }
    
