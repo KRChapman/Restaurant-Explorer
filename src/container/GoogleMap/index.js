@@ -32,22 +32,24 @@ const useStyles = makeStyles({
 const GoogleMapDisplay = (props) => {
   const classes = useStyles();
   const [mapMarkers, setmapMarkers] = useState([]);
-  const {googleData} = props;
+  //const [mapData, setmapData] = useState({data:[],prev:""});
+  const { googleData, getPlaceForMap, chosenMapPlaceId, getDataByPlaceId} = props;
   const basePaddle = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png"
 
 
-  useMarkerInfo(mapMarkers);
+  const popoverInfo = useMarkerInfo(mapMarkers, googleData, getPlaceForMap, getDataByPlaceId);
 
   useEffect(()=>{
 
     const selectedIndex = googleData.findIndex((ele) => {
-      return ele.marker === 'selected';
+      return ele.placeId === chosenMapPlaceId;
     })
-  
+    //debugger;
     //skip first render of empty array and no marker has been selected 
     if (selectedIndex >= 0 ){
       setmapMarkers(prev=> {  
-        const markersToUpdate = [...prev]
+        const markersToUpdate = prev;
+        //[...prev]
         const prevIndex = markersToUpdate.findIndex((ele) => {
           return ele.icon.url === basePaddle;
         })
@@ -67,9 +69,49 @@ const GoogleMapDisplay = (props) => {
       setmapMarkers(markers);
     }
    
-  }, [googleData])
+  }, [googleData, chosenMapPlaceId])
+
+  // useEffect(()=> {
+  //   setmapData(googleData)
+  // }, [googleData]);
+
+  // useEffect(()=> {
+ 
+  //   if (chosenMapPlaceId !== ""){
+  //     setmapData(currentState => {
+  //       const mapData = [...currentState];
+  //       //   const mapData = googleData;
+  //       const prevIconIndex = mapData.findIndex((ele) => {
+  //         return ele.marker === 'selected';
+  //       })
+  //       const newIConIndex = mapData.findIndex((ele) => {
+  //         return ele.placeId === chosenMapPlaceId;
+  //       })
 
 
+  //       if (prevIconIndex >= 0) {
+  //         mapData.data[prevIconIndex].marker = 'default';
+  //         mapData.data[prevIconIndex].prev = prevIconIndex;
+
+  //       }
+  //       if (newIConIndex >= 0) {
+  //         mapData.data[newIConIndex].marker = 'selected';
+
+  //       }
+
+  //       return mapData
+
+  //     })
+  //   }
+
+
+
+
+ 
+  // }, [setmapData, chosenMapPlaceId])
+
+  // mapData[prevIconIndex].marker.setMap(googleMapsApi.map);
+  // mapData[newIConIndex].marker.setMap(googleMapsApi.map);
   useEffect(() => {
 
       mapMarkers.forEach(ele => {
@@ -87,7 +129,9 @@ const GoogleMapDisplay = (props) => {
   
    <div className={containerStyle}>
      
-     <div className={mapStyle} id="map"></div>
+     <div className={mapStyle} id="map">
+       {popoverInfo}
+     </div>
     </div>
   )
 }

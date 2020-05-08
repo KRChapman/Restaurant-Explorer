@@ -156,8 +156,8 @@ class GoogleMapsApi {
     }
   }
 
-  getDetails = (places,) => {
-    const requests = [];
+  getDetails = (places) => {
+    const requests = []; 
     for (let index = 0; index < places.length; index++) {
       let request = {
         placeId: places[index].placeId,

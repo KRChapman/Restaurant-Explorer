@@ -23,6 +23,11 @@ class Layout extends Component {
       isDataLoading: false,
       mapTheme: 'light',
       currentTotalDisplay: 0,
+      chosenMapPlaceId: "",
+      mapPlaceToDisplay: {},
+      allMapData: { selectedPlaces: [], placesDetails: [], placesToDisplay: [], 
+                  placeId: "1", healthData:[], yelpData:[], googleData:[],
+                }
      }
     this.displayInc = 4;
   }
@@ -69,7 +74,7 @@ class Layout extends Component {
     const slectedPlaces = allPlaces.slice(start, end);
     const slectedYelpData = yelpData.slice(start, end);
     const slectedHealthData = healthData.slice(start, end);
-
+   
     const places = slectedPlaces.map((ele, i) => {
       const  yelp  = slectedYelpData[i].yelp;
       const  health  = slectedHealthData[i].data;
@@ -114,6 +119,8 @@ class Layout extends Component {
 
   setAllPlaces = (data) => {
     const currentTotalDisplay = this.displayInc >= data.length ? data.length : this.displayInc
+    // allPlaces will move around in different orders based on map selection and googleData Needs to stay in the same order
+    // to corrospond with map markers
     const googleData = [...data];
     this.setState({ allPlaces: data, googleData, currentTotalDisplay });
   }
@@ -130,7 +137,7 @@ class Layout extends Component {
 
     queries["health"] = buildHealthQuery(slectedPlaces, phoneNumbers);
     queries["yelp"] =  buildYelpQuery(slectedPlaces, phoneNumbers, placeData);
-   // debugger;
+
     return queries;
   }
   async getDetails(){
@@ -144,11 +151,12 @@ class Layout extends Component {
   }
 
   
-  getMorePlaces = () => {
+  getMorePlaces = (displayNumber = null) => {
+    const displayInc = displayNumber || this.displayInc;
     // argument for this.displayInc or 1 for map marker increase
     const allPlacesTotal = this.state.allPlaces.length
     if (this.state.currentTotalDisplay < allPlacesTotal){
-      const totalInc = this.displayInc + this.state.placesToDisplay.length;
+      const totalInc = displayInc + this.state.placesToDisplay.length;
       const currentTotalDisplay = totalInc >= allPlacesTotal ? allPlacesTotal : totalInc
       this.setState({ currentTotalDisplay }, this.getPlacesToDisplay);
     }
@@ -157,29 +165,88 @@ class Layout extends Component {
     }
   }
 
-  changeMapIcon = (placeId, event) =>{
-   
-    this.setState(currentState => {
+  getPlaceForMap = async (displaySelected) => {
 
-      const googleData = [...currentState.googleData];
-      const prevIconIndex = googleData.findIndex((ele)=> {
-        return ele.marker === 'selected';
-      })
-      const newIConIndex = googleData.findIndex((ele) => {
-        return ele.placeId === placeId;
-      })
+    const { placesToDisplay, placeData} = this.state;
+
+    console.log("displaySelected", displaySelected)
+    const mapPlaceToDisplay = getMatchingToDisplayData(displaySelected, placesToDisplay);
+
+    if (mapPlaceToDisplay){
+      this.setState({ mapPlaceToDisplay });
+     }
+     else{
+     // const displaySelectedId = displaySelected[0].googlePlace.placeId
+      // const found = currentState.allPlaces.find(ele => ele.placeId === )
+     // return array for searching allplaces before switch
+      const getDetails = googleMapsApi.getDetails([displaySelected]);
+      const details = await getDetails;
+     // debugger;
  
+      let queries = buildQueries(details, [displaySelected], placeData);
+      const setData = (data) => {
+          this.setState(currentState => {
+            const allMapData = currentState.allMapData;
+             allMapData.yelpData = currentState.allMapData.yelpData.concat(data.yelpData)
+             allMapData.healthData = currentState.allMapData.healthData.concat(data.healthData)
+             allMapData.placesDetails = currentState.allMapData.placesDetails.concat(details)
+            return { allMapData }
+          });
+     }
+      getYelpHealthData(queries, setData);
+      this.setState(currentState=> {
+      
+        // displaySelected
+  
 
-      if (prevIconIndex >= 0){
-       
-        googleData[prevIconIndex].marker = 'default';
-      }
-      if (newIConIndex >= 0) {
-        googleData[newIConIndex].marker  = 'selected';
-      }
+      
+      });
+     }
 
-      return { googleData}
-    });
+    // 
+    // const setData = (data) => {
+    //   this.setState(currentState => {
+    //     const yelpData = currentState.yelpData.concat(data.yelpData)
+    //     const healthData = currentState.healthData.concat(data.healthData)
+    //     const placesDetails = currentState.placesDetails.concat(details.details)
+    //     return { yelpData, healthData, placesDetails }
+    //   });
+    // }
+    // getYelpHealthData(queries, setData);
+
+    // const places = slectedPlaces.map((ele, i) => {
+    //   const yelp = slectedYelpData[i].yelp;
+    //   const health = slectedHealthData[i].data;
+    //   const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
+    //   const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
+    //   const detailsData = this.getDataByPlaceId("placesDetails", ele.placeId);
+    //   const generalInfo = new GeneralInfo(ele.placeId, detailsData, ele, yelp);
+    //   return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace, healthPlace, generalInfo }
+    // })
+    //this.getMorePlaces(displayNumber);
+    
+    function buildQueries(details, slectedPlace, placeData ){
+      const queries = { displayLimit: slectedPlace.length };
+      const phoneNumbers = details;
+      queries["health"] = buildHealthQuery(slectedPlace, phoneNumbers);
+      queries["yelp"] = buildYelpQuery(slectedPlace, phoneNumbers, placeData);
+      return queries;
+    }
+
+    function getMatchingToDisplayData(data, placesToDisplay) {
+      const placeId = data.placeId
+
+      const found = placesToDisplay.find(ele => ele.googlePlace.placeId === placeId)
+    
+      return found;
+    }
+  }
+
+  changeMapIcon = (placeId, event) =>{
+
+    this.setState({chosenMapPlaceId: placeId} )
+   
+  
   }
 
   setIsDataLoading = (isLoading) => {
@@ -198,7 +265,7 @@ class Layout extends Component {
   render() { 
   
     
-    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData, isDataLoading}  = this.state;
+    const { placesToDisplay, googleData, allPlaces, mapTheme, placeData, isDataLoading, chosenMapPlaceId, mapPlaceToDisplay}  = this.state;
     const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
     return ( 
       <div>
@@ -207,7 +274,7 @@ class Layout extends Component {
       
         <Results placesToDisplay={placesToDisplay} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
           setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} allPlacesCount={allPlaces.length} isDataLoading={isDataLoading} /> 
-        <GoogleMapDisplay googleData={googleData}/>
+        <GoogleMapDisplay googleData={googleData} chosenMapPlaceId={chosenMapPlaceId} getPlaceForMap={this.getPlaceForMap} mapPlaceToDisplay={mapPlaceToDisplay}/>
       </div>
      )
   }

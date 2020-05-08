@@ -12,8 +12,8 @@ export class GooglePlace {
     this.photo = googleData.photo || "";
     this.address = googleData.address || "";
     this.reviewsTotal = googleData.reviewsTotal || 0;
-    this.reviews = reviews;
-    this.url = url;
+    this.reviews = reviews || "";
+    this.url = url || "";
   }
 }
 

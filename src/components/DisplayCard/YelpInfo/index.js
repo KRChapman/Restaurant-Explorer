@@ -31,7 +31,7 @@ const YelpInfo = (props) => {
   const reviewsToDisplay = <ReviewContainer title={"Revew Excerpts"}>
                     <ReviewsDisplay reviews={yelpReviewState.reviews} />
                    </ReviewContainer>;
- 
+                                                                                      // corrospond input with state reducer
   const popOver = yelpReviewState.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setYelpReviewState({ anchorEl: inp })} anchorEl={yelpReviewState.anchorEl}>{reviewsToDisplay}</WarnPopover>
 
   return (
