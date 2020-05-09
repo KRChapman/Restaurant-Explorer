@@ -39,37 +39,7 @@ const GoogleMapDisplay = (props) => {
 
   const popoverInfo = useMarkerInfo(mapMarkers, googleData, getPlaceForMap, getDataByPlaceId);
 
-  useEffect(()=>{
 
-    const selectedIndex = googleData.findIndex((ele) => {
-      return ele.placeId === chosenMapPlaceId;
-    })
-    //debugger;
-    //skip first render of empty array and no marker has been selected 
-    if (selectedIndex >= 0 ){
-      setmapMarkers(prev=> {  
-        const markersToUpdate = prev;
-        //[...prev]
-        const prevIndex = markersToUpdate.findIndex((ele) => {
-          return ele.icon.url === basePaddle;
-        })
-        if (prevIndex >= 0){
-           markersToUpdate[prevIndex].setIcon(markers['default']);
-         }      
-        markersToUpdate[selectedIndex].setIcon(markers['selected']);
-        return markersToUpdate;
-      });
-    }
-    else if (googleData.length > 0){
-
-      const markers = googleMapsApi.getMarkers(googleData);
-  
-  
-   
-      setmapMarkers(markers);
-    }
-   
-  }, [googleData, chosenMapPlaceId])
 
   // useEffect(()=> {
   //   setmapData(googleData)
@@ -119,6 +89,47 @@ const GoogleMapDisplay = (props) => {
       })
 
   }, [mapMarkers])
+
+
+  useEffect(() => {
+
+ 
+     if (googleData.length > 0) {
+
+      const markers = googleMapsApi.getMarkers(googleData);
+
+
+
+      setmapMarkers(markers);
+    }
+
+  }, [googleData, chosenMapPlaceId])
+
+
+  useEffect(()=> {
+    const selectedIndex = googleData.findIndex((ele) => {
+      return ele.placeId === chosenMapPlaceId;
+    })
+    // debugger;
+    //skip first render of empty array and no marker has been selected 
+    if (selectedIndex >= 0 && mapMarkers.length > 0) {
+    //  setmapMarkers(prev => {
+        const markersToUpdate = mapMarkers;
+        const prevIndex = markersToUpdate.findIndex((ele) => {
+          return ele.icon.url === basePaddle;
+        })
+
+        if (prevIndex >= 0) {
+          markersToUpdate[prevIndex].setIcon(markers['default']);
+        }
+        if (markersToUpdate.length > 0) {
+          markersToUpdate[selectedIndex].setIcon(markers['selected']);
+        }
+
+      //   return markersToUpdate;
+      // });
+    }
+  }, [googleData,chosenMapPlaceId, mapMarkers])
   // const DisplayMap  = 
  // const IsDisplayMap = mapMarkers.length > 0 ? <DisplayMap /> : <div></div>;
   const isMarkersContainer = mapMarkers.length > 0 ? classes.styledMapContainer : ""; 
