@@ -103,7 +103,7 @@ const GoogleMapDisplay = (props) => {
       setmapMarkers(markers);
     }
 
-  }, [googleData, chosenMapPlaceId])
+  }, [googleData])
 
 
   useEffect(()=> {

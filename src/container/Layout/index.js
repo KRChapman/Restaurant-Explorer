@@ -26,7 +26,7 @@ class Layout extends Component {
       chosenMapPlaceId: "",
       mapPlaceToDisplay: {},
       allMapData: { selectedPlaces: [], placesDetails: [], placesToDisplay: [], 
-                  placeId: "1", healthData:[], yelpData:[], googleData:[],
+                  selectedplaceId: "1", healthData:[], yelpData:[], googleData:[],
                 }
      }
     this.displayInc = 4;
@@ -36,13 +36,22 @@ class Layout extends Component {
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (prevState.allPlaces !== this.state.allPlaces ){
+    if (prevState.googleData !== this.state.googleData ){
    
       this.displayNewPlaces();
     }
 
     if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData && (this.state.healthData.length > 0 || this.state.yelpData.length > 0)){
       this.combineDataForPlacesToDisplay()
+    }
+
+    if (this.state.selectedPlaces !== prevState.selectedPlaces){
+      this.getDataForMap();
+    }
+
+    if (this.state.allMapData.yelpData !== prevState.allMapData.yelpData && this.state.allMapData.healthData !== prevState.allMapData.healthData ) {
+      //&& (this.state.healthData.length > 0 || this.state.yelpData.length > 0)
+      this.combineDataForMap()
     }
 
   }
@@ -74,21 +83,26 @@ class Layout extends Component {
     const slectedPlaces = allPlaces.slice(start, end);
     const slectedYelpData = yelpData.slice(start, end);
     const slectedHealthData = healthData.slice(start, end);
-   
-    const places = slectedPlaces.map((ele, i) => {
-      const  yelp  = slectedYelpData[i].yelp;
-      const  health  = slectedHealthData[i].data;
-      const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
-      const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
-      const detailsData = this.getDataByPlaceId("placesDetails", ele.placeId);
-      const generalInfo = new GeneralInfo(ele.placeId, detailsData, ele, yelp );
-      return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace, healthPlace, generalInfo }
-    })
+    const places = this.getPlacesDisplay(slectedPlaces, slectedYelpData, slectedHealthData);
+
     this.setState(currentState => {
       const placesToDisplay = currentState.placesToDisplay.concat(places)
       localAdd(placesToDisplay)
       return { placesToDisplay}
     }, this.setIsDataLoading(false));
+  }
+
+  getPlacesDisplay = (slectedPlaces, slectedYelpData, slectedHealthData) => {
+    const places = slectedPlaces.map((ele, i) => {
+      const yelp = slectedYelpData[i].yelp;
+      const health = slectedHealthData[i].data;
+      const healthPlace = new Healthplace(slectedHealthData[i].placeId, health)
+      const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
+      const detailsData = this.getDataByPlaceId("placesDetails", ele.placeId);
+      const generalInfo = new GeneralInfo(ele.placeId, detailsData, ele, yelp);
+      return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace, healthPlace, generalInfo }
+    })
+    return places;
   }
 
   getDataByPlaceId = (dataToLook,placeId) => {
@@ -165,7 +179,16 @@ class Layout extends Component {
     }
   }
 
-  getPlaceForMap = async (displaySelected) => {
+  getPlaceForMap = (displaySelected) =>{
+
+    this.setState(currentState => {
+      const allMapData = currentState.allMapData;
+      allMapData.selectedplaceId = displaySelected.placeId;
+      allMapData.selectedPlaces = allMapData.selectedPlaces.concat(displaySelected);
+      return { allMapData}
+    }, this.changeMapIcon(displaySelected.placeId));
+  }
+  getDataForMap = async (displaySelected) => {
 
     const { placesToDisplay, placeData} = this.state;
 
@@ -173,7 +196,7 @@ class Layout extends Component {
     const mapPlaceToDisplay = getMatchingToDisplayData(displaySelected, placesToDisplay);
 
     if (mapPlaceToDisplay){
-      this.setState({ mapPlaceToDisplay });
+      this.setState({ mapPlaceToDisplay }, this.changeMapIcon(displaySelected.placeId));
      }
      else{
      // const displaySelectedId = displaySelected[0].googlePlace.placeId
@@ -194,13 +217,7 @@ class Layout extends Component {
           });
      }
       getYelpHealthData(queries, setData);
-      this.setState(currentState=> {
-      
-        // displaySelected
-  
 
-      
-      });
      }
 
     // 
@@ -240,6 +257,10 @@ class Layout extends Component {
     
       return found;
     }
+  }
+
+  combineDataForMap = () => {
+
   }
 
   changeMapIcon = (placeId, event) =>{
