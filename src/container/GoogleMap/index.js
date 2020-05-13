@@ -33,11 +33,11 @@ const GoogleMapDisplay = (props) => {
   const classes = useStyles();
   const [mapMarkers, setmapMarkers] = useState([]);
   //const [mapData, setmapData] = useState({data:[],prev:""});
-  const { googleData, mapPlaceToDisplay, getPlaceForMap, chosenMapPlaceId, getDataByPlaceId} = props;
+  const { googleData, mapPlaceToDisplay, getPlaceForMap, chosenMapPlaceId, placeData, getDataByPlaceId} = props;
   const basePaddle = "http://maps.google.com/mapfiles/kml/paddle/wht-circle.png"
-  console.log('mapPlaceToDisplay', mapPlaceToDisplay );
+  
 
-  const popoverInfo = useMarkerInfo(mapMarkers, googleData, getPlaceForMap, getDataByPlaceId);
+  const popoverInfo = useMarkerInfo(mapMarkers, googleData, getPlaceForMap, getDataByPlaceId, mapPlaceToDisplay, placeData);
 
 
 
