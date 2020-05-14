@@ -7,7 +7,8 @@ import DisplayCard from './../../components/DisplayCard/DisplayCard'
 
 //
 const useMarkerInfo = (mapMarkers, googleData, getPlaceForMap, getDataByPlaceId, mapPlaceToDisplay,placeData) => {
- // const [anchorEl, setAnchorEl] =  useState(null);
+  // Initial anchor element separate so the update comes ofter the api call returns with the data
+ // const [holdAnchorEl, setHoldAnchorEl] = useState({ anchorEl: null});
   const [markerInfo, setMarkerInfo] = useReducer((state, newState) => {
     return { ...state, ...newState }
   }, { anchorEl: null, infoDisplay: "" })
@@ -29,6 +30,7 @@ const useMarkerInfo = (mapMarkers, googleData, getPlaceForMap, getDataByPlaceId,
           // const placeDetails = getDataByPlaceId("placesDetails",found.placeId);
           // console.log('ele', placeDetails);
           getPlaceForMap(found);
+       //   setHoldAnchorEl({ anchorEl: e.tb.target });
           setMarkerInfo({ anchorEl: e.tb.target });
           //pDoc.parentElement
         });
@@ -51,9 +53,9 @@ const useMarkerInfo = (mapMarkers, googleData, getPlaceForMap, getDataByPlaceId,
     
   }, [mapPlaceToDisplay, placeData] )
 
- /// generalInfo googlePlace healthPlace yelpPlace
 
-  return <WarnPopover setanchorEl={(inp) => setMarkerInfo({ anchorEl: inp })} anchorEl={markerInfo.anchorEl} >{markerInfo.infoDisplay}</WarnPopover>
+
+  return <WarnPopover setanchorEl={(inp) => setMarkerInfo({ anchorEl: inp, infoDisplay: "" })} anchorEl={markerInfo.anchorEl} >{markerInfo.infoDisplay}</WarnPopover>
 }
 
 export default useMarkerInfo;
