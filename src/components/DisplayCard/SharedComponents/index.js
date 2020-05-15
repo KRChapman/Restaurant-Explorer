@@ -42,7 +42,7 @@ export const Link = (props) => {
 
   const target = isDesktop ? "_blank" : "";
   return (
-    <Button href={url} target={target} variant="outlined" color="primary" size="small">
+    <Button href={url} target={target} variant="outlined" color="secondary" size="small">
       {children}
 </Button>
   )
@@ -54,7 +54,7 @@ export const Link = (props) => {
 export const Reviews = (props) => {
   const { action, reviewCount} = props;
   return (
-    <Button onClick={action} variant="outlined" color="primary" size="small">Reviews ({reviewCount})</Button  >
+    <Button onClick={action} variant="outlined" color="secondary" size="small">Reviews ({reviewCount})</Button  >
   )
 }
 
@@ -71,7 +71,7 @@ export const Reviews = (props) => {
         
         {title}
         </Typography>
-      <CardContent className={classes.content}>
+      <CardContent  className={classes.content}>
         {children}
       </CardContent>
 

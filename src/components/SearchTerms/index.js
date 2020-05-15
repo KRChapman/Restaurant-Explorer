@@ -8,7 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=> ({
   root: {
     '&:hover': {
       backgroundColor: 'transparent',
@@ -49,11 +49,22 @@ const useStyles = makeStyles({
   },
 
   customInput:{
+    
     "& input": {
-      background: "#f5f8fa"
+      background: "#f5f8fa",
+      color: 'black',
+    },
+      "& label": {
+  
+        color: theme.palette.secondary.label
+        //theme.palette.getContrastText(theme.palette.secondary.background),
     }
+  },
+  rootLabel:{
+    color: theme.palette.getContrastText(theme.palette.secondary.background)
+ //   theme.palette.text.secondary
   }
-});
+}));
 
 // Inspired by blueprintjs
 function StyledRadio(props) {
@@ -79,7 +90,7 @@ export default function CustomizedRadios(props) {
   for (const key in terms) {
     if (terms.hasOwnProperty(key)) {
      const checked = terms[key] === searchTerm ? true:false;
-      radioOptions.push(<FormControlLabel key={key} checked={checked} onChange={props.handleTermChange} value={terms[key]} control={<StyledRadio />} label={terms[key]} />)
+      radioOptions.push(<FormControlLabel className={classes.rootLabel}  key={key} checked={checked} onChange={props.handleTermChange} value={terms[key]} control={<StyledRadio />} label={terms[key]} />)
     }
   }
   return (
@@ -87,7 +98,7 @@ export default function CustomizedRadios(props) {
       <RadioGroup defaultValue="female" aria-label="gender" name="customized-radios">
         {radioOptions}
       </RadioGroup>
-      <TextField onChange={handleTermChange} className={classes.customInput}  size="small" id="outlined-basic" label="Custom" variant="outlined" />
+      <TextField  onChange={handleTermChange} className={classes.customInput}  size="small" id="outlined-basic" label="Custom" variant="outlined" />
     </FormControl>
   );
 }

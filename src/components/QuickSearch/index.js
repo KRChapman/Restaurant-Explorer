@@ -3,6 +3,7 @@ import {googleMapsApi }from './../../Api/helper'
 import { AllPlaces} from './../../Models/place'
 import SearchTerms from './../SearchTerms/index'
 import GeberalBtn from './../shared/GeneralBtn'
+import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -50,8 +51,10 @@ const QuickSearch = (props) => {
   }
   return (
     <div className={classes.container}>
-      <h3>OR</h3>
-      <h2>Imediate Search Option</h2>
+      <Typography color="textPrimary" variant='h5' component="h5" gutterBottom>OR</Typography>
+
+      <Typography color="textPrimary" variant='h5' component="h5" gutterBottom>Imediate Seattle Search Option</Typography>
+   
       <GeberalBtn action={getAllPlaces}>Seattle {searchTerm}</GeberalBtn>
       <SearchTerms handleTermChange={handleTermChange} terms={terms} searchTerm={searchTerm}/>
     </div>

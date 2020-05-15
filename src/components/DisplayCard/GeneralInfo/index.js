@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   siteLink: {
   textDecoration: "none",
    // color: '#3f9ade',
-    color: theme.palette.primary.main,
+    color: theme.palette.text.secondary,
     marginRight: "5px",
   //  color: 'black',
     //theme.text.primary,

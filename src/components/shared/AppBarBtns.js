@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     '& span': {
 
       top: "-3px",
+      backgroundColor: theme.palette.secondary.switch,
     }
 
   }
@@ -21,7 +22,7 @@ export const MapTheme = (props) => {
   const { toggleMapTheme, badgeContent } = props;
   return (
     <IconButton onClick={toggleMapTheme} title="Map" color="inherit">
-      <Badge badgeContent={badgeContent} className={classes.badge} color="secondary">
+      <Badge badgeContent={badgeContent} className={classes.badge} >
         <MapIcon />
       </Badge>
     </IconButton>

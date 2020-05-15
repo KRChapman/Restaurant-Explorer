@@ -156,7 +156,7 @@ const Results = (props) => {
         <div className={classes.root} >
 
           <ControlButtons changeViewRange={changeViewRangeHandler} />
-          <Typography varient={"caption"} className={classes.counter} >
+          <Typography color="textPrimary" varient={"caption"} className={classes.counter} >
             {startingDisplayCount} / {allPlacesCount}
           </Typography>
 

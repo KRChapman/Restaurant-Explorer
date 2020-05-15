@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   root: {
    maxWidth: 320,
      flexGrow: 1,
-     
+   // backgroundColor: theme.palette.secondary.card
    // margin: '1.2%',
   //   padding: "10px",
   },
@@ -31,6 +31,7 @@ const useStyles = makeStyles(theme => ({
   },
 
   content: {
+    textAlign: "center",
     cursor: 'auto',
     padding: "4px",
     "&:last-child" :{
@@ -57,7 +58,7 @@ const DisplayCard = (props) => {
             title={googlePlace.name}
         />
         <CardContent className={classes.content}>
-          <Typography gutterBottom variant="h5" color="primary" component="h6">
+        <Typography gutterBottom variant="h5" color="textPrimary" component="h6">
               {googlePlace.name}
           </Typography>
        

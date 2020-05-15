@@ -319,7 +319,7 @@ class Layout extends Component {
     const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
 
     return ( 
-      <div>
+      <div className="main">
         <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
       
       

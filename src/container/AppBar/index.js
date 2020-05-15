@@ -100,9 +100,9 @@ export default function ButtonAppBar(props) {
   }
  const popOver = <WarnPopover anchorEl={anchorEl} setanchorEl={setanchorEl}><InfoCard/></WarnPopover>
   return (
-    <div className={classes.root}>
+    <div   className={classes.root}>
       <AppBar position="fixed" className={classes.root}>
-        <Toolbar className={classes.toolbar}>
+        <Toolbar  className={classes.toolbar}>
           <EmojiTransportationIcon className={classes.logo}/>
           <Container   className={classes.menuButton} color="inherit" aria-label="menu">
             <MobileMenu toggleInfoCard={toggleInfoCard} badgeContent={mapTheme} toggleMapTheme={toggleMapTheme}>
@@ -111,7 +111,7 @@ export default function ButtonAppBar(props) {
           </Container>
     
           <div className={classes.titleContainer}>
-        <Typography className={classes.title} variant="h4" >
+            <Typography color="inherit" className={classes.title} variant="h4" >
             Restaurant Explorer   
           </Typography>
             <Typography className={classes.details} variant="subtitle2" >

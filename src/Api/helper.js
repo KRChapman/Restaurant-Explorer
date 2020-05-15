@@ -91,27 +91,29 @@ class GoogleMapsApi {
     this.place = null
     this.exactLocation = null
     this.markers = []
-   
+    this.mapTheme = 'light'
   }
 
     // pUT STYLES AND MAP THEM VARIABLE START IN OWN FILE AND IMPORT TO THIS AND LAYOUT mapTheme State
-  initiateMap(latitude = null,longitude = null,mapTheme = "light"){
+  initiateMap(latitude = null,longitude = null){
     const lat = latitude == null ? this.place.geometry.location.lat() :  latitude;
     const lon = longitude == null ? this.place.geometry.location.lng() : longitude;
       const exactLocation = new window.google.maps.LatLng(lat, lon);
       const map = new window.google.maps.Map(document.getElementById('map'), {
         center: exactLocation,
         zoom: 14,
-        styles: mapThemes[mapTheme],
+        styles: mapThemes[this.mapTheme],
   
         
       });
-      this.exactLocation = exactLocation
+     // this.mapTheme = mapTheme;
+      this.exactLocation = exactLocation;
       this.map = map;
   }
 
   changeMapTheme(mapTheme){
     if (this.map){
+      this.mapTheme = mapTheme;
       this.map.setOptions({ styles: mapThemes[mapTheme] })
     }
     

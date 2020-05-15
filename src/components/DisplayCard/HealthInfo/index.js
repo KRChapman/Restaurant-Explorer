@@ -52,7 +52,7 @@ const HealthInfo = (props) => {
           
           <CardActions>
 
-              <Button onClick={handlePopTable} size="small" color="primary" variant="outlined">
+          <Button onClick={handlePopTable} size="small" color="secondary"  variant="outlined">
                 Inspections
             </Button>
               
