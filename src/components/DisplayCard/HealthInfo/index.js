@@ -34,7 +34,7 @@ const HealthInfo = (props) => {
   const handlePopTable = (e) => {
     setanchorEl(e.currentTarget);
   }
-
+  const isImage = !!healthImage
   return (
     
       <div className='health-container'>
@@ -42,16 +42,17 @@ const HealthInfo = (props) => {
         <div>Health Department Rating</div>
         
         <div className="health-data-container">
-        
-          <CardMedia
-            className={classes.media}
-            image={healthImage || "na"}
-            title={healthPlace.name}
-          />
+        {isImage ? <CardMedia
+          className={classes.media}
+          image={healthImage || "na"}
+          title={healthPlace.name}
+        /> :null} 
+      
 
           
           <CardActions>
-
+          {isImage ? null : <div>Not Available</div>} 
+       
           <Button onClick={handlePopTable} size="small" color="secondary"  variant="outlined">
                 Inspections
             </Button>

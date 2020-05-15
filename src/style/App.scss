@@ -15,14 +15,27 @@ height: 100%;
 }
 .App {
   text-align: center;
-//background-color: #1A1A1B;
+  //background-color: #1A1A1B;
   height: 100%;
- background-color: #e9e8ee;
+ //background-color: #e9e8ee;
  font-family: "Roboto, Helvetica, Arial, sans-serif",
+}
+
+.light{
+   background-color: #e9e8ee;
+   display: block;
+overflow: auto;
+
+}
+.dark{
+  background-color: #1A1A1B;
+   display: block;
+overflow: auto;
+
 }
 .main{
   //background-color: #1A1A1B;
-   background-color: #e9e8ee;
+   //background-color: #e9e8ee;
 }
 #root{
   height: 100%;

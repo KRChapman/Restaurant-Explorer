@@ -116,6 +116,9 @@ class GoogleMapsApi {
       this.mapTheme = mapTheme;
       this.map.setOptions({ styles: mapThemes[mapTheme] })
     }
+    else{
+      this.mapTheme = mapTheme;
+    }
     
  
  }

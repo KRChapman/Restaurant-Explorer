@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { googleMapsApi, getYelpHealthData, buildYelpQuery, buildHealthQuery} from '../../Api/helper'
 import { GooglePlace, Yelpplace, Healthplace, GeneralInfo} from './../../Models/place'
 import Results from './../Results/index';
@@ -7,8 +9,15 @@ import GoogleMapDisplay from './../GoogleMap/index';
 
 import { localAdd, localupdate} from '../../utils/testing';
 
+const useStyle = makeStyles(theme => ({
 
+  maing: {
 
+    backgroundColor: 'black'
+    //theme.palette.secondary.background,
+  }
+
+}));
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -308,18 +317,20 @@ class Layout extends Component {
   toggleMapTheme = () => {
       const choices = {'light': 'dark', 'dark': 'light'}
     const newTheme = choices[this.state.mapTheme] 
-  
+    this.props.toggleTheme(newTheme);
     this.setState({ mapTheme: newTheme }, ()=> googleMapsApi.changeMapTheme(this.state.mapTheme));
   }
   render() { 
-  
+ 
     
-    const {chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, googleData, allPlaces, mapTheme, placeData, isDataLoading}  = this.state;
+    const { chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, googleData, allPlaces, mapTheme, placeData, isDataLoading, }  = this.state;
+    const { styleName} = this.props;
 
     const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
-
+    //debugger;
     return ( 
-      <div className="main">
+     
+      <div className={styleName}>
         <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
       
       
@@ -330,5 +341,5 @@ class Layout extends Component {
      )
   }
 }
-
 export default Layout;
+//export default withStyles(useStyle)(Layout);

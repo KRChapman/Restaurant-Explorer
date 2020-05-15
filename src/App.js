@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 //import './App.css';
 import './style/App.scss'
@@ -84,10 +84,15 @@ const theme2 = createMuiTheme({
 });
 console.log(theme);
 function App() {
+  const [currentTheme, setCurrentTheme] = useState({theme:theme,name:'light'});
+  const themes = { 'light': theme, 'dark': theme2}
+  const toggleTheme = (theme)=> {
+    setCurrentTheme({ theme: themes[theme], name: theme});
+  }
   return (
     <div className="App">
-      <ThemeProvider theme={theme2}>
-        <Layout />
+      <ThemeProvider theme={currentTheme.theme}>
+        <Layout toggleTheme={toggleTheme} styleName={currentTheme.name}/>
       </ThemeProvider>
     
       
