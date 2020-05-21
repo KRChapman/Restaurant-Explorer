@@ -10,27 +10,24 @@
 }
 html{
 //background-color: #f9f8ff;
+
 //background-color: #e9e8ee;
 height: 100%;
 }
 .App {
-  text-align: center;
-  //background-color: #1A1A1B;
-  height: 100%;
- //background-color: #e9e8ee;
- font-family: "Roboto, Helvetica, Arial, sans-serif",
+
 }
 
 .light{
-   background-color: #e9e8ee;
-   display: block;
-overflow: auto;
+  // background-color: #e9e8ee;
+//    display: block;
+// overflow: auto;
 
 }
 .dark{
   background-color: #1A1A1B;
-   display: block;
-overflow: auto;
+//    display: block;
+// overflow: auto;
 
 }
 .main{
@@ -39,9 +36,12 @@ overflow: auto;
 }
 #root{
   height: 100%;
+//background-color: #e9e8ee;
+ 
 }
 body{
-    height: 100%;
+   height: 100%;
+  
 }
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

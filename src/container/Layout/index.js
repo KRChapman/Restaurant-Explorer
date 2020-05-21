@@ -324,13 +324,13 @@ class Layout extends Component {
  
     
     const { chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, googleData, allPlaces, mapTheme, placeData, isDataLoading, }  = this.state;
-    const { styleName} = this.props;
+    // const { styleName} = this.props;
 
     const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
     //debugger;
     return ( 
      
-      <div className={styleName}>
+      <div>
         <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
       
       

@@ -5,6 +5,7 @@ import './style/App.scss'
 import Layout from './container/Layout/index';
 
 import { createMuiTheme, ThemeProvider}  from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 //import { MultiThemeProvider } from '@material-ui/core';
 //import ThemeProvider from '@material-ui/core/styles/ThemeProvider ';
 import { deepPurple,indigo, teal } from '@material-ui/core/colors';
@@ -82,21 +83,44 @@ const theme2 = createMuiTheme({
     }
   },
 });
+
+
+
+const useStyles = makeStyles({
+  base: {
+      textAlign: "center",
+
+  minHeight: "100vh",
+  //background-color: #1A1A1B;
+  //height: 100%;
+//background-color: #e9e8ee;
+  fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    backgroundColor: props => props.backgroundColor,
+  },
+  // secondStyle: {
+  //   color: props => props.color,
+  // },
+});
+
 console.log(theme);
 function App() {
-  const [currentTheme, setCurrentTheme] = useState({theme:theme,name:'light'});
+  
+  const [currentTheme, setCurrentTheme] = useState({theme:theme});
   const themes = { 'light': theme, 'dark': theme2}
+  const classes = useStyles({ backgroundColor: currentTheme.theme.palette.secondary.background});
   const toggleTheme = (theme)=> {
-    setCurrentTheme({ theme: themes[theme], name: theme});
+    setCurrentTheme({ theme: themes[theme]});
   }
   return (
-    <div className="App">
+   
+    <div className={`App ${classes.base}`}>
       <ThemeProvider theme={currentTheme.theme}>
         <Layout toggleTheme={toggleTheme} styleName={currentTheme.name}/>
-      </ThemeProvider>
+   
     
-      
+      </ThemeProvider >
     </div>
+     
   );
 }
 
