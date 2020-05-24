@@ -86,7 +86,7 @@ const GoogleMapDisplay = (props) => {
   // mapData[prevIconIndex].marker.setMap(googleMapsApi.map);
   // mapData[newIConIndex].marker.setMap(googleMapsApi.map);
   useEffect(() => {
-
+ 
       mapMarkers.forEach(ele => {
         ele.setMap(googleMapsApi.map);
       })
@@ -101,9 +101,13 @@ const GoogleMapDisplay = (props) => {
 
       const markers = googleMapsApi.getMarkers(googleData);
 
+      setmapMarkers(prevState=> {
+        prevState.forEach(ele => {
+        ele.setMap(null);
+        })
 
-
-      setmapMarkers(markers);
+        return markers    
+      });
     }
 
   }, [googleData])
