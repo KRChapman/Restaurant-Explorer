@@ -81,10 +81,10 @@ export default function InspectionsTable(props) {
 
  function createData(tableData) {
   
-  const rows = tableData.map(ele => {
+  const rows = tableData.map((ele,i) => {
     const classes = useStyles();
     const { name, grade, inspection_date, violation_points,
-      inspection_result, inspection_score, inspection_type,
+      inspection_result, 
       violation_description } = ele
 
     const violationDestription = violation_description || 'none available'
@@ -100,7 +100,7 @@ export default function InspectionsTable(props) {
   //  <TableCell align="right">Inspection Type&nbsp;(g)</TableCell>
   //   < TableCell align = "right" > { inspection_type }</TableCell>  
   return (
-      <TableRow key={inspection_date}>
+      <TableRow key={i}>
       <TableCell className={classes.cell} size={'small'} component="th" scope="row">
           {name}
         </TableCell>
