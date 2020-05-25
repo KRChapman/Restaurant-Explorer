@@ -9,15 +9,6 @@ import GoogleMapDisplay from './../GoogleMap/index';
 
 import { localAdd, localupdate} from '../../utils/testing';
 
-const useStyle = makeStyles(theme => ({
-
-  maing: {
-
-    backgroundColor: 'black'
-    //theme.palette.secondary.background,
-  }
-
-}));
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -185,7 +176,7 @@ class Layout extends Component {
     const { allPlaces, currentTotalDisplay, placesToDisplay } = this.state;
     const startingCountDisplay = placesToDisplay.length;
     const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
-    // debugger;
+
     const getDetails = googleMapsApi.getDetails(slectedPlaces);
     const details = await getDetails;
     return { slectedPlaces, details}
@@ -251,11 +242,8 @@ class Layout extends Component {
   }
   getDataForMap = async () => {
 
-    const { placesToDisplay, placeData, allPlaces} = this.state;
-    const { selectedplaceId, selectedplace } = this.state.allMapData;
-
-   
-    
+    const { placesToDisplay, allPlaces} = this.state;
+    const { selectedplaceId} = this.state.allMapData;
     const mapPlaceToDisplay = this.getMatchingToDisplayData(selectedplaceId, placesToDisplay);
 
     if (mapPlaceToDisplay) {
@@ -301,10 +289,7 @@ class Layout extends Component {
 
 
   changeMapIcon = (placeId, event) =>{
-
     this.setState({chosenMapPlaceId: placeId} )
-   
-  
   }
 
   setIsDataLoading = (isLoading) => {
@@ -315,25 +300,18 @@ class Layout extends Component {
     this.setState({ displayPlaceResults: data });
   }
   toggleMapTheme = () => {
-      const choices = {'light': 'dark', 'dark': 'light'}
+    const choices = {'light': 'dark', 'dark': 'light'}
     const newTheme = choices[this.state.mapTheme] 
     this.props.toggleTheme(newTheme);
     this.setState({ mapTheme: newTheme }, ()=> googleMapsApi.changeMapTheme(this.state.mapTheme));
   }
   render() { 
- 
-    
     const { chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, googleData, allPlaces, mapTheme, placeData, isDataLoading, }  = this.state;
-    // const { styleName} = this.props;
-
     const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
-    //debugger;
-    return ( 
-     
+
+    return (    
       <div>
-        <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />
-      
-      
+        <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />    
         <Results placesToDisplay={displayPlaceResults} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
           setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} allPlacesCount={allPlaces.length} isDataLoading={isDataLoading} /> 
         <GoogleMapDisplay googleData={googleData} chosenMapPlaceId={chosenMapPlaceId} getPlaceForMap={this.getPlaceForMap} mapPlaceToDisplay={mapPlaceToDisplay} placeData={placeData} />
@@ -342,4 +320,3 @@ class Layout extends Component {
   }
 }
 export default Layout;
-//export default withStyles(useStyle)(Layout);
