@@ -210,7 +210,7 @@ class Layout extends Component {
     if (this.state.currentTotalDisplay < allPlacesTotal) {
       const totalInc = displayInc + this.state.displayPlaceResults.length;
       const isResultsSmaller =  totalInc <= this.state.currentTotalDisplay ? true : false
-// 
+      console.log("this.state.currentTotalDisplay ", this.state.currentTotalDisplay );
       const currentTotalDisplay = totalInc >= allPlacesTotal ? allPlacesTotal : totalInc
       const resultsDisplayCount = currentTotalDisplay;
       if (isResultsSmaller){

@@ -12,20 +12,25 @@ const useStyles = makeStyles({
       marginLeft: "auto",
    marginRight: "auto",
     paddingBottom: "5px",
+    
+    maxWidth: "800px",
   },
   // initialMap: {
   //   backgroundColor: props => props.backgroundColor,
   // },
+  initialMap:{
+   visibility: "hidden",
+  },
   styledMapContainer: {
      //  margin: "10px auto",
       maxWidth: "800px",
 
- 
+   
     boxShadow: "0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)",
   },
   styledMap: {
     width: "100%",
-
+    visibility: "visible",
     height:"350px",
   },
 });
@@ -139,10 +144,10 @@ const GoogleMapDisplay = (props) => {
   }, [googleData,chosenMapPlaceId, mapMarkers])
   // const DisplayMap  = 
  // const IsDisplayMap = mapMarkers.length > 0 ? <DisplayMap /> : <div></div>;
-  const isMarkersContainer = mapMarkers.length > 0 ? classes.styledMapContainer : ""; 
-  const isMarkersMap = mapMarkers.length > 0 ? classes.styledMap : ""; 
-  const containerStyle = `${classes.initialContainer} ${isMarkersContainer}`
-  const mapStyle = `${classes.initialContainer} ${isMarkersMap}`
+  const markersContainer = mapMarkers.length > 0 ? classes.styledMapContainer : ""; 
+  const markersMap = mapMarkers.length > 0 ? classes.styledMap : ""; 
+  const containerStyle = `${classes.initialContainer} ${markersContainer}`
+  const mapStyle = `${classes.initialMap} ${markersMap}`
  return (
   
    <div className={containerStyle}>
