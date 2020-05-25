@@ -5,7 +5,7 @@ import SearchTerms from './../SearchTerms/index'
 import GeberalBtn from './../shared/GeneralBtn'
 import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import withStyles from '@material-ui/core/styles/withStyles';
+import { WarnPopover} from './../../components/PopOver/index'
 
 
 const useStyles = makeStyles(theme => {
@@ -23,6 +23,7 @@ const useStyles = makeStyles(theme => {
 const QuickSearch = (props) => {
   const classes = useStyles();
   const [searchTerm, setSearchTerm] = useState('Pasta');
+  const [warnAnchorEl, setwarnAnchorEl] = useState(null);
   const { setAllPlaces, setPlaceDataForQuery} = props;
   const seattleCoordinates = { lat: 47.6062095, lng: -122.3320708, }
   const seattleData = {
@@ -46,9 +47,9 @@ const QuickSearch = (props) => {
     setAllPlaces(allPlaces);
   }
   const handleTermChange = (e) => {
-    console.log('e', e.target.value);
     setSearchTerm(e.target.value);
   }
+  
   return (
     <div className={classes.container}>
       <Typography color="textPrimary" variant='h5' component="h5" gutterBottom>OR</Typography>
@@ -57,14 +58,20 @@ const QuickSearch = (props) => {
    
       <GeberalBtn action={getAllPlaces}>Seattle {searchTerm}</GeberalBtn>
       <SearchTerms handleTermChange={handleTermChange} terms={terms} searchTerm={searchTerm}/>
+      {warnAnchorEl && <WarnPopover anchorEl={warnAnchorEl} setanchorEl={setwarnAnchorEl} warningText={'Select or Type Search Term'}></WarnPopover>}
     </div>
   )
 
-  function getAllPlaces(){
-    setPlaceDataForQuery(seattleData);
-    googleMapsApi.initiateMap(seattleCoordinates.lat, seattleCoordinates.lng);
+   function getAllPlaces (e){
+     if (searchTerm === ""){
+       setwarnAnchorEl(e.currentTarget)
+     }
+     else{
+       setPlaceDataForQuery(seattleData);
+       googleMapsApi.initiateMap(seattleCoordinates.lat, seattleCoordinates.lng);
+       googleMapsApi.findPlaces(searchTerm, formatPlaces);
+     }
  
-    googleMapsApi.findPlaces(searchTerm, formatPlaces );
   }
 }
 
