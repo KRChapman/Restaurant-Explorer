@@ -37,7 +37,8 @@ class Layout extends Component {
     this.displayInc = 4;
   }
   componentDidMount(){
-   localupdate(this.placesLocal);
+    localupdate("displayPlaceResults",this.placesLocal);
+   localupdate("mapTheme", this.placesLocal);
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -68,7 +69,9 @@ class Layout extends Component {
     if (this.state.placesToDisplay !== prevState.placesToDisplay && this.state.allMapData.selectedplaceId !== prevState.allMapData.selectedplaceId){
       this.changeMapToDisplay();
     }
-
+    if(this.state.mapTheme !== prevState.mapTheme ) {
+      this.switchToChosenTheme();
+    }
 
   }
 
@@ -190,7 +193,7 @@ class Layout extends Component {
       const end = currentState.resultsDisplayCount;
       const toDisplay = currentState.placesToDisplay.slice(start, end);
       const displayPlaceResults = currentState.displayPlaceResults.concat(toDisplay);
-      localAdd(displayPlaceResults)
+      localAdd("displayPlaceResults", displayPlaceResults)
       return { displayPlaceResults}
     });
   }
@@ -296,14 +299,19 @@ class Layout extends Component {
     this.setState({ isDataLoading: isLoading });
   }
 
-  placesLocal = (data) => {
-    this.setState({ displayPlaceResults: data });
+  placesLocal = (key,value) => {
+    this.setState({  [key]: value });
   }
   toggleMapTheme = () => {
     const choices = {'light': 'dark', 'dark': 'light'}
-    const newTheme = choices[this.state.mapTheme] 
-    this.props.toggleTheme(newTheme);
-    this.setState({ mapTheme: newTheme }, ()=> googleMapsApi.changeMapTheme(this.state.mapTheme));
+    const newTheme = choices[this.state.mapTheme]   
+    localAdd("mapTheme", newTheme)
+    this.setState({ mapTheme: newTheme });
+  }
+  switchToChosenTheme = () => {
+    const { mapTheme} = this.state;
+    this.props.toggleTheme(mapTheme);
+    googleMapsApi.changeMapTheme(mapTheme);
   }
   render() { 
     const { chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, googleData, allPlaces, mapTheme, placeData, isDataLoading, }  = this.state;

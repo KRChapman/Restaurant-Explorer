@@ -1,23 +1,23 @@
 
-const key = "displayPlaces";
+//const key = "displayPlaces";
 
-export const localAdd = (data) => {
+export const localAdd = (key,data) => {
    
 
   localStorage.setItem(key, JSON.stringify(data));
 
 }
 
-export const localupdate = (setState) =>{
+export const localupdate = (key,setState) =>{
 
 
 
   let value = localStorage.getItem(key) || "[]";
 
-
+debugger;
   try {
     value = JSON.parse(value);
-    setState(value);
+    setState(key,value);
   } catch (e) {
     // if empty string
     setState(value);
