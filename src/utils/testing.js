@@ -14,7 +14,7 @@ export const localupdate = (key,setState) =>{
 
   let value = localStorage.getItem(key);
 
-debugger;
+
   if (value){
     try {
       value = JSON.parse(value);

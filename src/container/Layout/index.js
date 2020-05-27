@@ -42,7 +42,7 @@ class Layout extends Component {
       },
 
      }
-    this.displayInc = 4;
+    this.displayInc = 2;
   }
   componentDidMount(){
     localupdate("displayPlaceResults",this.placesLocal);
@@ -209,7 +209,9 @@ class Layout extends Component {
     if (this.state.currentTotalDisplay < allPlacesTotal) {
       const totalInc = displayInc + this.state.displayPlaceResults.length;
       const isResultsSmaller =  totalInc <= this.state.currentTotalDisplay ? true : false
-      console.log("this.state.currentTotalDisplay ", this.state.currentTotalDisplay );
+      // console.log("this.state.currentTotalDisplay ", this.state.currentTotalDisplay );
+      // console.log("totalInc ", totalInc);
+      // console.log("totalInc ", isResultsSmaller);
       const currentTotalDisplay = totalInc >= allPlacesTotal ? allPlacesTotal : totalInc
       const resultsDisplayCount = currentTotalDisplay;
       if (isResultsSmaller){
@@ -225,21 +227,21 @@ class Layout extends Component {
   }
 
   getMapPlaces  = () => {
-  const displayInc = 1;
+    const displayInc = 1;
 
-  const allPlacesTotal = this.state.allPlaces.length
-  if (this.state.currentTotalDisplay < allPlacesTotal) {
-    const totalInc = displayInc + this.state.placesToDisplay.length;
-    const currentTotalDisplay = totalInc >= allPlacesTotal ? allPlacesTotal : totalInc
-    this.setState({ currentTotalDisplay }, () => this.getPlacesToDisplay(false));
-  }
+    const allPlacesTotal = this.state.allPlaces.length
+    if (this.state.currentTotalDisplay < allPlacesTotal) {
+      const totalInc = displayInc + this.state.placesToDisplay.length;
+      const currentTotalDisplay = totalInc >= allPlacesTotal ? allPlacesTotal : totalInc
+      this.setState({ currentTotalDisplay }, () => this.getPlacesToDisplay(false));
+    }
   }
 
 
   getPlaceForMap = (displaySelected) =>{
 
     this.setState(currentState => {
-      currentState.allMapData.selectedplace = { ...currentState.allMapData.selectedplace}
+     // currentState.allMapData.selectedplace = { ...currentState.allMapData.selectedplace}
       const newState = { selectedplace: displaySelected}
       const allMapData = { ...currentState.allMapData, ...newState};
 
