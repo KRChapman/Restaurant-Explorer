@@ -12,16 +12,19 @@ export const localupdate = (key,setState) =>{
 
 
 
-  let value = localStorage.getItem(key) || "[]";
+  let value = localStorage.getItem(key);
 
 debugger;
-  try {
-    value = JSON.parse(value);
-    setState(key,value);
-  } catch (e) {
-    // if empty string
-    setState(value);
-  }
+  if (value){
+    try {
+      value = JSON.parse(value);
+      setState(key, value);
+    } catch (e) {
+      // if empty string
+      setState(value);
+    }
+ }
+
 
 }
 

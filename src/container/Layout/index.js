@@ -9,6 +9,14 @@ import GoogleMapDisplay from './../GoogleMap/index';
 
 import { localAdd, localupdate} from '../../utils/testing';
 
+const useStyles = makeStyles({
+
+  // secondStyle: {
+  //   color: props => props.color,
+  // },
+});
+
+
 class Layout extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +46,7 @@ class Layout extends Component {
   }
   componentDidMount(){
     localupdate("displayPlaceResults",this.placesLocal);
-   localupdate("mapTheme", this.placesLocal);
+
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -69,10 +77,7 @@ class Layout extends Component {
     if (this.state.placesToDisplay !== prevState.placesToDisplay && this.state.allMapData.selectedplaceId !== prevState.allMapData.selectedplaceId){
       this.changeMapToDisplay();
     }
-    if(this.state.mapTheme !== prevState.mapTheme ) {
-      this.switchToChosenTheme();
-    }
-
+ 
   }
 
   displayNewPlaces = () => {
@@ -302,24 +307,16 @@ class Layout extends Component {
   placesLocal = (key,value) => {
     this.setState({  [key]: value });
   }
-  toggleMapTheme = () => {
-    const choices = {'light': 'dark', 'dark': 'light'}
-    const newTheme = choices[this.state.mapTheme]   
-    localAdd("mapTheme", newTheme)
-    this.setState({ mapTheme: newTheme });
-  }
-  switchToChosenTheme = () => {
-    const { mapTheme} = this.state;
-    this.props.toggleTheme(mapTheme);
-    googleMapsApi.changeMapTheme(mapTheme);
-  }
-  render() { 
-    const { chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, googleData, allPlaces, mapTheme, placeData, isDataLoading, }  = this.state;
-    const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
 
+  render() { 
+    const { chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, 
+      googleData, allPlaces, placeData, isDataLoading, } = this.state;
+    const { mapTheme, classes} = this.props;
+    const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
+// className={base}
     return (    
-      <div>
-        <AppBar toggleMapTheme={this.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />    
+      <div className={classes.base}>
+        <AppBar toggleMapTheme={this.props.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />    
         <Results placesToDisplay={displayPlaceResults} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
           setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} allPlacesCount={allPlaces.length} isDataLoading={isDataLoading} /> 
         <GoogleMapDisplay googleData={googleData} chosenMapPlaceId={chosenMapPlaceId} getPlaceForMap={this.getPlaceForMap} mapPlaceToDisplay={mapPlaceToDisplay} placeData={placeData} />
@@ -327,4 +324,24 @@ class Layout extends Component {
      )
   }
 }
-export default Layout;
+export default withStyles(styles)(Layout);
+//Layout;
+//
+
+function styles(theme){
+
+  const styles = {
+    base: {
+      textAlign: "center",
+
+      minHeight: "100vh",
+      //background-color: #1A1A1B;
+      //height: 100%;
+      //background-color: #e9e8ee;
+      //  fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+      backgroundColor: theme.palette.secondary.background,
+    },
+
+  }
+  return styles;
+}

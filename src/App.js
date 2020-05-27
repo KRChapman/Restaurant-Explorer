@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 //import './App.css';
 import './style/App.scss'
@@ -9,7 +9,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 //import { MultiThemeProvider } from '@material-ui/core';
 //import ThemeProvider from '@material-ui/core/styles/ThemeProvider ';
 import { deepPurple,indigo, teal } from '@material-ui/core/colors';
-
+import { localAdd, localupdate } from './utils/testing';
+import { googleMapsApi } from './Api/helper'
 const theme = createMuiTheme({
   palette: {
    primary: indigo,
@@ -95,7 +96,7 @@ const useStyles = makeStyles({
   //height: 100%;
 //background-color: #e9e8ee;
   fontFamily: "Roboto, Helvetica, Arial, sans-serif",
-    backgroundColor: props => props.backgroundColor,
+  //  backgroundColor: props => props.backgroundColor,
   },
   // secondStyle: {
   //   color: props => props.color,
@@ -105,17 +106,33 @@ const useStyles = makeStyles({
 console.log(theme);
 function App() {
   
-  const [currentTheme, setCurrentTheme] = useState({theme:theme});
+  const [currentTheme, setCurrentTheme] = useState('light');
   const themes = { 'light': theme, 'dark': theme2}
-  const classes = useStyles({ backgroundColor: currentTheme.theme.palette.secondary.background});
-  const toggleTheme = (theme)=> {
-    setCurrentTheme({ theme: themes[theme]});
+  const key = "mapTheme";
+ // const classes = useStyles({ backgroundColor: currentTheme.theme.palette.secondary.background});
+  const classes = useStyles();
+  const toggleMapTheme = ()=> {
+    const choices = { 'light': 'dark', 'dark': 'light' }
+    const newTheme = choices[currentTheme]
+    localAdd(key, newTheme)
+    debugger;
+    setCurrentTheme(newTheme);
+    googleMapsApi.changeMapTheme(newTheme);
   }
+
+  useEffect(()=> {
+    const setStateCallBack = (key,value) => {
+      setCurrentTheme(value);
+      googleMapsApi.changeMapTheme(value);
+    }
+    localupdate(key, setStateCallBack);
+  },[])
+  
   return (
-   
+    
     <div className={`App ${classes.base}`}>
-      <ThemeProvider theme={currentTheme.theme}>
-        <Layout toggleTheme={toggleTheme} styleName={currentTheme.name}/>
+      <ThemeProvider theme={themes[currentTheme]}>
+        <Layout mapTheme={currentTheme} toggleMapTheme={toggleMapTheme} />
    
     
       </ThemeProvider >
