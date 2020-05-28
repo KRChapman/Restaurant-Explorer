@@ -262,7 +262,7 @@ class Layout extends Component {
     else{
       const foundIndex = allPlaces.findIndex(ele => ele.placeId === selectedplaceId)
       const placeIndex = placesToDisplay.length;
-      //debugger;
+    // Swap user selected place from map in allPlaces so it comes next when user hits the next button
       const swapallPlaces = (placeToswap, target) => {
         this.setState(currentState => {
           const allPlaces = [...currentState.allPlaces]

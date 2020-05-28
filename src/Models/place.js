@@ -62,24 +62,24 @@ export class Healthplace {
 
 export class AllPlaces {
 
-  constructor(ele){
+  constructor(place){
 
-    let addressArray = ele.formatted_address.split('');
+    let addressArray = place.formatted_address.split('');
     let index = addressArray.indexOf(',');
     let address = addressArray.slice(0, index);
     address = address.join('');
 
-    let photo = ele.photos != null ? ele.photos[0].getUrl() : null;
+    let photo = place.photos != null ? place.photos[0].getUrl() : null;
    
-      this.placeId= ele.place_id;
-      this.name= ele.name;
+      this.placeId= place.place_id;
+      this.name= place.name;
       this.address = address
-      this.rating= ele.rating;
+      this.rating= place.rating;
       this.photo = photo;
-      this.lat= ele.geometry.location.lat();
-      this.lng= ele.geometry.location.lng();
+      this.lat= place.geometry.location.lat();
+      this.lng= place.geometry.location.lng();
       this.marker= 'default';
-      this.reviewsTotal = ele.user_ratings_total || 0;
+      this.reviewsTotal = place.user_ratings_total || 0;
 
 
   }
