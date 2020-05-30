@@ -28,6 +28,7 @@ class Layout extends Component {
       healthData:[],
       placesToDisplay: [],
       displayPlaceResults:[],
+      photos: [],
       placeData: {},
       isDataLoading: false,
       mapTheme: 'light',
@@ -55,7 +56,7 @@ class Layout extends Component {
       this.displayNewPlaces();
     }
 
-    if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData && (this.state.healthData.length > 0 || this.state.yelpData.length > 0)){
+    if (this.state.yelpData !== prevState.yelpData && this.state.healthData !== prevState.healthData && this.state.photos !== prevState.photos && (this.state.healthData.length > 0 || this.state.yelpData.length > 0)){
       this.combineDataForPlacesToDisplay()
     }
 
@@ -97,19 +98,20 @@ class Layout extends Component {
         const yelpData = currentState.yelpData.concat(data.yelpData)
         const healthData = currentState.healthData.concat(data.healthData)
         const placesDetails = currentState.placesDetails.concat(details.details)
-        return { yelpData, healthData, placesDetails}
+        const photos = currentState.placesDetails.concat(details.photos)
+        return { yelpData, healthData, placesDetails, photos}
       });
     }
     getYelpHealthData(queries, setData);
   }
   combineDataForPlacesToDisplay  = () => {
-    const { allPlaces, placesToDisplay, currentTotalDisplay, yelpData,healthData } = this.state;
+    const { allPlaces, placesToDisplay, currentTotalDisplay, yelpData,healthData,photos } = this.state;
     const start = placesToDisplay.length;
     const end = currentTotalDisplay;
     const slectedPlaces = allPlaces.slice(start, end);
     const slectedYelpData = yelpData.slice(start, end);
     const slectedHealthData = healthData.slice(start, end);
-    const places = this.getPlacesDisplay(slectedPlaces, slectedYelpData, slectedHealthData);
+    const places = this.getPlacesDisplay(slectedPlaces, slectedYelpData, slectedHealthData, photos);
 
     this.setState(currentState => {
       const placesToDisplay = currentState.placesToDisplay.concat(places)
@@ -118,7 +120,7 @@ class Layout extends Component {
     }, this.setIsDataLoading(false));
   }
 
-  getPlacesDisplay = (slectedPlaces, slectedYelpData, slectedHealthData) => {
+  getPlacesDisplay = (slectedPlaces, slectedYelpData, slectedHealthData, photos) => {
     const places = slectedPlaces.map((ele, i) => {
       const yelp = slectedYelpData[i].yelp;// USE getDataByPlaceIds
       const health = slectedHealthData[i].data; /// USE getDataByPlaceIds
@@ -126,7 +128,12 @@ class Layout extends Component {
       const yelpPlace = new Yelpplace(slectedYelpData[i].placeId, yelp);
       const detailsData = this.getDataByPlaceId("placesDetails", ele.placeId);
       const generalInfo = new GeneralInfo(ele.placeId, detailsData, ele, yelp);
-      return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace, healthPlace, generalInfo }
+ 
+      const selectedPhoto = photos.find(pic => {
+        return pic.placeId === ele.placeId;
+      })
+      return { googlePlace: new GooglePlace(ele.placeId, ele, detailsData), yelpPlace,
+         healthPlace, generalInfo, photo: selectedPhoto }
     })
     return places;
   }
@@ -185,9 +192,23 @@ class Layout extends Component {
     const startingCountDisplay = placesToDisplay.length;
     const slectedPlaces = allPlaces.slice(startingCountDisplay, currentTotalDisplay);
 
+    const photos = await this.getPhotos(slectedPlaces);
     const getDetails = googleMapsApi.getDetails(slectedPlaces);
     const details = await getDetails;
-    return { slectedPlaces, details}
+    return { slectedPlaces, details, photos}
+  }
+
+  async getPhotos(slectedPlaces){
+    const photos = slectedPlaces.map(ele=> {
+    //  debugger;
+      const url = ele.photoT != null ? ele.photoT.getUrl() : null;
+      const photo = {
+        placeId: ele.placeId,
+        photo: url,
+      }
+      return photo;
+    })
+    return photos;
   }
 
 
@@ -312,16 +333,16 @@ class Layout extends Component {
 
   render() { 
     const { chosenMapPlaceId, mapPlaceToDisplay, displayPlaceResults, 
-      googleData, allPlaces, placeData, isDataLoading, } = this.state;
+      googleData, allPlaces, placeData, isDataLoading, photos } = this.state;
     const { mapTheme, classes} = this.props;
     const isShowQuickSearch = Object.keys(placeData).length === 0 && placeData.constructor === Object ? true : false;
 // className={base}
     return (    
       <div className={classes.base}>
         <AppBar toggleMapTheme={this.props.toggleMapTheme} mapTheme={mapTheme} setPlaceDataForQuery={this.setPlaceDataForQuery} setAllPlaces={this.setAllPlaces} />    
-        <Results placesToDisplay={displayPlaceResults} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
+        <Results placesToDisplay={displayPlaceResults} photos={photos} changeMapIcon={this.changeMapIcon} getMorePlaces={this.getMorePlaces} placeData={placeData} isShowQuickSearch={isShowQuickSearch}
           setAllPlaces={this.setAllPlaces} setPlaceDataForQuery={this.setPlaceDataForQuery} displayInc={this.displayInc} allPlacesCount={allPlaces.length} isDataLoading={isDataLoading} /> 
-        <GoogleMapDisplay googleData={googleData} chosenMapPlaceId={chosenMapPlaceId} getPlaceForMap={this.getPlaceForMap} mapPlaceToDisplay={mapPlaceToDisplay} placeData={placeData} />
+        <GoogleMapDisplay googleData={googleData} photos={photos} chosenMapPlaceId={chosenMapPlaceId} getPlaceForMap={this.getPlaceForMap} mapPlaceToDisplay={mapPlaceToDisplay} placeData={placeData} />
       </div>
      )
   }

@@ -256,6 +256,7 @@ class GoogleMapsApi {
 
 }
 
+
 export const yelpUrl = 'http://localhost:5000/api'
 export const buildYelpQuery = (allPlaces, phoneNumbers, placeDetails) => {
   const { city, state, country } = placeDetails;
@@ -405,5 +406,7 @@ export const getYelpReviews = (yelpId) => {
     })
 
 }
+
+
 
 export let googleMapsApi = new GoogleMapsApi();

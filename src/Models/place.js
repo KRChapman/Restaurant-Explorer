@@ -75,7 +75,8 @@ export class AllPlaces {
       this.name= place.name;
       this.address = address
       this.rating= place.rating;
-      this.photo = photo;
+      this.photo = null;
+      this.photoT = place.photos[0];
       this.lat= place.geometry.location.lat();
       this.lng= place.geometry.location.lng();
       this.marker= 'default';

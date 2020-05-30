@@ -59,7 +59,7 @@ const Results = (props) => {
   const [isDesktop, setIsDesktop] = useState(true);
   const [isShowHealth, setIsShowHealth] = useState(false);
 
-  const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
+  const { placesToDisplay, photos, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
     setPlaceDataForQuery, allPlacesCount, placeData, isShowQuickSearch, isDataLoading} = props;
   
   const totalPlacesDisplay = placesToDisplay.length;
@@ -96,7 +96,11 @@ const Results = (props) => {
  
   let toDisplay = null;
   if (totalPlacesDisplay > 0) {
+  
     toDisplay = currentPlacesToDisplay.map((ele, i) => {
+  
+      
+
       return <DisplayCard isDesktop={isDesktop} isShowHealth={isShowHealth} placeData={placeData} changeMapIcon={changeMapIcon} key={i} googleYelpHealthData={ele}/>
     })
   } 
