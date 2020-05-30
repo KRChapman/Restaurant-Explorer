@@ -304,14 +304,16 @@ export const buildHealthQuery = (places, phoneNumbers) => {
     const regex = /%20and%20/gi;
    // const regex2 = /'/gi;
     const regex3 = /'s/gi;
-
+    const regex4 = /'/gi;
+    const regex5 = /./gi;
     name = modifyAccent(name);
     let healthName = fixedEncodeURIComponent(name.toUpperCase());
     healthName = healthName.replace(regex, '%20%26%20');
     // Error no return data with 's escaped so replace with empty string instead
    // healthName = healthName.replace(regex2, '%34'); 
     healthName = healthName.replace(regex3, '')
-
+    healthName = healthName.replace(regex4, '')
+    healthName = healthName.replace(regex5, '')
     return healthName;
   }
 

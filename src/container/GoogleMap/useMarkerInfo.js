@@ -55,7 +55,7 @@ const useMarkerInfo = (mapMarkers, googleData, getPlaceForMap, getDataByPlaceId,
 
 
 
-  return <WarnPopover setanchorEl={(inp) => setMarkerInfo({ anchorEl: inp, infoDisplay: "" })} anchorEl={markerInfo.anchorEl} >{markerInfo.infoDisplay}</WarnPopover>
+  return markerInfo.anchorEl == null ? null : <WarnPopover setanchorEl={(inp) => setMarkerInfo({ anchorEl: inp, infoDisplay: "" })} anchorEl={markerInfo.anchorEl} >{markerInfo.infoDisplay}</WarnPopover>
 }
 
 export default useMarkerInfo;
