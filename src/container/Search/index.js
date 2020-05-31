@@ -157,7 +157,7 @@ const Search = props => {
     if (placeInput === "" ) {
       setanchorEl({ anchorEl: event.currentTarget, text: emptyPlace });
       }
-       else if (inputForSearch === ""){
+    else if (inputForSearch === ""){
       setanchorEl({ anchorEl: event.currentTarget, text: fillOutText });
 
     }

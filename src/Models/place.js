@@ -69,14 +69,13 @@ export class AllPlaces {
     let address = addressArray.slice(0, index);
     address = address.join('');
 
-    let photo = place.photos != null ? place.photos[0].getUrl() : null;
-   
+    let photo = place.photos != null ? place.photos[0] : null;
+    debugger;
       this.placeId= place.place_id;
       this.name= place.name;
       this.address = address
       this.rating= place.rating;
-      this.photo = null;
-      this.photoT = place.photos[0];
+      this.photo = photo;
       this.lat= place.geometry.location.lat();
       this.lng= place.geometry.location.lng();
       this.marker= 'default';

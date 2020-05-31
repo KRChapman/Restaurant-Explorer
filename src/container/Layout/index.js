@@ -201,7 +201,7 @@ class Layout extends Component {
   async getPhotos(slectedPlaces){
     const photos = slectedPlaces.map(ele=> {
     //  debugger;
-      const url = ele.photoT != null ? ele.photoT.getUrl() : null;
+      const url = ele.photo != null ? ele.photo.getUrl() : null;
       const photo = {
         placeId: ele.placeId,
         photo: url,
