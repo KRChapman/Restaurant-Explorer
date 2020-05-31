@@ -6,7 +6,7 @@ import DisplayCard from './../../components/DisplayCard/DisplayCard'
 //'./../../components/DisplayCard/DisplayCard'
 
 //
-const useMarkerInfo = (mapMarkers, googleData, getPlaceForMap, getDataByPlaceId, mapPlaceToDisplay,placeData) => {
+const useMarkerInfo = (mapMarkers, googleData, selectPlaceForMap, getDataByPlaceId, mapPlaceToDisplay,placeData) => {
   // Initial anchor element separate so the update comes ofter the api call returns with the data
  // const [holdAnchorEl, setHoldAnchorEl] = useState({ anchorEl: null});
   const [markerInfo, setMarkerInfo] = useReducer((state, newState) => {
@@ -29,7 +29,7 @@ const useMarkerInfo = (mapMarkers, googleData, getPlaceForMap, getDataByPlaceId,
           // console.log('map', found);
           // const placeDetails = getDataByPlaceId("placesDetails",found.placeId);
           // console.log('ele', placeDetails);
-          getPlaceForMap(found);
+          selectPlaceForMap(found);
        //   setHoldAnchorEl({ anchorEl: e.tb.target });
           setMarkerInfo({ anchorEl: e.tb.target });
           //pDoc.parentElement
@@ -40,7 +40,7 @@ const useMarkerInfo = (mapMarkers, googleData, getPlaceForMap, getDataByPlaceId,
      // googleData[]
 
     })
-  }, [mapMarkers, googleData, getPlaceForMap, getDataByPlaceId])
+  }, [mapMarkers, googleData, selectPlaceForMap, getDataByPlaceId])
 
   useEffect(()=> {
    // debugger;
