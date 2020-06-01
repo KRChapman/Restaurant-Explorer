@@ -6,7 +6,7 @@ import { GooglePlace, Yelpplace, Healthplace, GeneralInfo} from './../../Models/
 import Results from './../Results/index';
 import AppBar from './../AppBar/index';
 import GoogleMapDisplay from './../GoogleMap/index';
-import { localAdd, localupdate} from '../../utils/testing';
+//import { localAdd, localupdate } from '../../utils/localstorage';
 
 const useStyles = makeStyles({
 
