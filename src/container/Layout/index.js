@@ -44,11 +44,7 @@ class Layout extends Component {
      }
     this.displayInc = 2;
   }
-  componentDidMount(){
-    localupdate("displayPlaceResults",this.placesLocal);
-
-  }
-
+ 
   componentDidUpdate(prevProps, prevState){
     if (prevState.googleData !== this.state.googleData ){
    
@@ -79,6 +75,12 @@ class Layout extends Component {
     }
  
   }
+
+  componentDidMount() {
+    // For now just used for testing
+    //  localupdate("displayPlaceResults",this.placesLocal);
+  }
+
 
   displayNewPlaces = () => {
     this.setState(currentState => {
@@ -218,7 +220,7 @@ class Layout extends Component {
       const end = currentState.resultsDisplayCount;
       const toDisplay = currentState.placesToDisplay.slice(start, end);
       const displayPlaceResults = currentState.displayPlaceResults.concat(toDisplay);
-      localAdd("displayPlaceResults", displayPlaceResults)
+     // localAdd("displayPlaceResults", displayPlaceResults)
       return { displayPlaceResults}
     });
   }

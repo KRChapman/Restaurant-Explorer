@@ -9,7 +9,7 @@ const YelpInfo = (props) => {
   const [yelpReviewState, setYelpReviewState] = useReducer((state,newState)=>{
                                                   return {...state,...newState}
                                                 }, { anchorEl: null, reviews: [] })
-  const [prevReviews, setPevReviews] = useState([])
+  const [prevReviews, setPrevReviews] = useState([])
   
   const { yelpPlace, isDesktop} = props;
   const rating = yelpPlace.rating;
@@ -33,7 +33,7 @@ const YelpInfo = (props) => {
       else{
        const data = await getYelpReviews(yelpId);
         reviews  = data.yelpData.reviews;
-        setPevReviews(prevState=> {
+        setPrevReviews(prevState=> {
           const prevYelpReview = {
             yelpId: yelpId,
             reviews: reviews
@@ -42,12 +42,13 @@ const YelpInfo = (props) => {
           return prevState.concat(prevYelpReview)
         });
       }
-      
+      setYelpReviewState({ anchorEl, reviews });
     } catch (error) {
       console.log('errorYelpInfo', error);
+      setYelpReviewState({ anchorEl: null, reviews : [] });
     }
     
-    setYelpReviewState({ anchorEl, reviews });
+    
   }
   const reviewsToDisplay = <ReviewContainer title={"Revew Excerpts"}>
                     <ReviewsDisplay reviews={yelpReviewState.reviews} />
