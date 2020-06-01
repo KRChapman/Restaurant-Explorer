@@ -70,7 +70,7 @@ export class AllPlaces {
     address = address.join('');
 
     let photo = place.photos != null ? place.photos[0] : null;
-    debugger;
+
       this.placeId= place.place_id;
       this.name= place.name;
       this.address = address

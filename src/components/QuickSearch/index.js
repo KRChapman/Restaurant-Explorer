@@ -14,8 +14,11 @@ const useStyles = makeStyles(theme => {
     container: {
       width: "200px",
       display: "flex",
-        flexDirection: 'column',
-        margin: "20px auto",
+      flexDirection: 'column',
+      margin: "50px auto",
+    },
+    root:{
+      marginTop: "50px"
     }
   }
 })
@@ -54,7 +57,7 @@ const QuickSearch = (props) => {
     <div className={classes.container}>
       <Typography color="textPrimary" variant='h5' component="h5" gutterBottom>OR</Typography>
 
-      <Typography color="textPrimary" variant='h5' component="h5" gutterBottom>Imediate Seattle Search Option</Typography>
+      <Typography className={classes.root} color="textPrimary" variant='h5' component="h5" gutterBottom>Imediate Seattle Search Option</Typography>
    
       <GeberalBtn action={getAllPlaces}>Seattle {searchTerm}</GeberalBtn>
       <SearchTerms handleTermChange={handleTermChange} terms={terms} searchTerm={searchTerm}/>

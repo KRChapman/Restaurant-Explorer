@@ -157,7 +157,7 @@ class GoogleMapsApi {
       for (let i = 0; i < results.length; i++) {
         allPlaceData.push(results[i]); 
       }
-      console.log('status', status);
+ 
       setPlaceData(allPlaceData);
     }
   }

@@ -75,11 +75,11 @@ const Search = props => {
     { anchorEl: null, text: fillOutText }
   )
 
-  const { setAllPlaces} = props
+  const { setAllPlaces, setPlaceDataForQuery} = props
   const searchPlaceId = "searchPlace";
   
 
-  const placeInput = usePlace(searchPlaceId, props.setPlaceDataForQuery);
+  const placeInput = usePlace(searchPlaceId, setPlaceDataForQuery);
 
   //SEPERATE OUT INTO HOOK
   const isFirstRun = useRef(true);

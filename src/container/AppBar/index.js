@@ -4,7 +4,7 @@ import  makeStyles  from '@material-ui/core/styles/makeStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
+import ErrorHandler from './../../components/Error'
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Badge from '@material-ui/core/Badge';
@@ -117,7 +117,7 @@ export default function ButtonAppBar(props) {
             <Typography className={classes.details} variant="subtitle2" >
             Google and Yelp Ratings with King County Health Department Data
           </Typography>
-          </div>     
+          </div>      
             < Search setPlaceDataForQuery={setPlaceDataForQuery} setAllPlaces={setAllPlaces}/>
           <div className={classes.optionsBtn}>
             <MapTheme toggleMapTheme={toggleMapTheme} badgeContent={mapTheme}/>         

@@ -59,7 +59,7 @@ const Results = (props) => {
   const [isDesktop, setIsDesktop] = useState(true);
   const [isShowHealth, setIsShowHealth] = useState(false);
 
-  const { placesToDisplay, photos, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
+  const { placesToDisplay, getMorePlaces, displayInc, changeMapIcon, setAllPlaces, 
     setPlaceDataForQuery, allPlacesCount, placeData, isShowQuickSearch, isDataLoading} = props;
   
   const totalPlacesDisplay = placesToDisplay.length;
